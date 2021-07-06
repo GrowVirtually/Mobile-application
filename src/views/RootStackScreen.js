@@ -9,6 +9,7 @@ import DetailsScreen from './DetailsScreen';
 import {ConsumerHomeScreen} from './Consumer/ConsumerHomeScreen';
 import {GrowerHomeScreen} from './Grower/GrowerHomeScreen';
 
+
 const RootStack = createStackNavigator();
 
 const RootStackScreen = ({navigation}) => (
