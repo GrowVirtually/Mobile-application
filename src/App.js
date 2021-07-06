@@ -7,13 +7,11 @@
  */
 
 import React from "react";
-import type { Node } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import DetailsScreen from "./views/DetailsScreen";
 import HomeScreen from "./views/HomeScreen";
-import Icon from "react-native-vector-icons/Ionicons";
 import MainTabScreen from "./views/MainTabScreen";
 import RootStackScreen from "./views/RootStackScreen";
 
@@ -35,7 +33,7 @@ const Drawer = createDrawerNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <RootStackScreen/>
+      <RootStackScreen />
       {/*<Drawer.Navigator initialRouteName="Home">*/}
       {/*  <Drawer.Screen name="Home" component={MainTabScreen} />*/}
       {/*  /!*<Drawer.Screen name="Details" component={DetailsStackScreen} />*!/*/}
