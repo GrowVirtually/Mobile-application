@@ -4,44 +4,50 @@ import {Button} from 'react-native-paper';
 
 const HomeScreen = ({navigation}) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.title}>
-        <Text>I am a</Text>
-      </View>
-      <View style={styles.row}>
-        <View style={(styles.left, styles.btn)}>
-          <TouchableOpacity onPress={() => navigation.navigate('ConsumerHome')}>
-            <Text style={styles.btnText}>Consumer</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={(styles.right, styles.btn)}>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
-            <Text style={styles.btnText}>Grower</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+    <View style={newStyle.container}>
+      <Text style={newStyle.title}>I want to,</Text>
+      <TouchableOpacity
+        style={[newStyle.btn, newStyle.btnFocused]}
+        onPress={() => navigation.navigate('ConsumerHome')}>
+        <Text style={newStyle.btnText}>Buy things</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={newStyle.btn}
+        onPress={() => navigation.navigate('GrowerHome')}>
+        <Text style={newStyle.btnText}>Sell things</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({
+const newStyle = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  left: {},
-  btn: {
+    paddingTop: 100,
+    padding: 10,
     backgroundColor: 'green',
-    padding: 20,
-    margin: 5,
+    flex: 1,
+  },
+  title: {
+    fontSize: 20,
+  },
+
+  btn: {
+    marginTop: 10,
+    borderWidth: 2,
+    borderColor: 'white',
+    borderRadius: 5,
+    padding: 10,
+    width: '100%',
+    alignItems: 'center',
+  },
+  btnFocused: {
+    backgroundColor: 'white',
   },
   btnText: {
-    fontSize: 30,
-  }
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
 });

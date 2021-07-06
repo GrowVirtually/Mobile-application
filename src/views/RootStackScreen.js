@@ -1,14 +1,13 @@
 import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import SplashScreen from './Auth/SplashScreen'
+import SplashScreen from './Auth/SplashScreen';
 import SignInScreen from './Auth/SignInScreen';
 import SignUpScreen from './Auth/SignUpScreen';
 import HomeScreen from './HomeScreen';
 import DetailsScreen from './DetailsScreen';
 import {ConsumerHomeScreen} from './Consumer/ConsumerHomeScreen';
-import { GrowerHomeScreen } from './Grower/GrowerHomeScreen';
-
+import {GrowerHomeScreen} from './Grower/GrowerHomeScreen';
 
 const RootStack = createStackNavigator();
 
