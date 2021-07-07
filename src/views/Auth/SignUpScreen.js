@@ -4,7 +4,7 @@ import { Button, StyleSheet, Text, View } from "react-native";
 const SignUpScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>SignupScreen</Text>
+      <Text>Signup Screen</Text>
       <Button title={"Click Here"}
               onPress={() => alert("button clicked")} />
     </View>

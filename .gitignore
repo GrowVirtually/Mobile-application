@@ -58,3 +58,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# for linux android sdk root
+android/local.properties
