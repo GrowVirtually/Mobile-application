@@ -1,10 +1,12 @@
 import * as React from 'react';
-import {Button, View} from 'react-native';
+import {Button, View, Text} from 'react-native';
+import {ConsumerHeader} from './ConsumerHomeScreen';
 
-export function Notifications({navigation}) {
+export const Notifications = ({navigation}) => {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
+    <View>
+      <ConsumerHeader navigation={navigation}/>
+      <Text>Notificatins</Text>
     </View>
   );
-}
+};

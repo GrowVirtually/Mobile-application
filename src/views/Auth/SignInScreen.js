@@ -56,14 +56,14 @@ const SignInScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={'#009387'} barStyle={'light-content'} />
+      <StatusBar backgroundColor={'green'} barStyle={'light-content'} />
       <View style={styles.header}>
         <Text style={styles.text_header}>Welcome</Text>
       </View>
       <Animatable.View style={styles.footer} animation={'fadeInUpBig'}>
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
-          <FontAwesome name={'user-o'} color={'#05375a'} size={20} />
+          <FontAwesome name={'user-o'} color={'green'} size={20} />
           <TextInput
             placeholder={'Your Email'}
             style={styles.textInput}
@@ -86,7 +86,7 @@ const SignInScreen = ({navigation}) => {
           Password
         </Text>
         <View style={styles.action}>
-          <FontAwesome name={'lock'} color={'#05375a'} size={20} />
+          <FontAwesome name={'lock'} color={'green'} size={20} />
           <TextInput
             placeholder={'Your Password'}
             secureTextEntry={data.secureTextEntry}
@@ -125,7 +125,7 @@ const SignInScreen = ({navigation}) => {
           <TouchableOpacity
             
             style={[newStyle.btn, newStyle.btnFocused]}
-            onPress={() => navigation.navigate('HomeScreen')}>
+            onPress={() => navigation.navigate('CommonHome')}>
             <Text style={newStyle.btnText}>Sign In</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -167,13 +167,14 @@ const newStyle = StyleSheet.create({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#009387',
+    backgroundColor: 'green',
   },
   header: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    alignItems:'center',
     paddingHorizontal: 20,
-    paddingBottom: 50,
+    paddingBottom: 30,
   },
   footer: {
     flex: 3,

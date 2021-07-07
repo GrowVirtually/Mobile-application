@@ -14,15 +14,16 @@ import {
   Paragraph,
   Appbar,
 } from 'react-native-paper';
+import {NavigationContainer} from '@react-navigation/native';
 
-const ConsumerHeader = () => {
+const ConsumerHeader = ({navigation}) => {
   return (
     <Appbar.Header>
-      <Appbar.Content title="Title" />
       <Appbar.Action
-        icon="label"
-        onPress={() => console.log('Pressed label')}
+        icon="menu"
+        onPress={() => navigation.toggleDrawer()}
       />
+      <Appbar.Content title="Title" />
     </Appbar.Header>
   );
 };
@@ -69,11 +70,10 @@ const ConsumerGigsStyle = StyleSheet.create({
   },
 });
 
-
-export const ConsumerHomeScreen = () => {
+const ConsumerHomeScreen = ({navigation}) => {
   return (
     <>
-      <ConsumerHeader />
+      <ConsumerHeader  navigation={navigation} />
       <ScrollView>
         <ConsumerContent />
       </ScrollView>
@@ -95,3 +95,5 @@ const style = StyleSheet.create({
     flex: 1,
   },
 });
+
+export {ConsumerHomeScreen, ConsumerHeader};
