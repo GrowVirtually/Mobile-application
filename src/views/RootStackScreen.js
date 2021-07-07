@@ -1,9 +1,9 @@
 import React from "react";
 
 import { createStackNavigator } from "@react-navigation/stack";
-import SplashScreen from "./SplashScreen";
-import SignInScreen from "./SignInScreen";
-import SignUpScreen from "./SignUpScreen";
+// import SplashScreen from "./SplashScreen";
+// import SignInScreen from "./SignInScreen";
+// import SignUpScreen from "./SignUpScreen";
 import SignUpPathDeciderScreen from './SignUpPathDeciderScreen';
 import EnterMobileNumberScreen from './EnterMobileNumberScreen';
 import LoginScreen from './LoginScreen';

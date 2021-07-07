@@ -13,7 +13,6 @@ const SignupScreen2 = ({ navigation }) => {
     </View>
   );
 
-
 };
 
 export default SignupScreen2;
