@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import userTypeReducer from '../reducers/userType';
 
 import * as Base from '../styles/base/base';
 import * as Typography from '../styles/base/typography';
@@ -11,6 +12,17 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
 
 const SignUpPathDeciderScreen = ({ navigation }) => {
+
+  const [userType, userTypeDispatch] = useReducer(userTypeReducer, 'consumer');
+
+  const handlePath = (userType) => {
+    userType === 'consumer' ?
+      userTypeDispatch({ type: 'CONSUMER' })
+      :
+      userTypeDispatch({ type: 'GROWER' });
+    navigation.navigate('EnterMobileNumberScreen');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -23,7 +35,7 @@ const SignUpPathDeciderScreen = ({ navigation }) => {
         />
       </View>
       <View style={styles.buttons}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handlePath('consumer')}>
           <LinearGradient colors={['#08d4c4', '#01ab9d']}
                           style={[styles.button_round, {
                             marginBottom: 20,
@@ -31,7 +43,7 @@ const SignUpPathDeciderScreen = ({ navigation }) => {
             <Text style={styles.button_txt}>Buy</Text>
           </LinearGradient>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('EnterMobileNumberScreen')}>
+        <TouchableOpacity onPress={() => handlePath('grower')}>
           <LinearGradient colors={['#08d4c4', '#01ab9d']}
                           style={styles.button_round}>
             <Text style={styles.button_txt}>Sell</Text>
