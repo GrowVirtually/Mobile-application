@@ -1,37 +1,14 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, { useEffect } from 'react';
-import type { Node } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-// import DetailsScreen from './views/DetailsScreen';
-import HomeScreen from './views/HomeScreen';
-import Icon from 'react-native-vector-icons/Ionicons';
-import MainTabScreen from './views/MainTabScreen';
-import RootStackScreen from './views/RootStackScreen';
-import { MainStackNavigator } from './navigators/StackNavigator';
+import AuthStackScreen from './navigators/AuthStackScreen';
 import { ActivityIndicator, View } from 'react-native';
-
-// import {
-//   SafeAreaView,
-//   ScrollView,
-//   StatusBar,
-//   StyleSheet,
-//   Text,
-//   Button,
-//   useColorScheme,
-//   View
-// } from "react-native";
-
+import { MainStackNavigator } from './navigators/StackNavigator';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Drawer = createDrawerNavigator();
+
+const RootStack = createStackNavigator();
 
 const App = () => {
 
@@ -42,9 +19,9 @@ const App = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setIsLoading(false)
-    }, 1000)
-  }, [])
+      setIsLoading(false);
+    }, 1000);
+  }, []);
 
   if (isLoading) {
     return (
@@ -60,7 +37,11 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <RootStackScreen />
+      <RootStack.Navigator headerMode={'none'}>
+        <RootStack.Screen name={'AuthScreen'} component={AuthStackScreen} />
+        <RootStack.Screen name={'MainStackNavigator'} component={MainStackNavigator} />
+      </RootStack.Navigator>
+      {/*<RootStackScreen />*/}
       {/*<Drawer.Navigator initialRouteName="Home">*/}
       {/*  <Drawer.Screen name="Home" component={MainTabScreen} />*/}
       {/*  /!*<Drawer.Screen name="Details" component={DetailsStackScreen} />*!/*/}

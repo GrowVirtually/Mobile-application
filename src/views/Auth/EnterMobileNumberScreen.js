@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Dimensions, StyleSheet, Text, TextInput, View } from 'react-native';
-import * as Base from '../styles/base/base';
-import * as Colors from '../styles/abstracts/colors';
+import * as Base from '../../styles/base/base';
+import * as Colors from '../../styles/abstracts/colors';
 
 const EnterMobileNumberScreen = ({ navigation }) => {
   const [data, setData] = React.useState({

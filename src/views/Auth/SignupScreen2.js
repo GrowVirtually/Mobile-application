@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import * as Colors from '../styles/abstracts/colors';
+import * as Colors from '../../styles/abstracts/colors';
 
 const SignupScreen2 = ({ navigation }) => {
 
@@ -68,7 +68,7 @@ const SignupScreen2 = ({ navigation }) => {
         <Button title={'Back'}
                 onPress={() => navigation.goBack()} />
         {(!!password && !pwErrors.length && password === confirmPassword) && (
-          <Button title={'Finish'} onPress={() => alert(password, confirmPassword)} />
+          <Button title={'Finish'} onPress={() => navigation.navigate('MainStackNavigator')} />
         )}
 
         <Button title={'Go to path decider'}

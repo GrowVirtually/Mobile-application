@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import * as Colors from '../styles/abstracts/colors';
+import * as Colors from '../../styles/abstracts/colors';
 
 export const SignupScreen1 = ({ navigation }) => {
 

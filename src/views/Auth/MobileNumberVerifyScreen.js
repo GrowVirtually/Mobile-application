@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import * as Base from '../styles/base/base';
-import * as Colors from '../styles/abstracts/colors';
+import * as Base from '../../styles/base/base';
+import * as Colors from '../../styles/abstracts/colors';
 
 import {
   CodeField,

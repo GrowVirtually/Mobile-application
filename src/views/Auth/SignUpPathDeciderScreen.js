@@ -1,11 +1,11 @@
 import React, { useReducer } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import userTypeReducer from '../reducers/userType';
+import userTypeReducer from '../../reducers/userType';
 
-import * as Base from '../styles/base/base';
-import * as Typography from '../styles/base/typography';
-import * as Colors from '../styles/abstracts/colors';
-import * as Buttons from '../styles/components/buttons';
+import * as Base from '../../styles/base/base';
+import * as Typography from '../../styles/base/typography';
+import * as Colors from '../../styles/abstracts/colors';
+import * as Buttons from '../../styles/components/buttons';
 
 import * as Animatable from 'react-native-animatable';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -29,7 +29,7 @@ const SignUpPathDeciderScreen = ({ navigation }) => {
         <Text style={styles.heading}>Welcome to</Text>
         <Animatable.Image animation={'bounceIn'}
                           duration={1500}
-                          source={require('../assets/logo.png')}
+                          source={require('../../assets/logo.png')}
                           style={styles.logo}
                           resizeMode={'stretch'}
         />
