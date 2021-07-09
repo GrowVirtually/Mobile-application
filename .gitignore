@@ -61,3 +61,6 @@ buck-out/
 
 # for linux android sdk root
 android/local.properties
+
+.vscode
+*.lock

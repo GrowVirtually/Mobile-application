@@ -1,7 +1,7 @@
 import React from "react";
 import HomeScreen from "./HomeScreen";
 import Icon from "react-native-vector-icons/Ionicons";
-import DetailsScreen from "./DetailsScreen";
+// import DetailsScreen from "./DetailsScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";

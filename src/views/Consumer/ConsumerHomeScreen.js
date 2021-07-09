@@ -14,16 +14,12 @@ import {
   Paragraph,
   Appbar,
 } from 'react-native-paper';
-import {NavigationContainer} from '@react-navigation/native';
 
-const ConsumerHeader = ({navigation}) => {
+const ConsumerHeader = ({navigation, title}) => {
   return (
-    <Appbar.Header>
-      <Appbar.Action
-        icon="menu"
-        onPress={() => navigation.toggleDrawer()}
-      />
-      <Appbar.Content title="Title" />
+    <Appbar.Header style={{backgroundColor: 'green'}}>
+      <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
+      <Appbar.Content title={title} />
     </Appbar.Header>
   );
 };
@@ -42,8 +38,8 @@ const ConsumerGig = () => {
 
 const ConsumerGigStyle = StyleSheet.create({
   gridItem: {
-    width: 190,
-    // margin:5,
+    width: '45%',
+    margin: 5,
     // padding:5,
     // height:150,
   },
@@ -73,7 +69,7 @@ const ConsumerGigsStyle = StyleSheet.create({
 const ConsumerHomeScreen = ({navigation}) => {
   return (
     <>
-      <ConsumerHeader  navigation={navigation} />
+      <ConsumerHeader navigation={navigation} title="Gigs" />
       <ScrollView>
         <ConsumerContent />
       </ScrollView>
