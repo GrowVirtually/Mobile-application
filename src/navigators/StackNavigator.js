@@ -5,6 +5,7 @@ import SplashScreen from '../views/sample/SplashScreen';
 import SignInScreen from '../views/sample/SignInScreen';
 import SignUpScreen from '../views/sample/SignUpScreen';
 import HomeScreen from '../views/HomeScreen';
+import ProfileScreen from '../views/ProfileScreen';
 import {
   ConsumerDrawerNavigator,
   GrowerDrawerNavigator,
@@ -21,6 +22,8 @@ const MainStackNavigator = () => {
       <Stack.Screen name={'CommonHome'} component={HomeScreen} />
       <Stack.Screen name={'ConsumerHome'} component={ConsumerDrawerNavigator} />
       <Stack.Screen name={'GrowerHome'} component={GrowerDrawerNavigator} />
+      
+      <Stack.Screen name={'ProfileScreen'} component={ProfileScreen} />
     </Stack.Navigator>
   );
 };
