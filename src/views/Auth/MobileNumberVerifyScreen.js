@@ -72,7 +72,7 @@ export default MobileNumberVerifyScreen;
 const styles = StyleSheet.create({
   container: {
     ...Base.container,
-    backgroundColor: Colors.primary,
+    backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: 'blue',
   },

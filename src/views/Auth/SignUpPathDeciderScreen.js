@@ -37,12 +37,12 @@ const SignUpPathDeciderScreen = ({navigation}) => {
         <TouchableOpacity
           onPress={() => handlePath('consumer')}
           style={[styles.button_round, {backgroundColor:Colors.secondary.color}]}>
-          <Text style={styles.button_txt}>Buy</Text>
+          <Text style={styles.button_txt}>BUY</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => handlePath('grower')}
           style={styles.button_round}>
-          <Text style={styles.button_txt}>Sell</Text>
+          <Text style={styles.button_txt}>SELL</Text>
         </TouchableOpacity>
       </View>
     </View>
