@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import * as Base from '../../styles/base/base';
 import * as Colors from '../../styles/abstracts/colors';
 
@@ -10,10 +17,9 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-const MobileNumberVerifyScreen = ({ navigation }) => {
-
+const MobileNumberVerifyScreen = ({navigation}) => {
   const [OTP, setValue] = useState('');
-  const ref = useBlurOnFulfill({ OTP, cellCount: CELL_COUNT });
+  const ref = useBlurOnFulfill({OTP, cellCount: CELL_COUNT});
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     OTP,
     setValue,
@@ -30,10 +36,9 @@ const MobileNumberVerifyScreen = ({ navigation }) => {
      */
   }, []);
 
-
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{`Enter the code \n we sent to you`}</Text>
+      <Text style={styles.heading}>{`Enter the code\nwe sent to you`}</Text>
       <CodeField
         ref={ref}
         {...props}
@@ -42,9 +47,9 @@ const MobileNumberVerifyScreen = ({ navigation }) => {
         onChangeText={setValue}
         cellCount={CELL_COUNT}
         rootStyle={styles.codeFieldRoot}
-        keyboardType='number-pad'
-        textContentType='oneTimeCode'
-        renderCell={({ index, symbol, isFocused }) => (
+        keyboardType="number-pad"
+        textContentType="oneTimeCode"
+        renderCell={({index, symbol, isFocused}) => (
           <Text
             key={index}
             style={[styles.cell, isFocused && styles.focusCell]}
@@ -53,16 +58,20 @@ const MobileNumberVerifyScreen = ({ navigation }) => {
           </Text>
         )}
       />
-      <Button title={'Not your number?'} onPress={() => navigation.navigate('EnterMobileNumberScreen')} />
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('EnterMobileNumberScreen')}>
+        <Text style={styles.goBackBtnTxt}>Not your number?</Text>
+      </TouchableOpacity>
       {/*<Button title={'Next'} onPress={*/}
       {/*  data.signIn ?*/}
       {/*    () => navigation.navigate('LoginScreen') :*/}
       {/*    () => navigation.navigate('SignupScreen1')*/}
       {/*} />*/}
-      {OTP * 1 === verificationCode && (userFound ?
-        navigation.navigate('HomeScreen') :
-        navigation.navigate('SignupScreen1'))
-      }
+      {OTP * 1 === verificationCode &&
+        (userFound
+          ? navigation.navigate('HomeScreen')
+          : navigation.navigate('SignupScreen1'))}
     </View>
   );
 };
@@ -72,23 +81,37 @@ export default MobileNumberVerifyScreen;
 const styles = StyleSheet.create({
   container: {
     ...Base.container,
-    backgroundColor: Colors.primary,
-    borderWidth: 1,
-    borderColor: 'blue',
+    backgroundColor: '#fff',
+    // justifyContent
   },
-  root: { flex: 1, padding: 20 },
-  title: { textAlign: 'center', fontSize: 30 },
-  codeFieldRoot: { marginTop: 20 },
+  root: {flex: 1, padding: 20},
+  title: {textAlign: 'center', fontSize: 30},
+  codeFieldRoot: {marginTop: 20},
   cell: {
     width: 40,
     height: 40,
     lineHeight: 38,
     fontSize: 24,
     borderWidth: 2,
-    borderColor: '#00000030',
+    borderColor: '#ccc',
     textAlign: 'center',
   },
   focusCell: {
-    borderColor: '#000',
+    borderColor: Colors.secondary.color,
+    borderWidth: 3,
+  },
+  goBackBtnTxt: {
+    fontSize: 14,
+    color: 'blue',
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  heading: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: Colors.primary.color,
+    marginBottom: 20,
   },
 });
