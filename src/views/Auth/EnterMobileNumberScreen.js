@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   goBackBtnTxt : {
-    fontSize:18,
+    fontSize:14,
     color: 'blue',
     textDecorationLine: 'underline',  
     textAlign: 'center',
