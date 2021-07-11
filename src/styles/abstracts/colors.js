@@ -1,15 +1,19 @@
 export const primary = {
-  color: '#006400',
-};
-
-export const secondary = {
   color: '#007200',
 };
 
-export const tertiary = {
-  color: '#008000',
+export const secondary = {
+  color: '#38B000',
 };
 
+export const tertiary = {
+  color: '#CFCFCF',
+};
+
+export const fontColor = {
+  color: '#404040',
+}
+
 export const errorColor = {
-  color: '#FF0000',
+  color: '#E34400',
 };

@@ -8,7 +8,7 @@ export const container = {
   alignItems: 'center',
   justifyContent: 'center',
   borderWidth: 1,
-  borderColor: '#fff',
+  // borderColor: '#fff',
 };
 
 export const logoLarge = {
