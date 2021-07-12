@@ -21,8 +21,6 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
     userOTP,
     setValue
   });
-  const [userFound, setUserFound] = useState(false);
-  const [OTPVerified, setOTPVerified] = useState(false);
 
   // useEffect(() => {
   //   // verify OTP
@@ -41,8 +39,13 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
 
       if (otpVerification.data.status === "success") {
         // otp verified
-        // setOTPVerified(true);
-        navigation.navigate("SignupScreen1");
+        // check user found or not
+        if (otpVerification.data.userFound) {
+          // 1) set the token to async storage [TODO]
+          navigation.navigate("HomeScreen");
+        } else if (!otpVerification.data.userFound) {
+          navigation.navigate("SignupScreen1");
+        }
       } else {
         alert(otpVerification.data.message);
       }
