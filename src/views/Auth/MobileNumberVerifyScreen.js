@@ -1,37 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import * as Base from '../../styles/base/base';
-import * as Colors from '../../styles/abstracts/colors';
+import React, { useState, useEffect } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import * as Base from "../../styles/base/base";
+import * as Colors from "../../styles/abstracts/colors";
 
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
-  useClearByFocusCell,
-} from 'react-native-confirmation-code-field';
+  useClearByFocusCell
+} from "react-native-confirmation-code-field";
+import axios from "axios";
 
 const MobileNumberVerifyScreen = ({ navigation, route }) => {
 
   const CELL_COUNT = 4;
 
-  const [userOTP, setValue] = useState('');
+  const [userOTP, setValue] = useState("");
   const ref = useBlurOnFulfill({ userOTP, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     userOTP,
-    setValue,
+    setValue
   });
   const [userFound, setUserFound] = useState(false);
-  const [codeVerified, setCodeVerified] = useState(false);
+  const [OTPVerified, setOTPVerified] = useState(false);
 
-  useEffect(() => {
-    /*
-      1. api call to load user if exists
-      2. update userFound state
-     */
-    if(userOTP * 1 === route.params.systemOTP * 1) {
-      navigation.navigate('SignupScreen1')
+  // useEffect(() => {
+  //   // verify OTP
+  //   if (userOTP * 1 === route.params.systemOTP * 1) {
+  //     navigation.navigate("HomeScreen");
+  //   }
+  // }, [userOTP]);
+
+  const handleOTPVerification = async () => {
+    try {
+      const otpVerification = await axios.post("http://10.0.2.2:3000/api/v1/users/verifyOTP", {
+        phone: route.params.phone,
+        hash: route.params.hash,
+        otp: route.params.otp
+      });
+
+      if (otpVerification.data.status === "success") {
+        // otp verified
+        // setOTPVerified(true);
+        navigation.navigate("SignupScreen1");
+      } else {
+        alert(otpVerification.data.message);
+      }
+    } catch (err) {
+      console.log(err);
     }
-  }, [userOTP]);
+  };
 
   return (
     <View style={styles.container}>
@@ -44,8 +62,8 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
         onChangeText={setValue}
         cellCount={CELL_COUNT}
         rootStyle={styles.codeFieldRoot}
-        keyboardType='number-pad'
-        textContentType='oneTimeCode'
+        keyboardType="number-pad"
+        textContentType="oneTimeCode"
         renderCell={({ index, symbol, isFocused }) => (
           <Text
             key={index}
@@ -55,7 +73,10 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
           </Text>
         )}
       />
-      <Button title={'Not your number?'} onPress={() => navigation.navigate('EnterMobileNumberScreen')} />
+      {userOTP.length === 4 && (
+        <Button title={"OK"} onPress={handleOTPVerification} />
+      )}
+      <Button title={"Not your number?"} onPress={() => navigation.navigate("EnterMobileNumberScreen")} />
       {/*{codeVerified && (userFound ?*/}
       {/*  navigation.navigate('HomeScreen') :*/}
       {/*  navigation.navigate('SignupScreen1'))*/}
@@ -69,10 +90,10 @@ export default MobileNumberVerifyScreen;
 const styles = StyleSheet.create({
   container: {
     ...Base.container,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff"
   },
   root: { flex: 1, padding: 20 },
-  title: { textAlign: 'center', fontSize: 30 },
+  title: { textAlign: "center", fontSize: 30 },
   codeFieldRoot: { marginTop: 20 },
   cell: {
     width: 40,
@@ -80,25 +101,25 @@ const styles = StyleSheet.create({
     lineHeight: 38,
     fontSize: 24,
     borderWidth: 2,
-    borderColor: '#ccc',
-    textAlign: 'center',
+    borderColor: "#ccc",
+    textAlign: "center"
   },
   focusCell: {
     borderColor: Colors.secondary.color,
-    borderWidth: 3,
+    borderWidth: 3
   },
   goBackBtnTxt: {
     fontSize: 14,
-    color: 'blue',
-    textDecorationLine: 'underline',
-    textAlign: 'center',
-    marginTop: 20,
+    color: "blue",
+    textDecorationLine: "underline",
+    textAlign: "center",
+    marginTop: 20
   },
   heading: {
     fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     color: Colors.primary.color,
-    marginBottom: 20,
-  },
+    marginBottom: 20
+  }
 });

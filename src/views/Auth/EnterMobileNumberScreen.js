@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Dimensions, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import * as Base from '../../styles/base/base';
-import * as Colors from '../../styles/abstracts/colors';
-import * as Typography from '../../styles/base/typography';
-import { color } from 'react-native-reanimated';
-import { TextInput } from 'react-native-paper';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Dimensions, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import * as Base from "../../styles/base/base";
+import * as Colors from "../../styles/abstracts/colors";
+import * as Typography from "../../styles/base/typography";
+import { color } from "react-native-reanimated";
+import { TextInput } from "react-native-paper";
+import axios from "axios";
 
 
 const EnterMobileNumberScreen = ({ navigation }) => {
 
-  const [mobileNumber, setMobileNumber] = useState('07');
-  const [systemOTP, setOTP] = useState('');
+  const [mobileNumber, setMobileNumber] = useState("07");
+  const [systemOTP, setOTP] = useState("");
   const [disabledNext, setDisabledNext] = useState(false);
 
   const validateMobileNumber = (number) => {
@@ -30,20 +30,24 @@ const EnterMobileNumberScreen = ({ navigation }) => {
   const handleSendOTP = async () => {
 
     // serialize phone number
-    const newMobile = mobileNumber.replace(mobileNumber.charAt(0), '+94');
+    const newMobile = mobileNumber.replace(mobileNumber.charAt(0), "+94");
 
     // 1. send OTP code to mobile
     try {
       // backend call to get the OTP
-      // fetch call
-      const otpWithDetails = await axios.post('http://10.0.2.2:3000/api/v1/users/sendOTP', {
-        phone: newMobile,
+      const otpWithDetails = await axios.post("http://10.0.2.2:3000/api/v1/users/sendOTP", {
+        phone: newMobile
       });
 
       console.log(otpWithDetails);
-      if (otpWithDetails.data.status === 'success') {
+      if (otpWithDetails.data.status === "success") {
         const { otp, hash } = otpWithDetails.data;
-        setOTP(otp);
+        navigation.navigate("MobileNumberVerifyScreen", {
+          phone : newMobile,
+          hash,
+          otp
+        });
+        // setOTP(otp);
       } else {
         alert(otpWithDetails.data.message);
       }
@@ -53,14 +57,14 @@ const EnterMobileNumberScreen = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
-
-    // alert(systemOTP);
-
-    if (!!systemOTP) {
-      navigation.navigate('MobileNumberVerifyScreen', { systemOTP });
-    }
-  }, [systemOTP]);
+  // useEffect(() => {
+  //
+  //   // alert(systemOTP);
+  //
+  //   if (!!systemOTP) {
+  //     navigation.navigate('MobileNumberVerifyScreen', { systemOTP });
+  //   }
+  // }, [systemOTP]);
 
 
   return (
@@ -71,20 +75,20 @@ const EnterMobileNumberScreen = ({ navigation }) => {
       </Text>
       <View style={styles.btnContainer}>
         <TextInput
-          label='Mobile number'
+          label="Mobile number"
           value={mobileNumber}
           onChangeText={validateMobileNumber}
           style={styles.textInput}
-          keyboardType={'numeric'}
-          mode='outlined'
+          keyboardType={"numeric"}
+          mode="outlined"
           autoFocus={true}
           selectionColor={Colors.secondary.color}
           theme={{
             colors: {
               primary: Colors.primary.color,
-              underlineColor: 'transparent',
-              background: '#fff',
-            },
+              underlineColor: "transparent",
+              background: "#fff"
+            }
           }}
         />
         <TouchableOpacity
@@ -112,58 +116,58 @@ const EnterMobileNumberScreen = ({ navigation }) => {
 
 export default EnterMobileNumberScreen;
 
-const { width } = Dimensions.get('screen');
+const { width } = Dimensions.get("screen");
 const widthTextInput = width * 0.9;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: '#fff',
-    paddingTop: 40,
+    justifyContent: "flex-start",
+    backgroundColor: "#fff",
+    paddingTop: 40
   },
   heading: {
     fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: Colors.primary.color,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: Colors.primary.color
   },
   subHeading: {
     fontSize: 15,
-    textAlign: 'center',
+    textAlign: "center",
     padding: 30,
-    color: Colors.fontColor.color,
+    color: Colors.fontColor.color
   },
   textInput: {
     width: widthTextInput,
-    marginBottom: 20,
+    marginBottom: 20
   },
   button: {
     padding: 15,
     backgroundColor: Colors.primary.color,
     marginTop: 10,
-    borderRadius: 10,
+    borderRadius: 10
   },
   buttonDisabled: {
     padding: 15,
-    backgroundColor: 'grey',
+    backgroundColor: "grey",
     marginTop: 10,
-    borderRadius: 10,
+    borderRadius: 10
   },
   btnContainer: {
-    alignSelf: 'center',
-    flexDirection: 'column',
+    alignSelf: "center",
+    flexDirection: "column"
   },
   btnText: {
     fontSize: 18,
-    color: '#fff',
-    textAlign: 'center',
+    color: "#fff",
+    textAlign: "center"
   },
   goBackBtnTxt: {
     fontSize: 14,
-    color: 'blue',
-    textDecorationLine: 'underline',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
+    color: "blue",
+    textDecorationLine: "underline",
+    textAlign: "center",
+    marginBottom: 20
+  }
 });
