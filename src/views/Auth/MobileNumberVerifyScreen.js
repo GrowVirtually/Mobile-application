@@ -3,9 +3,6 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import * as Base from '../../styles/base/base';
 import * as Colors from '../../styles/abstracts/colors';
 
-import AuthContext from '../../context/auth-context';
-
-
 import {
   CodeField,
   Cursor,
@@ -31,14 +28,10 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
       1. api call to load user if exists
       2. update userFound state
      */
-  }, []);
-
-  // useEffect(() => {
-  //   alert(route.params.systemOTP);
-  //   if (userOTP * 1 === route.params.systemOTP) {
-  //     setCodeVerified(true);
-  //   }
-  // }, [userOTP]);
+    if(userOTP * 1 === route.params.systemOTP * 1) {
+      navigation.navigate('SignupScreen1')
+    }
+  }, [userOTP]);
 
   return (
     <View style={styles.container}>
@@ -63,10 +56,10 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
         )}
       />
       <Button title={'Not your number?'} onPress={() => navigation.navigate('EnterMobileNumberScreen')} />
-      {codeVerified && (userFound ?
-        navigation.navigate('HomeScreen') :
-        navigation.navigate('SignupScreen1'))
-      }
+      {/*{codeVerified && (userFound ?*/}
+      {/*  navigation.navigate('HomeScreen') :*/}
+      {/*  navigation.navigate('SignupScreen1'))*/}
+      {/*}*/}
     </View>
   );
 };

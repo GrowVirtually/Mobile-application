@@ -17,7 +17,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
   const [systemOTP, setOTP] = useState('');
 
   const validateMobileNumber = (number) => {
-    const allowBackspace = number.length === mobileNumber.length - 1
+    const allowBackspace = number.length === mobileNumber.length - 1;
 
     const regex = /^\d*(\.\d{0, 2})?$/;
 
@@ -30,20 +30,23 @@ const EnterMobileNumberScreen = ({ navigation }) => {
   };
 
   const handleSendOTP = async () => {
+
+    // serialize phone number
+    const newMobile = mobileNumber.replace(mobileNumber.charAt(0), '+94');
+
     // 1. send OTP code to mobile
     try {
       // backend call to get the OTP [TODO]
       // fetch call
-      const getOTP = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(2003);
-        }, 2000);
+      const otpWithDetails = await axios.post('http://10.0.2.2:5000/api/v1/users/sendOTP', {
+        phone: newMobile,
       });
 
-      const OTP = await getOTP;
-
-      setOTP(OTP);
-      // navigation.navigate('MobileNumberVerifyScreen', { systemOTP });
+      console.log(otpWithDetails);
+      if (otpWithDetails.data.status === 'success') {
+        const { otp, hash } = otpWithDetails.data;
+        setOTP(otp);
+      }
 
     } catch (err) {
       alert(err);
@@ -52,10 +55,8 @@ const EnterMobileNumberScreen = ({ navigation }) => {
 
   useEffect(() => {
 
-    if (systemOTP) {
-      alert('hi');
-      // const otp = systemOTP;
-      // navigation.navigate('MobileNumberVerifyScreen', { systemOTP })
+    if (!!systemOTP) {
+      navigation.navigate('MobileNumberVerifyScreen', { systemOTP })
     }
   }, [systemOTP]);
 
@@ -67,13 +68,6 @@ const EnterMobileNumberScreen = ({ navigation }) => {
         We will text you a verification code. Message and data rates may apply
       </Text>
       <View style={styles.btnContainer}>
-        {/* <TextInput
-          style={styles.textInput}
-          onChangeText={validateMobileNumber}
-          value={data.mobileNumber}
-          keyboardType={'numeric'}
-          autoFocus={true}
-        /> */}
         <TextInput
           label='Mobile number'
           value={mobileNumber}
@@ -99,7 +93,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
         {/* validate input and if there is number proceed */}
         {mobileNumber.length === 10 && (
           <TouchableOpacity
-            onPress={() => navigation.navigate('MobileNumberVerifyScreen')}
+            onPress={handleSendOTP}
             style={styles.button}>
             <Text style={styles.btnText}>Next</Text>
           </TouchableOpacity>
