@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
   container: {
     ...Base.container,
     backgroundColor: '#fff',
-    // justifyContent
   },
   root: { flex: 1, padding: 20 },
   title: { textAlign: 'center', fontSize: 30 },

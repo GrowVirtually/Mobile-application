@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import * as Base from '../../styles/base/base';
 import * as Colors from '../../styles/abstracts/colors';
 import * as Typography from '../../styles/base/typography';
-import { TouchableOpacity } from 'react-native';
 import { color } from 'react-native-reanimated';
 import { TextInput } from 'react-native-paper';
 import axios from 'axios';
 
 
 const EnterMobileNumberScreen = ({ navigation }) => {
-  const [data, setData] = useState({
-    signIn: true,
-  });
+
   const [mobileNumber, setMobileNumber] = useState('07');
   const [systemOTP, setOTP] = useState('');
+  const [disabledNext, setDisabledNext] = useState(false);
 
   const validateMobileNumber = (number) => {
     const allowBackspace = number.length === mobileNumber.length - 1;
@@ -36,9 +34,9 @@ const EnterMobileNumberScreen = ({ navigation }) => {
 
     // 1. send OTP code to mobile
     try {
-      // backend call to get the OTP [TODO]
+      // backend call to get the OTP
       // fetch call
-      const otpWithDetails = await axios.post('http://10.0.2.2:5000/api/v1/users/sendOTP', {
+      const otpWithDetails = await axios.post('http://10.0.2.2:3000/api/v1/users/sendOTP', {
         phone: newMobile,
       });
 
@@ -46,6 +44,8 @@ const EnterMobileNumberScreen = ({ navigation }) => {
       if (otpWithDetails.data.status === 'success') {
         const { otp, hash } = otpWithDetails.data;
         setOTP(otp);
+      } else {
+        alert(otpWithDetails.data.message);
       }
 
     } catch (err) {
@@ -55,8 +55,10 @@ const EnterMobileNumberScreen = ({ navigation }) => {
 
   useEffect(() => {
 
+    // alert(systemOTP);
+
     if (!!systemOTP) {
-      navigation.navigate('MobileNumberVerifyScreen', { systemOTP })
+      navigation.navigate('MobileNumberVerifyScreen', { systemOTP });
     }
   }, [systemOTP]);
 
@@ -93,8 +95,13 @@ const EnterMobileNumberScreen = ({ navigation }) => {
         {/* validate input and if there is number proceed */}
         {mobileNumber.length === 10 && (
           <TouchableOpacity
-            onPress={handleSendOTP}
-            style={styles.button}>
+            onPress={async () => {
+              setDisabledNext(true);
+              await handleSendOTP();
+            }}
+            style={disabledNext ? styles.buttonDisabled : styles.button}
+            disabled={disabledNext}
+          >
             <Text style={styles.btnText}>Next</Text>
           </TouchableOpacity>
         )}
@@ -134,6 +141,12 @@ const styles = StyleSheet.create({
   button: {
     padding: 15,
     backgroundColor: Colors.primary.color,
+    marginTop: 10,
+    borderRadius: 10,
+  },
+  buttonDisabled: {
+    padding: 15,
+    backgroundColor: 'grey',
     marginTop: 10,
     borderRadius: 10,
   },
