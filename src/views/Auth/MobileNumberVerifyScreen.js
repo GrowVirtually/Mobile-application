@@ -1,12 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import * as Base from '../../styles/base/base';
 import * as Colors from '../../styles/abstracts/colors';
 
@@ -17,39 +10,43 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-const MobileNumberVerifyScreen = ({navigation}) => {
-  const [OTP, setValue] = useState('');
-  const ref = useBlurOnFulfill({OTP, cellCount: CELL_COUNT});
+const MobileNumberVerifyScreen = ({ navigation, route }) => {
+
+  const CELL_COUNT = 4;
+
+  const [userOTP, setValue] = useState('');
+  const ref = useBlurOnFulfill({ userOTP, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    OTP,
+    userOTP,
     setValue,
   });
   const [userFound, setUserFound] = useState(false);
-  const [verificationCode, setVerificationCode] = useState(2003);
-
-  const CELL_COUNT = 4;
+  const [codeVerified, setCodeVerified] = useState(false);
 
   useEffect(() => {
     /*
       1. api call to load user if exists
       2. update userFound state
      */
-  }, []);
+    if(userOTP * 1 === route.params.systemOTP * 1) {
+      navigation.navigate('SignupScreen1')
+    }
+  }, [userOTP]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>{`Enter the code\nwe sent to you`}</Text>
+      <Text style={styles.title}>{`Enter the code \n we sent to you`}</Text>
       <CodeField
         ref={ref}
         {...props}
         // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
-        value={OTP}
+        value={userOTP}
         onChangeText={setValue}
         cellCount={CELL_COUNT}
         rootStyle={styles.codeFieldRoot}
-        keyboardType="number-pad"
-        textContentType="oneTimeCode"
-        renderCell={({index, symbol, isFocused}) => (
+        keyboardType='number-pad'
+        textContentType='oneTimeCode'
+        renderCell={({ index, symbol, isFocused }) => (
           <Text
             key={index}
             style={[styles.cell, isFocused && styles.focusCell]}
@@ -58,20 +55,11 @@ const MobileNumberVerifyScreen = ({navigation}) => {
           </Text>
         )}
       />
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate('EnterMobileNumberScreen')}>
-        <Text style={styles.goBackBtnTxt}>Not your number?</Text>
-      </TouchableOpacity>
-      {/*<Button title={'Next'} onPress={*/}
-      {/*  data.signIn ?*/}
-      {/*    () => navigation.navigate('LoginScreen') :*/}
-      {/*    () => navigation.navigate('SignupScreen1')*/}
-      {/*} />*/}
-      {OTP * 1 === verificationCode &&
-        (userFound
-          ? navigation.navigate('HomeScreen')
-          : navigation.navigate('SignupScreen1'))}
+      <Button title={'Not your number?'} onPress={() => navigation.navigate('EnterMobileNumberScreen')} />
+      {/*{codeVerified && (userFound ?*/}
+      {/*  navigation.navigate('HomeScreen') :*/}
+      {/*  navigation.navigate('SignupScreen1'))*/}
+      {/*}*/}
     </View>
   );
 };
@@ -82,11 +70,10 @@ const styles = StyleSheet.create({
   container: {
     ...Base.container,
     backgroundColor: '#fff',
-    // justifyContent
   },
-  root: {flex: 1, padding: 20},
-  title: {textAlign: 'center', fontSize: 30},
-  codeFieldRoot: {marginTop: 20},
+  root: { flex: 1, padding: 20 },
+  title: { textAlign: 'center', fontSize: 30 },
+  codeFieldRoot: { marginTop: 20 },
   cell: {
     width: 40,
     height: 40,

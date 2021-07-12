@@ -1,9 +1,6 @@
 import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import SplashScreen from '../views/sample/SplashScreen';
-import SignInScreen from '../views/sample/SignInScreen';
-import SignUpScreen from '../views/sample/SignUpScreen';
 import HomeScreen from '../views/HomeScreen';
 import ProfileScreen from '../views/ProfileScreen';
 import {
