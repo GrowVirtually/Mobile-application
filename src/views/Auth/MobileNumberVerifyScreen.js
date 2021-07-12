@@ -76,9 +76,8 @@ export default MobileNumberVerifyScreen;
 const styles = StyleSheet.create({
   container: {
     ...Base.container,
-    backgroundColor: Colors.primary,
-    borderWidth: 1,
-    borderColor: 'blue',
+    backgroundColor: '#fff',
+    // justifyContent
   },
   root: { flex: 1, padding: 20 },
   title: { textAlign: 'center', fontSize: 30 },
@@ -89,10 +88,25 @@ const styles = StyleSheet.create({
     lineHeight: 38,
     fontSize: 24,
     borderWidth: 2,
-    borderColor: '#00000030',
+    borderColor: '#ccc',
     textAlign: 'center',
   },
   focusCell: {
-    borderColor: '#000',
+    borderColor: Colors.secondary.color,
+    borderWidth: 3,
+  },
+  goBackBtnTxt: {
+    fontSize: 14,
+    color: 'blue',
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  heading: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: Colors.primary.color,
+    marginBottom: 20,
   },
 });

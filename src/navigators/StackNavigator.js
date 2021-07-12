@@ -2,6 +2,7 @@ import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../views/HomeScreen';
+import ProfileScreen from '../views/ProfileScreen';
 import {
   ConsumerDrawerNavigator,
   GrowerDrawerNavigator,
@@ -18,6 +19,8 @@ const MainStackNavigator = () => {
       <Stack.Screen name={'CommonHome'} component={HomeScreen} />
       <Stack.Screen name={'ConsumerHome'} component={ConsumerDrawerNavigator} />
       <Stack.Screen name={'GrowerHome'} component={GrowerDrawerNavigator} />
+      
+      <Stack.Screen name={'ProfileScreen'} component={ProfileScreen} />
     </Stack.Navigator>
   );
 };
