@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import * as Base from '../../styles/base/base';
 import * as Colors from '../../styles/abstracts/colors';
 
@@ -33,12 +33,12 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
      */
   }, []);
 
-  useEffect(() => {
-    alert(route.params.systemOTP);
-    if (userOTP * 1 === route.params.systemOTP) {
-      setCodeVerified(true);
-    }
-  }, [userOTP]);
+  // useEffect(() => {
+  //   alert(route.params.systemOTP);
+  //   if (userOTP * 1 === route.params.systemOTP) {
+  //     setCodeVerified(true);
+  //   }
+  // }, [userOTP]);
 
   return (
     <View style={styles.container}>

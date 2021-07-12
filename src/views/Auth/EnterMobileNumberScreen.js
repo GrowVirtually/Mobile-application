@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Dimensions, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import * as Base from '../../styles/base/base';
 import * as Colors from '../../styles/abstracts/colors';
 import * as Typography from '../../styles/base/typography';
-import {TouchableOpacity} from 'react-native';
-import {color} from 'react-native-reanimated';
-import {TextInput} from 'react-native-paper';
+import { TouchableOpacity } from 'react-native';
+import { color } from 'react-native-reanimated';
+import { TextInput } from 'react-native-paper';
+import axios from 'axios';
+
 
 const EnterMobileNumberScreen = ({ navigation }) => {
   const [data, setData] = useState({
     signIn: true,
-    mobileNumber: '',
   });
+  const [mobileNumber, setMobileNumber] = useState('07');
   const [systemOTP, setOTP] = useState('');
 
   const validateMobileNumber = (number) => {
+    const allowBackspace = number.length === mobileNumber.length - 1
 
     const regex = /^\d*(\.\d{0, 2})?$/;
 
     if (
-      (!number || regex.test(number.toString())) &&
-      data.mobileNumber.length < 10
+      (!number || allowBackspace || regex.test(number.toString())) &&
+      (number.length <= 10 && number.length >= 2)
     ) {
-      setData({
-        ...data,
-        mobileNumber: number,
-      });
+      setMobileNumber(number);
     }
   };
 
@@ -50,11 +50,11 @@ const EnterMobileNumberScreen = ({ navigation }) => {
     }
   };
 
-  useEffect(  () => {
+  useEffect(() => {
 
     if (systemOTP) {
       alert('hi');
-    // const otp = systemOTP;
+      // const otp = systemOTP;
       // navigation.navigate('MobileNumberVerifyScreen', { systemOTP })
     }
   }, [systemOTP]);
@@ -75,12 +75,12 @@ const EnterMobileNumberScreen = ({ navigation }) => {
           autoFocus={true}
         /> */}
         <TextInput
-          label="Mobile number"
-          value={data.mobileNumber}
+          label='Mobile number'
+          value={mobileNumber}
           onChangeText={validateMobileNumber}
           style={styles.textInput}
           keyboardType={'numeric'}
-          mode="outlined"
+          mode='outlined'
           autoFocus={true}
           selectionColor={Colors.secondary.color}
           theme={{
@@ -93,11 +93,11 @@ const EnterMobileNumberScreen = ({ navigation }) => {
         />
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          >
+        >
           <Text style={styles.goBackBtnTxt}>Go back</Text>
         </TouchableOpacity>
         {/* validate input and if there is number proceed */}
-        {data.mobileNumber.length === 10 && (
+        {mobileNumber.length === 10 && (
           <TouchableOpacity
             onPress={() => navigation.navigate('MobileNumberVerifyScreen')}
             style={styles.button}>
@@ -111,7 +111,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
 
 export default EnterMobileNumberScreen;
 
-const {width} = Dimensions.get('screen');
+const { width } = Dimensions.get('screen');
 const widthTextInput = width * 0.9;
 
 const styles = StyleSheet.create({
@@ -131,11 +131,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     padding: 30,
-    color:Colors.fontColor.color,
+    color: Colors.fontColor.color,
   },
   textInput: {
     width: widthTextInput,
-    marginBottom:20,
+    marginBottom: 20,
   },
   button: {
     padding: 15,
@@ -148,15 +148,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   btnText: {
-    fontSize:18,
+    fontSize: 18,
     color: '#fff',
     textAlign: 'center',
   },
-  goBackBtnTxt : {
-    fontSize:14,
+  goBackBtnTxt: {
+    fontSize: 14,
     color: 'blue',
-    textDecorationLine: 'underline',  
+    textDecorationLine: 'underline',
     textAlign: 'center',
-    marginBottom:20,
-  }
+    marginBottom: 20,
+  },
 });
