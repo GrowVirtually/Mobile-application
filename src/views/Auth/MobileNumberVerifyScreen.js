@@ -3,6 +3,9 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import * as Base from '../../styles/base/base';
 import * as Colors from '../../styles/abstracts/colors';
 
+import AuthContext from '../../context/auth-context';
+
+
 import {
   CodeField,
   Cursor,
@@ -10,18 +13,18 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-const MobileNumberVerifyScreen = ({ navigation }) => {
+const MobileNumberVerifyScreen = ({ navigation, route }) => {
 
-  const [OTP, setValue] = useState('');
-  const ref = useBlurOnFulfill({ OTP, cellCount: CELL_COUNT });
+  const CELL_COUNT = 4;
+
+  const [userOTP, setValue] = useState('');
+  const ref = useBlurOnFulfill({ userOTP, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    OTP,
+    userOTP,
     setValue,
   });
   const [userFound, setUserFound] = useState(false);
-  const [verificationCode, setVerificationCode] = useState(2003);
-
-  const CELL_COUNT = 4;
+  const [codeVerified, setCodeVerified] = useState(false);
 
   useEffect(() => {
     /*
@@ -30,6 +33,12 @@ const MobileNumberVerifyScreen = ({ navigation }) => {
      */
   }, []);
 
+  useEffect(() => {
+    alert(route.params.systemOTP);
+    if (userOTP * 1 === route.params.systemOTP) {
+      setCodeVerified(true);
+    }
+  }, [userOTP]);
 
   return (
     <View style={styles.container}>
@@ -38,7 +47,7 @@ const MobileNumberVerifyScreen = ({ navigation }) => {
         ref={ref}
         {...props}
         // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
-        value={OTP}
+        value={userOTP}
         onChangeText={setValue}
         cellCount={CELL_COUNT}
         rootStyle={styles.codeFieldRoot}
@@ -54,12 +63,7 @@ const MobileNumberVerifyScreen = ({ navigation }) => {
         )}
       />
       <Button title={'Not your number?'} onPress={() => navigation.navigate('EnterMobileNumberScreen')} />
-      {/*<Button title={'Next'} onPress={*/}
-      {/*  data.signIn ?*/}
-      {/*    () => navigation.navigate('LoginScreen') :*/}
-      {/*    () => navigation.navigate('SignupScreen1')*/}
-      {/*} />*/}
-      {OTP * 1 === verificationCode && (userFound ?
+      {codeVerified && (userFound ?
         navigation.navigate('HomeScreen') :
         navigation.navigate('SignupScreen1'))
       }

@@ -5,6 +5,7 @@ import AuthStackScreen from './navigators/AuthStackScreen';
 import { ActivityIndicator, View } from 'react-native';
 import { MainStackNavigator } from './navigators/StackNavigator';
 import { createStackNavigator } from '@react-navigation/stack';
+import AuthContext from './context/auth-context';
 
 const Drawer = createDrawerNavigator();
 
@@ -15,7 +16,20 @@ const App = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [userToken, setUserToken] = React.useState(null);
 
-  // const authContext = React.useMemo();
+  const authContext = React.useMemo(() => ({
+    // signIn: () => {
+    //   setUserToken('gdfs');
+    //   setIsLoading(false);
+    // },
+    // signOut: () => {
+    //   setUserToken(null);
+    //   setIsLoading(false);
+    // },
+    // signUp: () => {
+    //   setUserToken('gdfs');
+    //   setIsLoading(false);
+    // },
+  }));
 
   useEffect(() => {
     setTimeout(() => {
@@ -36,18 +50,25 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
-      <RootStack.Navigator headerMode={'none'}>
-        <RootStack.Screen name={'AuthScreen'} component={AuthStackScreen} />
-        <RootStack.Screen name={'MainStackNavigator'} component={MainStackNavigator} />
-      </RootStack.Navigator>
-      {/*<RootStackScreen />*/}
-      {/*<Drawer.Navigator initialRouteName="Home">*/}
-      {/*  <Drawer.Screen name="Home" component={MainTabScreen} />*/}
-      {/*  /!*<Drawer.Screen name="Details" component={DetailsStackScreen} />*!/*/}
-      {/*</Drawer.Navigator>*/}
-      {/*<MainStackNavigator/>*/}
-    </NavigationContainer>
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        <RootStack.Navigator headerMode={'none'}>
+          {!!userToken ?
+            (<RootStack.Screen name={'MainStackNavigator'}
+                               component={MainStackNavigator} />)
+            :
+            (<RootStack.Screen name={'AuthScreen'}
+                               component={AuthStackScreen} />)
+          }
+        </RootStack.Navigator>
+        {/*<RootStackScreen />*/}
+        {/*<Drawer.Navigator initialRouteName="Home">*/}
+        {/*  <Drawer.Screen name="Home" component={MainTabScreen} />*/}
+        {/*  /!*<Drawer.Screen name="Details" component={DetailsStackScreen} />*!/*/}
+        {/*</Drawer.Navigator>*/}
+        {/*<MainStackNavigator/>*/}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 };
 
