@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Dimensions, StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import * as Base from "../../styles/base/base";
-import * as Colors from "../../styles/abstracts/colors";
-import * as Typography from "../../styles/base/typography";
-import { color } from "react-native-reanimated";
-import { TextInput } from "react-native-paper";
-import axios from "axios";
+import React, {useEffect, useState} from 'react';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import * as Colors from '../../styles/abstracts/colors';
+import {TextInput} from 'react-native-paper';
+import axios from 'axios';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 const EnterMobileNumberScreen = ({ navigation }) => {
@@ -18,26 +22,28 @@ const EnterMobileNumberScreen = ({ navigation }) => {
   }, [mobileNumber]);
 
   const validateMobileNumber = (number) => {
+
     const allowBackspace = number.length === mobileNumber.length - 1;
 
     const regex = /^\d*(\.\d{0, 2})?$/;
 
     if (
       (!number || allowBackspace || regex.test(number.toString())) &&
-      (number.length <= 10 && number.length >= 2)
+      number.length <= 10 &&
+      number.length >= 2
     ) {
       setMobileNumber(number);
     }
   };
 
   const handleSendOTP = async () => {
-
     // serialize phone number
     const newMobile = mobileNumber.replace(mobileNumber.charAt(0), "+94");
 
     // 1. send OTP code to mobile
     try {
       // backend call to get the OTP
+
       const otpWithDetails = await axios.post("http://10.0.2.2:3000/api/v1/users/sendOTP", {
         phone: newMobile
       });
@@ -50,14 +56,15 @@ const EnterMobileNumberScreen = ({ navigation }) => {
           hash,
           otp
         });
+
       } else {
         alert(otpWithDetails.data.message);
       }
-
     } catch (err) {
       alert(err);
     }
   };
+
 
   return (
     <View style={styles.container}>
@@ -71,7 +78,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
           value={mobileNumber}
           onChangeText={validateMobileNumber}
           style={styles.textInput}
-          keyboardType={"numeric"}
+          keyboardType={'numeric'}
           mode="outlined"
           autoFocus={true}
           selectionColor={Colors.secondary.color}
@@ -84,9 +91,9 @@ const EnterMobileNumberScreen = ({ navigation }) => {
           }}
         />
         <TouchableOpacity
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.goBackBtnTxt}>Go back</Text>
+          onPress={() => navigation.goBack()}>
+          {/* <MaterialIcons name="arrow-back" /> */}
+          <Text style={styles.linkText}>Go back</Text>
         </TouchableOpacity>
         {/* validate input and if there is number proceed */}
         {mobileNumber.length === 10 && (
@@ -96,8 +103,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
               await handleSendOTP();
             }}
             style={disabledNext ? styles.buttonDisabled : styles.button}
-            disabled={disabledNext}
-          >
+            disabled={disabledNext}>
             <Text style={styles.btnText}>Next</Text>
           </TouchableOpacity>
         )}
@@ -108,7 +114,8 @@ const EnterMobileNumberScreen = ({ navigation }) => {
 
 export default EnterMobileNumberScreen;
 
-const { width } = Dimensions.get("screen");
+
+const {width} = Dimensions.get('screen');
 const widthTextInput = width * 0.9;
 
 const styles = StyleSheet.create({
@@ -155,11 +162,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center"
   },
-  goBackBtnTxt: {
+  linkText: {
     fontSize: 14,
-    color: "blue",
-    textDecorationLine: "underline",
-    textAlign: "center",
-    marginBottom: 20
-  }
+    color: Colors.secondary.color,
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  miniBtn: {
+    flex:1,
+    backgroundColor: Colors.secondary.color,
+    padding: 5,
+  },
 });
