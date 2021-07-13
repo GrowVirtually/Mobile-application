@@ -88,7 +88,9 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
         )}
       />
       {userOTP.length === 4 && (
-        <Button title={'OK'} onPress={handleOTPVerification} />
+        <TouchableOpacity style={styles.button} onPress={handleOTPVerification} >
+          <Text style={styles.btnText}>Ok</Text>
+          </TouchableOpacity>
       )}
 
       <TouchableOpacity
@@ -141,5 +143,18 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     textAlign: 'center',
     marginTop: 20,
+  },
+  button: {
+    padding: 15,
+    backgroundColor: Colors.primary.color,
+    marginTop: 25,
+    borderRadius: 10,
+    width: '80%',
+    alignSelf: 'center',
+  },
+  btnText: {
+    fontSize: 18,
+    color: '#fff',
+    textAlign: 'center',
   },
 });
