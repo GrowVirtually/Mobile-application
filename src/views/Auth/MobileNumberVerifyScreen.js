@@ -44,7 +44,9 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
           await signIn(token);
           navigation.navigate("HomeScreen");
         } else if (!otpVerification.data.userFound) {
-          navigation.navigate("SignupScreen1");
+          navigation.navigate("SignupScreen1", {
+            phone: otpVerification.data.phone
+          });
         }
       } else {
         alert(otpVerification.data.message);

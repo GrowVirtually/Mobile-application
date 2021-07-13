@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import * as Colors from "../../styles/abstracts/colors";
 
-export const SignupScreen1 = ({ navigation }) => {
+export const SignupScreen1 = ({ navigation, route }) => {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -57,7 +57,8 @@ export const SignupScreen1 = ({ navigation }) => {
                 onPress={() => navigation.navigate("SignupScreen2", {
                   firstName,
                   lastName,
-                  email
+                  email,
+                  phone: route.params.phone
                 })} />
       )}
 

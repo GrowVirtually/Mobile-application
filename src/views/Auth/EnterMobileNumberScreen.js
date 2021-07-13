@@ -13,6 +13,10 @@ const EnterMobileNumberScreen = ({ navigation }) => {
   const [mobileNumber, setMobileNumber] = useState("07");
   const [disabledNext, setDisabledNext] = useState(false);
 
+  useEffect(() => {
+    setDisabledNext(false);
+  }, [mobileNumber]);
+
   const validateMobileNumber = (number) => {
     const allowBackspace = number.length === mobileNumber.length - 1;
 
@@ -42,7 +46,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
       if (otpWithDetails.data.status === "success") {
         const { otp, hash } = otpWithDetails.data;
         navigation.navigate("MobileNumberVerifyScreen", {
-          phone : newMobile,
+          phone: newMobile,
           hash,
           otp
         });
@@ -54,16 +58,6 @@ const EnterMobileNumberScreen = ({ navigation }) => {
       alert(err);
     }
   };
-
-  // useEffect(() => {
-  //
-  //   // alert(systemOTP);
-  //
-  //   if (!!systemOTP) {
-  //     navigation.navigate('MobileNumberVerifyScreen', { systemOTP });
-  //   }
-  // }, [systemOTP]);
-
 
   return (
     <View style={styles.container}>
