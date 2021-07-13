@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import * as Colors from '../../styles/abstracts/colors';
+import React, { useState } from "react";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import * as Colors from "../../styles/abstracts/colors";
 
-export const SignupScreen1 = ({ navigation }) => {
+export const SignupScreen1 = ({ navigation, route }) => {
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [validationErrors, setError] = useState([]);
 
   const validateName = (name, isFirstName = true) => {
@@ -23,12 +23,12 @@ export const SignupScreen1 = ({ navigation }) => {
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (!email || emailRegex.test(email)) {
-      setError(validationErrors.filter(error => error !== 'email'));
+      setError(validationErrors.filter(error => error !== "email"));
       setEmail(email);
     } else {
       setError([
         ...validationErrors,
-        'email',
+        "email"
       ]);
     }
   };
@@ -48,17 +48,22 @@ export const SignupScreen1 = ({ navigation }) => {
         <Text>Enter your email</Text>
         <TextInput style={styles.textInput}
                    onChangeText={email => validateEmail(email)} />
-        {validationErrors.includes('email') && (
+        {validationErrors.includes("email") && (
           <Text style={styles.error}>Wrong email</Text>
         )}
       </View>
       {(!!firstName && !!lastName && !!email && !validationErrors.length) && (
-        <Button title={'Next'}
-        onPress={() => navigation.navigate('SignupScreen2')}/>
+        <Button title={"Next"}
+                onPress={() => navigation.navigate("SignupScreen2", {
+                  firstName,
+                  lastName,
+                  email,
+                  phone: route.params.phone
+                })} />
       )}
 
-      <Button title={'Go to path decider'}
-              onPress={() => navigation.navigate('SignUpPathDeciderScreen')} />
+      <Button title={"Go to path decider"}
+              onPress={() => navigation.navigate("SignUpPathDeciderScreen")} />
     </View>
   );
 };
@@ -68,13 +73,13 @@ export default SignupScreen1;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center"
   },
   textInput: {
-    borderWidth: 1,
+    borderWidth: 1
   },
   error: {
-    color: Colors.errorColor,
-  },
+    color: Colors.errorColor
+  }
 });
