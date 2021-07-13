@@ -11,7 +11,6 @@ import axios from "axios";
 const EnterMobileNumberScreen = ({ navigation }) => {
 
   const [mobileNumber, setMobileNumber] = useState("07");
-  const [systemOTP, setOTP] = useState("");
   const [disabledNext, setDisabledNext] = useState(false);
 
   const validateMobileNumber = (number) => {
@@ -47,7 +46,6 @@ const EnterMobileNumberScreen = ({ navigation }) => {
           hash,
           otp
         });
-        // setOTP(otp);
       } else {
         alert(otpWithDetails.data.message);
       }

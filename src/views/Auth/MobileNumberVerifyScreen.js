@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import * as Base from "../../styles/base/base";
 import * as Colors from "../../styles/abstracts/colors";
+import AuthContext from "../../context/auth-context";
 
 import {
   CodeField,
@@ -22,12 +23,7 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
     setValue
   });
 
-  // useEffect(() => {
-  //   // verify OTP
-  //   if (userOTP * 1 === route.params.systemOTP * 1) {
-  //     navigation.navigate("HomeScreen");
-  //   }
-  // }, [userOTP]);
+  const { authContext } = useContext(AuthContext);
 
   const handleOTPVerification = async () => {
     try {
@@ -41,7 +37,11 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
         // otp verified
         // check user found or not
         if (otpVerification.data.userFound) {
-          // 1) set the token to async storage [TODO]
+          console.log(otpVerification.data);
+          const { token } = otpVerification.data;
+          const { signIn } = authContext;
+          // 1) set the token to async storage
+          await signIn(token);
           navigation.navigate("HomeScreen");
         } else if (!otpVerification.data.userFound) {
           navigation.navigate("SignupScreen1");
@@ -80,10 +80,6 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
         <Button title={"OK"} onPress={handleOTPVerification} />
       )}
       <Button title={"Not your number?"} onPress={() => navigation.navigate("EnterMobileNumberScreen")} />
-      {/*{codeVerified && (userFound ?*/}
-      {/*  navigation.navigate('HomeScreen') :*/}
-      {/*  navigation.navigate('SignupScreen1'))*/}
-      {/*}*/}
     </View>
   );
 };

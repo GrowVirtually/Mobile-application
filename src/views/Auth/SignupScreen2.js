@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import * as Colors from '../../styles/abstracts/colors';
+import axios from "axios";
 
-const SignupScreen2 = ({ navigation }) => {
+const SignupScreen2 = ({ navigation, route }) => {
 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -41,6 +42,12 @@ const SignupScreen2 = ({ navigation }) => {
         pwErrors.filter(pwe => pwe !== errorMessage),
       );
     };
+
+    const handleSignup = async () => {
+      // await axios.post('http://10.0.2.2:3000/api/v1/users/signup', {
+      //
+      // })
+    }
 
     return (
       <View style={styles.container}>
