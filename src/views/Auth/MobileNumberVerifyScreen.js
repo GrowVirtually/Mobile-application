@@ -1,51 +1,53 @@
-import React, { useState, useContext } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import * as Base from "../../styles/base/base";
-import * as Colors from "../../styles/abstracts/colors";
-import AuthContext from "../../context/auth-context";
+import React, {useState, useEffect, useContext} from 'react';
+import {StyleSheet, Button, Text, View, Image, TouchableOpacity} from 'react-native';
+import * as Base from '../../styles/base/base';
+import * as Colors from '../../styles/abstracts/colors';
+import AuthContext from '../../context/auth-context';
 
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
-  useClearByFocusCell
-} from "react-native-confirmation-code-field";
-import axios from "axios";
+  useClearByFocusCell,
+} from 'react-native-confirmation-code-field';
+import axios from 'axios';
 
-const MobileNumberVerifyScreen = ({ navigation, route }) => {
-
+const MobileNumberVerifyScreen = ({navigation, route}) => {
   const CELL_COUNT = 4;
 
-  const [userOTP, setValue] = useState("");
-  const ref = useBlurOnFulfill({ userOTP, cellCount: CELL_COUNT });
+  const [userOTP, setValue] = useState('');
+  const ref = useBlurOnFulfill({userOTP, cellCount: CELL_COUNT});
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     userOTP,
-    setValue
+    setValue,
   });
 
-  const { authContext } = useContext(AuthContext);
+  const {authContext} = useContext(AuthContext);
 
   const handleOTPVerification = async () => {
     try {
-      const otpVerification = await axios.post("http://10.0.2.2:3000/api/v1/users/verifyOTP", {
-        phone: route.params.phone,
-        hash: route.params.hash,
-        otp: route.params.otp
-      });
+      const otpVerification = await axios.post(
+        'http://10.0.2.2:3000/api/v1/users/verifyOTP',
+        {
+          phone: route.params.phone,
+          hash: route.params.hash,
+          otp: route.params.otp,
+        },
+      );
 
-      if (otpVerification.data.status === "success") {
+      if (otpVerification.data.status === 'success') {
         // otp verified
         // check user found or not
         if (otpVerification.data.userFound) {
           console.log(otpVerification.data);
-          const { token } = otpVerification.data;
-          const { signIn } = authContext;
+          const {token} = otpVerification.data;
+          const {signIn} = authContext;
           // 1) set the token to async storage
           await signIn(token);
-          navigation.navigate("HomeScreen");
+          navigation.navigate('HomeScreen');
         } else if (!otpVerification.data.userFound) {
-          navigation.navigate("SignupScreen1", {
-            phone: otpVerification.data.phone
+          navigation.navigate('SignupScreen1', {
+            phone: otpVerification.data.phone,
           });
         }
       } else {
@@ -58,7 +60,14 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{`Enter the code \n we sent to you`}</Text>
+      <Image
+        animation={'bounceIn'}
+        duration={1500}
+        source={require('../../assets/logo.png')}
+        style={styles.logo}
+        resizeMode={'stretch'}
+      />
+      <Text style={styles.heading}>{`Enter the code\nwe sent to you`}</Text>
       <CodeField
         ref={ref}
         {...props}
@@ -69,7 +78,7 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
         rootStyle={styles.codeFieldRoot}
         keyboardType="number-pad"
         textContentType="oneTimeCode"
-        renderCell={({ index, symbol, isFocused }) => (
+        renderCell={({index, symbol, isFocused}) => (
           <Text
             key={index}
             style={[styles.cell, isFocused && styles.focusCell]}
@@ -79,9 +88,13 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
         )}
       />
       {userOTP.length === 4 && (
-        <Button title={"OK"} onPress={handleOTPVerification} />
+        <Button title={'OK'} onPress={handleOTPVerification} />
       )}
-      <Button title={"Not your number?"} onPress={() => navigation.navigate("EnterMobileNumberScreen")} />
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('EnterMobileNumberScreen')}>
+        <Text style={styles.linkText}>Not your number?</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -91,36 +104,42 @@ export default MobileNumberVerifyScreen;
 const styles = StyleSheet.create({
   container: {
     ...Base.container,
-    backgroundColor: "#fff"
+    backgroundColor: '#fff',
+    justifyContent: 'flex-start',
+    paddingTop: 30,
   },
-  root: { flex: 1, padding: 20 },
-  title: { textAlign: "center", fontSize: 30 },
-  codeFieldRoot: { marginTop: 20 },
+  root: {flex: 1, padding: 20},
+  title: {textAlign: 'center', fontSize: 30},
+  codeFieldRoot: {marginTop: 20},
   cell: {
     width: 40,
     height: 40,
     lineHeight: 38,
     fontSize: 24,
     borderWidth: 2,
-    borderColor: "#ccc",
-    textAlign: "center"
+    borderColor: '#ccc',
+    textAlign: 'center',
   },
   focusCell: {
     borderColor: Colors.secondary.color,
-    borderWidth: 3
-  },
-  goBackBtnTxt: {
-    fontSize: 14,
-    color: "blue",
-    textDecorationLine: "underline",
-    textAlign: "center",
-    marginTop: 20
+    borderWidth: 3,
   },
   heading: {
     fontSize: 25,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     color: Colors.primary.color,
-    marginBottom: 20
-  }
+    marginBottom: 10,
+  },
+  logo: {
+    ...Base.logoLarge,
+    // width:'100%',
+  },
+  linkText: {
+    fontSize: 14,
+    color: Colors.secondary.color,
+    textDecorationLine: 'underline',
+    textAlign: 'center',
+    marginTop: 20,
+  },
 });
