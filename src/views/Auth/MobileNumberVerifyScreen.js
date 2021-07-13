@@ -22,6 +22,7 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
     userOTP,
     setValue
   });
+  const [errors, setErrors] = useState([]);
 
   const { authContext } = useContext(AuthContext);
 
@@ -48,11 +49,11 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
             phone: otpVerification.data.phone
           });
         }
-      } else {
-        // console.log(otpVerification.data);
       }
     } catch (err) {
-      console.log(err);
+      const { message } = err.response.data;
+      setErrors([...errors, message]);
+      console.log(message);
     }
   };
 
@@ -81,6 +82,8 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
       {userOTP.length === 4 && (
         <Button title={"OK"} onPress={handleOTPVerification} />
       )}
+      {!!errors.length &&
+      <Text>{errors[0]}</Text>}
       <Button title={"Not your number?"} onPress={() => navigation.navigate("EnterMobileNumberScreen")} />
     </View>
   );
