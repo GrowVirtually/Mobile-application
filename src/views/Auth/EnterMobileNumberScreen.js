@@ -9,6 +9,7 @@ import {
 import * as Colors from '../../styles/abstracts/colors';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const EnterMobileNumberScreen = ({navigation}) => {
   const [mobileNumber, setMobileNumber] = useState('07');
@@ -88,7 +89,9 @@ const EnterMobileNumberScreen = ({navigation}) => {
             },
           }}
         />
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}>
+          {/* <MaterialIcons name="arrow-back" /> */}
           <Text style={styles.linkText}>Go back</Text>
         </TouchableOpacity>
         {/* validate input and if there is number proceed */}
@@ -163,5 +166,10 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     textAlign: 'center',
     marginBottom: 20,
+  },
+  miniBtn: {
+    flex:1,
+    backgroundColor: Colors.secondary.color,
+    padding: 5,
   },
 });

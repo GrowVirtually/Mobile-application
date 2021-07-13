@@ -111,7 +111,7 @@ export const SignupScreen1 = ({navigation}) => {
         />
 
         {validationErrors.includes('email') && (
-          <Text style={styles.error}>Wrong email</Text>
+          <Text style={styles.helperText}>Wrong email</Text>
         )}
       </View>
       {!!firstName && !!lastName && !!email && !validationErrors.length && (
@@ -163,12 +163,12 @@ const styles = StyleSheet.create({
   textInput: {
     alignSelf: 'center',
     width: '80%',
-    marginBottom: 20,
+    marginTop: 20,
   },
   button: {
     padding: 15,
     backgroundColor: Colors.primary.color,
-    marginTop: 10,
+    marginTop: 25,
     borderRadius: 10,
     width: '80%',
     alignSelf: 'center',
@@ -178,4 +178,10 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
   },
+  helperText: {
+    fontSize:12,
+    textAlign:'center',
+    color:Colors.errorColor.color,
+    marginTop:10
+  }
 });

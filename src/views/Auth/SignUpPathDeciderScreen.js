@@ -91,4 +91,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'normal',
   },
+  miniBtn: {
+    backgroundColor:Colors.secondary.color,
+    padding:5,
+  },
 });
