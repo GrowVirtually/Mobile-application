@@ -1,15 +1,12 @@
 import React, {useReducer} from 'react';
-import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import userTypeReducer from '../../reducers/userType';
 
 import * as Base from '../../styles/base/base';
 import * as Typography from '../../styles/base/typography';
 import * as Colors from '../../styles/abstracts/colors';
-import * as Buttons from '../../styles/components/buttons';
-
 import * as Animatable from 'react-native-animatable';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import LinearGradient from 'react-native-linear-gradient';
 
 const SignUpPathDeciderScreen = ({navigation}) => {
   const [userType, userTypeDispatch] = useReducer(userTypeReducer, 'consumer');
@@ -60,6 +57,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     ...Base.logoLarge,
+    // width:'100%',
   },
   header: {
     flex: 1,
