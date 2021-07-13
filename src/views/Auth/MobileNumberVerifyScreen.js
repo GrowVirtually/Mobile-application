@@ -30,7 +30,7 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
       const otpVerification = await axios.post("http://10.0.2.2:3000/api/v1/users/verifyOTP", {
         phone: route.params.phone,
         hash: route.params.hash,
-        otp: route.params.otp
+        otp: userOTP
       });
 
       if (otpVerification.data.status === "success") {
@@ -49,7 +49,7 @@ const MobileNumberVerifyScreen = ({ navigation, route }) => {
           });
         }
       } else {
-        alert(otpVerification.data.message);
+        // console.log(otpVerification.data);
       }
     } catch (err) {
       console.log(err);
