@@ -1,5 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, Button, Text, View, Image, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Button,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import * as Base from '../../styles/base/base';
 import * as Colors from '../../styles/abstracts/colors';
 import AuthContext from '../../context/auth-context';
@@ -21,6 +28,7 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
     userOTP,
     setValue,
   });
+  const [errors, setErrors] = useState([]);
 
   const {authContext} = useContext(AuthContext);
 
@@ -31,7 +39,7 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
         {
           phone: route.params.phone,
           hash: route.params.hash,
-          otp: route.params.otp,
+          otp: userOTP,
         },
       );
 
@@ -50,11 +58,11 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
             phone: otpVerification.data.phone,
           });
         }
-      } else {
-        alert(otpVerification.data.message);
       }
     } catch (err) {
-      console.log(err);
+      const {message} = err.response.data;
+      setErrors([...errors, message]);
+      console.log(message);
     }
   };
 
@@ -88,10 +96,12 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
         )}
       />
       {userOTP.length === 4 && (
-        <TouchableOpacity style={styles.button} onPress={handleOTPVerification} >
+        <TouchableOpacity style={styles.button} onPress={handleOTPVerification}>
           <Text style={styles.btnText}>Ok</Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
       )}
+      
+      {!!errors.length && <Text>{errors[0]}</Text>}
 
       <TouchableOpacity
         onPress={() => navigation.navigate('EnterMobileNumberScreen')}>
