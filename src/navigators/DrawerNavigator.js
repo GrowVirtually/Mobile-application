@@ -7,6 +7,7 @@ import {GrowerHomeScreen} from '../views/Grower/GrowerHomeScreen';
 import {GrowerOther} from '../views/Grower/GrowerOther';
 
 import ConsumerDrawer from './ConsumerDrawer';
+import GrowerDrawer from './GrowerDrawer';
 
 const Drawer = createDrawerNavigator();
 
@@ -25,8 +26,13 @@ function ConsumerDrawerNavigator() {
 }
 
 function GrowerDrawerNavigator() {
+  const navigation = useNavigation();
+
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      drawerContent={GrowerDrawer}
+      navigation={navigation}
+      drawerStyle={{backgroundColor: 'red'}}>
       <Drawer.Screen name={'GrowerHome'} component={GrowerHomeScreen} />
       <Drawer.Screen name={'GrowerOther'} component={GrowerOther} />
     </Drawer.Navigator>
