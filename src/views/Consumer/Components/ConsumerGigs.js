@@ -24,6 +24,7 @@ const ConsumerGigsStyle = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    marginBottom:80
+    marginBottom:80,
+    backgroundColor:'#ddd',
   },
 });
