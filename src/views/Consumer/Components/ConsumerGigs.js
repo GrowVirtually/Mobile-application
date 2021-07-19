@@ -11,6 +11,9 @@ export const ConsumerGigs = () => {
       <ConsumerGig />
       <ConsumerGig />
       <ConsumerGig />
+      <ConsumerGig />
+      <ConsumerGig />
+      <ConsumerGig />
     </View>
   );
 };
@@ -21,5 +24,6 @@ const ConsumerGigsStyle = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    marginBottom:80
   },
 });
