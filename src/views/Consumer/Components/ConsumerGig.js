@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
 import * as Colors from '../../../styles/abstracts/colors';
+import {useNavigation} from '@react-navigation/core';
 
 export const ConsumerGig = ({
   gigTitle,
@@ -9,17 +10,29 @@ export const ConsumerGig = ({
   expireDate,
   growerName,
   imgUrl,
-  id
+  id,
 }) => {
+  const navigation = useNavigation();
   return (
-    <Card style={ConsumerGigStyle.gridItem} onPress={() => alert(id)}>
+    <Card
+      style={ConsumerGigStyle.gridItem}
+      onPress={() =>
+        navigation.navigate('GigScreen', {
+          gigTitle,
+          priceTag,
+          expireDate,
+          growerName,
+          imgUrl,
+          id,
+        })
+      }>
       <Card.Cover style={ConsumerGigStyle.img} source={{uri: imgUrl}} />
       <View style={ConsumerGigStyle.cardContent}>
         <View style={ConsumerGigStyle.cardLeft}>
           <Text style={ConsumerGigStyle.gigTitle}>{gigTitle}</Text>
           <Text style={ConsumerGigStyle.gigSubTitle}>{priceTag}</Text>
           <Text style={ConsumerGigStyle.expireTxt}>
-            Will expire in{' '}
+            Expires in{' '}
             {expireDate + ' ' + (expireDate > 1 ? 'days' : 'day')}
           </Text>
         </View>
