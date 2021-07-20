@@ -9,9 +9,10 @@ export const ConsumerGig = ({
   expireDate,
   growerName,
   imgUrl,
+  id
 }) => {
   return (
-    <Card style={ConsumerGigStyle.gridItem}>
+    <Card style={ConsumerGigStyle.gridItem} onPress={() => alert(id)}>
       <Card.Cover style={ConsumerGigStyle.img} source={{uri: imgUrl}} />
       <View style={ConsumerGigStyle.cardContent}>
         <View style={ConsumerGigStyle.cardLeft}>
@@ -25,7 +26,10 @@ export const ConsumerGig = ({
         <View style={ConsumerGigStyle.cardRight}>
           <Avatar.Text
             size={24}
-            label="AD"
+            label={growerName
+              .split(' ')
+              .map(name => name.charAt(0))
+              .join('')}
             color="#fff"
             style={{backgroundColor: Colors.primary.color}}
           />
@@ -59,11 +63,13 @@ const ConsumerGigStyle = StyleSheet.create({
   },
   gigTitle: {
     fontSize: 13,
+    color: Colors.fontColor.color,
   },
   gigSubTitle: {
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: Colors.fontColor.color,
   },
   expireTxt: {
     fontSize: 10,
