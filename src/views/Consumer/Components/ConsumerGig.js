@@ -3,18 +3,24 @@ import {Text, View, StyleSheet} from 'react-native';
 import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
 import * as Colors from '../../../styles/abstracts/colors';
 
-export const ConsumerGig = () => {
+export const ConsumerGig = ({
+  gigTitle,
+  priceTag,
+  expireDate,
+  growerName,
+  imgUrl,
+}) => {
   return (
     <Card style={ConsumerGigStyle.gridItem}>
-      <Card.Cover
-        style={ConsumerGigStyle.img}
-        source={{uri: 'https://picsum.photos/200/300'}}
-      />
+      <Card.Cover style={ConsumerGigStyle.img} source={{uri: imgUrl}} />
       <View style={ConsumerGigStyle.cardContent}>
         <View style={ConsumerGigStyle.cardLeft}>
-          <Text style={ConsumerGigStyle.gigTitle}>Brinjal / Organic</Text>
-          <Text style={ConsumerGigStyle.gigSubTitle}>Rs. 150/KG</Text>
-          <Text style={ConsumerGigStyle.expireTxt}>Will expire in 3 days</Text>
+          <Text style={ConsumerGigStyle.gigTitle}>{gigTitle}</Text>
+          <Text style={ConsumerGigStyle.gigSubTitle}>{priceTag}</Text>
+          <Text style={ConsumerGigStyle.expireTxt}>
+            Will expire in{' '}
+            {expireDate + ' ' + (expireDate > 1 ? 'days' : 'day')}
+          </Text>
         </View>
         <View style={ConsumerGigStyle.cardRight}>
           <Avatar.Text
@@ -23,7 +29,11 @@ export const ConsumerGig = () => {
             color="#fff"
             style={{backgroundColor: Colors.primary.color}}
           />
-          <Text style={ConsumerGigStyle.avatarTxt}>A. Dodampe</Text>
+          <Text style={ConsumerGigStyle.avatarTxt}>
+            {growerName.length > 10
+              ? growerName.slice(0, 9) + '..'
+              : growerName}
+          </Text>
         </View>
       </View>
     </Card>
