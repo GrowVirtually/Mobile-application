@@ -1,95 +1,50 @@
 import React from 'react';
 import {
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
   ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  StatusBar,
+  SafeAreaView,
 } from 'react-native';
-import {
-  Avatar,
-  Button,
-  Card,
-  Title,
-  Paragraph,
-  Appbar,
-} from 'react-native-paper';
+import {Searchbar} from 'react-native-paper';
+import {ConsumerContent} from './Components/ConsumerContent';
+import {ConsumerHeader} from './Components/ConsumerHeader';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Colors from '../../styles/abstracts/colors';
 
-const ConsumerHeader = ({navigation, title}) => {
+export const ConsumerHomeScreen = ({navigation}) => {
   return (
-    <Appbar.Header style={{backgroundColor: 'green'}}>
-      <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-      <Appbar.Content title={title} />
-    </Appbar.Header>
-  );
-};
-
-const ConsumerGig = () => {
-  return (
-    <Card style={ConsumerGigStyle.gridItem}>
-      <Card.Content>
-        <Title>Card title</Title>
-        <Paragraph>Card content</Paragraph>
-      </Card.Content>
-      <Card.Cover source={{uri: 'https://picsum.photos/700'}} />
-    </Card>
-  );
-};
-
-const ConsumerGigStyle = StyleSheet.create({
-  gridItem: {
-    width: '45%',
-    margin: 5,
-    // padding:5,
-    // height:150,
-  },
-});
-
-const ConsumerGigs = () => {
-  return (
-    <View style={ConsumerGigsStyle.grid}>
-      <ConsumerGig />
-      <ConsumerGig />
-      <ConsumerGig />
-      <ConsumerGig />
-      <ConsumerGig />
-    </View>
-  );
-};
-
-const ConsumerGigsStyle = StyleSheet.create({
-  grid: {
-    flex: 1,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-});
-
-const ConsumerHomeScreen = ({navigation}) => {
-  return (
-    <>
+    <SafeAreaView>
+      <StatusBar backgroundColor={Colors.primary.color} />
       <ConsumerHeader navigation={navigation} title="Gigs" />
+      <View style={styles.searchbarContainer}>
+        <Searchbar style={styles.searchbarLeft} placeholder="Search" />
+        <TouchableOpacity style={styles.searchbarRight}>
+          <MaterialCommunityIcons name="tune" color="#fff" size={30} />
+        </TouchableOpacity>
+      </View>
       <ScrollView>
         <ConsumerContent />
       </ScrollView>
-    </>
+    </SafeAreaView>
   );
 };
 
-const ConsumerContent = () => {
-  return (
-    <View style={style.container}>
-      <ConsumerGigs />
-    </View>
-  );
-};
-
-const style = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    flex: 1,
+const styles = StyleSheet.create({
+  searchbarContainer: {
+    padding: 5,
+    flexDirection: 'row',
+    backgroundColor: Colors.primary.color,
+  },
+  searchbarLeft: {
+    width: '80%',
+  },
+  searchbarRight: {
+    padding: 10,
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.primary.color,
+    width: '20%',
   },
 });
-
-export {ConsumerHomeScreen, ConsumerHeader};
