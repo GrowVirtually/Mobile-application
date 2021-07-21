@@ -54,6 +54,7 @@ const App = () => {
         }
       }
       dispatch({ type: "LOGIN", token });
+      // navigation.navigate("SignUpPathDeciderScreen");
     },
     signOut: async () => {
       try {
