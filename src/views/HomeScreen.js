@@ -11,12 +11,12 @@ const HomeScreen = ({ navigation }) => {
   const handleLogout = async () => {
     const { signOut } = authContext;
     await signOut();
-    navigation.navigate("SignUpPathDeciderScreen");
+    navigation.navigate("AuthStackNavigator");
   };
 
   return (
     <View style={newStyle.container}>
-      <Text style={newStyle.title}>I want to,</Text>
+      <Text style={newStyle.title}>Home screen</Text>
       <TouchableOpacity
         style={[newStyle.btn, newStyle.btnFocused]}
         onPress={() => navigation.navigate("ConsumerHome")}>

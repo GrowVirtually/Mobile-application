@@ -52,7 +52,7 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
           const {signIn} = authContext;
           // 1) set the token to async storage
           await signIn(token);
-          navigation.navigate('HomeScreen');
+          navigation.navigate('MainStackNavigator');
         } else if (!otpVerification.data.userFound) {
           navigation.navigate('SignupScreen1', {
             phone: otpVerification.data.phone,
@@ -100,7 +100,7 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
           <Text style={styles.btnText}>Ok</Text>
         </TouchableOpacity>
       )}
-      
+
       {!!errors.length && <Text>{errors[0]}</Text>}
 
       <TouchableOpacity

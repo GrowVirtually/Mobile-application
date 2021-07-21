@@ -7,6 +7,7 @@ import {
   ConsumerDrawerNavigator,
   GrowerDrawerNavigator,
 } from './DrawerNavigator';
+import AuthStackNavigator from "./AuthStackNavigator";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name={'ConsumerHome'} component={ConsumerDrawerNavigator} />
       <Stack.Screen name={'GrowerHome'} component={GrowerDrawerNavigator} />
       <Stack.Screen name={'ProfileScreen'} component={ProfileScreen} />
+      <Stack.Screen name={'AuthStackNavigator'} component={AuthStackNavigator} />
     </Stack.Navigator>
   );
 };
@@ -29,4 +31,4 @@ const screenOptionStyle = {
   headerBackTitle: 'Back',
 };
 
-export {MainStackNavigator};
+export default MainStackNavigator;
