@@ -8,11 +8,11 @@ import SignupScreen1 from '../views/Auth/SignupScreen1';
 import MobileNumberVerifyScreen from '../views/Auth/MobileNumberVerifyScreen';
 import HomeScreen from '../views/HomeScreen';
 import SignupScreen2 from '../views/Auth/SignupScreen2';
-import {MainStackNavigator} from './StackNavigator';
+import MainStackNavigator from './StackNavigator';
 
 const AuthStack = createStackNavigator();
 
-const AuthStackScreen = ({navigation}) => (
+const AuthStackNavigator = ({navigation}) => (
   <AuthStack.Navigator headerMode={'none'}>
     <AuthStack.Screen
       name={'SignUpPathDeciderScreen'}
@@ -37,4 +37,4 @@ const AuthStackScreen = ({navigation}) => (
   </AuthStack.Navigator>
 );
 
-export default AuthStackScreen;
+export default AuthStackNavigator;

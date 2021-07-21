@@ -29,4 +29,4 @@ const screenOptionStyle = {
   headerBackTitle: 'Back',
 };
 
-export {MainStackNavigator};
+export default MainStackNavigator;
