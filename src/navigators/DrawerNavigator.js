@@ -5,6 +5,7 @@ import {ConsumerHomeScreen} from '../views/Consumer/ConsumerHomeScreen';
 import {Notifications} from '../views/Consumer/Notifications';
 import {GrowerHomeScreen} from '../views/Grower/GrowerHomeScreen';
 import {GrowerOther} from '../views/Grower/GrowerOther';
+import {GigScreen} from '../views/Consumer/GigScreen';
 
 import ConsumerDrawer from './ConsumerDrawer';
 
@@ -20,6 +21,7 @@ function ConsumerDrawerNavigator() {
       drawerStyle={{backgroundColor: 'green'}}>
       <Drawer.Screen name={'ConsumerHome'} component={ConsumerHomeScreen} />
       <Drawer.Screen name={'Notifications'} component={Notifications} />
+      <Drawer.Screen name={'GigScreen'} component={GigScreen} />
     </Drawer.Navigator>
   );
 }
