@@ -11,23 +11,23 @@ const HomeScreen = ({ navigation }) => {
   const handleLogout = async () => {
     const { signOut } = authContext;
     await signOut();
-    navigation.navigate("SignUpPathDeciderScreen");
+    navigation.navigate("AuthStackNavigator");
   };
 
   return (
     <View style={newStyle.container}>
       <Text style={newStyle.title}>Home screen</Text>
-      {/*<TouchableOpacity*/}
-      {/*  style={[newStyle.btn, newStyle.btnFocused]}*/}
-      {/*  onPress={() => navigation.navigate("ConsumerHome")}>*/}
-      {/*  <Text style={newStyle.btnText}>Buy things</Text>*/}
-      {/*</TouchableOpacity>*/}
-      {/*<TouchableOpacity*/}
-      {/*  style={newStyle.btn}*/}
-      {/*  onPress={() => navigation.navigate("GrowerHome")}>*/}
-      {/*  <Text style={newStyle.btnText}>Sell things</Text>*/}
-      {/*</TouchableOpacity>*/}
-      <Button title={"Logout"} onPress={() => handleLogout()} />
+      <TouchableOpacity
+        style={[newStyle.btn, newStyle.btnFocused]}
+        onPress={() => navigation.navigate("ConsumerHome")}>
+        <Text style={newStyle.btnText}>Buy things</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={newStyle.btn}
+        onPress={() => navigation.navigate("GrowerHome")}>
+        <Text style={newStyle.btnText}>Sell things</Text>
+      </TouchableOpacity>
+      <Button title={"Logout"} onPress={handleLogout} />
     </View>
   );
 };

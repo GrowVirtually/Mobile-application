@@ -29,7 +29,7 @@ const AuthStackNavigator = ({navigation}) => (
     <AuthStack.Screen name={'LoginScreen'} component={LoginScreen} />
     <AuthStack.Screen name={'SignupScreen1'} component={SignupScreen1} />
     <AuthStack.Screen name={'SignupScreen2'} component={SignupScreen2} />
-    <AuthStack.Screen name={'HomeScreen'} component={HomeScreen} />
+    {/*<AuthStack.Screen name={'HomeScreen'} component={HomeScreen} />*/}
     <AuthStack.Screen
       name={'MainStackNavigator'}
       component={MainStackNavigator}
