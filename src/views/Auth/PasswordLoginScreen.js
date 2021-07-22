@@ -2,20 +2,23 @@ import React, {useState} from "react";
 import {Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {TextInput} from "react-native-paper";
 import * as Colors from "../../styles/abstracts/colors";
+import {validateEmail, validatePassword} from "../../utils/validators";
 
 const PasswordLoginScreen = ({navigation}) => {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [validationErrors, setError] = useState([]);
+  const [emailErrors, setEmailErrors] = useState([]);
+  const [pwErrors, setPwErrors] = useState([]);
 
-  const validateEmail = email => {
-    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (!email || emailRegex.test(email)) {
-      setError(validationErrors.filter(error => error !== "email"));
-      setEmail(email);
-    } else {
-      setError([...validationErrors, "email"]);
-    }
+  const handleEmailChange = email => {
+    validateEmail(email, emailErrors, setEmailErrors);
+    setEmail(email);
+  };
+
+  const handlePasswordChange = pwd => {
+    validatePassword(pwd, pwErrors, setPwErrors);
+    setPassword(pwd);
   };
 
   return (
@@ -23,10 +26,10 @@ const PasswordLoginScreen = ({navigation}) => {
       <View>
         <TextInput
           label="Email"
-          onChangeText={email => validateEmail(email)}
+          onChangeText={email => handleEmailChange(email)}
           style={styles.textInput}
           mode="outlined"
-          error={validationErrors.includes("email") && true}
+          error={emailErrors.includes("email") && true}
           selectionColor={Colors.secondary.color}
           theme={{
             colors: {
@@ -36,8 +39,32 @@ const PasswordLoginScreen = ({navigation}) => {
             },
           }}
         />
-        {validationErrors.includes("email") && <Text style={styles.helperText}>Wrong email</Text>}
+        {!!emailErrors.length && <Text style={styles.helperText}>{emailErrors[0]}</Text>}
       </View>
+      <View>
+        <TextInput
+          style={styles.textInput}
+          label="Password"
+          secureTextEntry
+          autoCapitalize="none"
+          mode="outlined"
+          autoFocus
+          onChangeText={pw => handlePasswordChange(pw)}
+          theme={{
+            colors: {
+              primary: Colors.primary.color,
+              underlineColor: "transparent",
+              background: "#fff",
+            },
+          }}
+        />
+        {!!pwErrors.length && <Text style={styles.helperText}>{pwErrors[0]}</Text>}
+      </View>
+      {!!email && !!password && !emailErrors.length && !pwErrors.length && (
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <Text style={styles.btnText}>Next</Text>
+        </TouchableOpacity>
+      )}
       <TouchableOpacity onPress={() => navigation.goBack()}>
         {/* <MaterialIcons name="arrow-back" /> */}
         <Text style={styles.linkText}>Go back</Text>
