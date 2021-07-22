@@ -4,36 +4,25 @@ import {TextInput} from "react-native-paper";
 import * as Colors from "../../styles/abstracts/colors";
 import * as Base from "../../styles/base/base";
 
+import {validateName, validateEmail} from "../../utils/validators";
+
 export const SignupScreen1 = ({navigation, route}) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
 
-  const [validationErrors, setError] = useState([]);
+  const [emailErrors, setEmailErrors] = useState([]);
 
-  const validateName = (name, isFirstName = true) => {
-    const letterRegex = /^[a-zA-Z]+$/;
-    if (!name || letterRegex.test(name)) {
-      if (isFirstName) {
-        setFirstName(name);
-      } else {
-        setLastName(name);
-      }
-    }
+  const handleNameChange = (name, state, setState) => {
+    validateName(name, state, setState);
   };
 
-  const validateEmail = email => {
-    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (!email || emailRegex.test(email)) {
-      setError(validationErrors.filter(error => error !== "email"));
-      setEmail(email);
-    } else {
-      setError([...validationErrors, "email"]);
-    }
+  const handleEmailChange = email => {
+    validateEmail(email, emailErrors, setEmailErrors);
+    setEmail(email);
   };
 
   return (
-    // eslint-disable-next-line no-use-before-define
     <View style={styles.container}>
       {/* <Image
         animation={'bounceIn'}
@@ -53,7 +42,7 @@ export const SignupScreen1 = ({navigation, route}) => {
         <TextInput
           label="First name"
           value={firstName}
-          onChangeText={name => validateName(name)}
+          onChangeText={name => handleNameChange(name, firstName, setFirstName)}
           style={styles.textInput}
           mode="outlined"
           autoFocus
@@ -77,7 +66,7 @@ export const SignupScreen1 = ({navigation, route}) => {
         <TextInput
           label="Last name"
           value={lastName}
-          onChangeText={name => validateName(name, false)}
+          onChangeText={name => handleNameChange(name, lastName, setLastName)}
           style={styles.textInput}
           mode="outlined"
           selectionColor={Colors.secondary.color}
@@ -97,10 +86,10 @@ export const SignupScreen1 = ({navigation, route}) => {
         /> */}
         <TextInput
           label="Email"
-          onChangeText={email => validateEmail(email)}
+          onChangeText={email => handleEmailChange(email)}
           style={styles.textInput}
           mode="outlined"
-          error={validationErrors.includes("email") && true}
+          error={emailErrors.includes("email") && true}
           selectionColor={Colors.secondary.color}
           theme={{
             colors: {
@@ -111,9 +100,9 @@ export const SignupScreen1 = ({navigation, route}) => {
           }}
         />
 
-        {validationErrors.includes("email") && <Text style={styles.helperText}>Wrong email</Text>}
+        {!!emailErrors.length && <Text style={styles.helperText}>{emailErrors[0]}</Text>}
       </View>
-      {!!firstName && !!lastName && !!email && !validationErrors.length && (
+      {!!firstName && !!lastName && !!email && !emailErrors.length && (
         <TouchableOpacity
           style={styles.button}
           onPress={() =>

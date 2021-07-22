@@ -1,14 +1,16 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {TouchableOpacity, Button, StyleSheet, Text, View} from 'react-native';
-import * as Colors from '../../styles/abstracts/colors';
-import axios from 'axios';
-import * as Base from '../../styles/base/base';
-import AuthContext from '../../context/auth-context';
-import {TextInput} from 'react-native-paper';
+import React, {useContext, useState} from "react";
+import {TouchableOpacity, StyleSheet, Text, View} from "react-native";
+import axios from "axios";
+import {TextInput} from "react-native-paper";
+import * as Colors from "../../styles/abstracts/colors";
+import * as Base from "../../styles/base/base";
+import AuthContext from "../../context/auth-context";
+
+import {validatePassword, pwErrorMessages} from "../../utils/validators";
 
 const SignupScreen2 = ({navigation, route}) => {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [pwErrors, setPwErrors] = useState([]);
 
   const {authContext} = useContext(AuthContext);
@@ -17,54 +19,30 @@ const SignupScreen2 = ({navigation, route}) => {
     if (isPwConfirm) {
       setConfirmPassword(pwd);
     } else {
-      pwErrorChecker(pwd);
+      validatePassword(pwd, pwErrors, setPwErrors);
       setPassword(pwd);
     }
   };
 
-  const pwErrorMessages = {
-    // all kinds of pw error messages
-    lessCharacters: 'Password must contain at least 8 characters',
-    pwNotMatch: 'Passwords does not match',
-  };
-
-  const pwErrorChecker = pwd => {
-    // predicates
-    pwd.length < 8
-      ? pwErrorAggregator(pwErrorMessages.lessCharacters)
-      : pwErrorCuttingUp(pwErrorMessages.lessCharacters);
-  };
-
-  const pwErrorAggregator = errorMessage => {
-    setPwErrors([...pwErrors, errorMessage]);
-  };
-
-  const pwErrorCuttingUp = errorMessage => {
-    setPwErrors(pwErrors.filter(pwe => pwe !== errorMessage));
-  };
-
   const handleSignup = async () => {
     try {
-      const addUser = await axios.post(
-        'http://10.0.2.2:3000/api/v1/users/signup',
-        {
-          fname: route.params.firstName,
-          lname: route.params.lastName,
-          email: route.params.email,
-          tel: route.params.phone,
-          password,
-        },
-      );
-      if (addUser.data.status === 'success') {
+      const addUser = await axios.post("http://10.0.2.2:3000/api/v1/users/signup", {
+        fname: route.params.firstName,
+        lname: route.params.lastName,
+        email: route.params.email,
+        tel: route.params.phone,
+        password,
+      });
+      if (addUser.data.status === "success") {
         // set async storage
         const {token} = addUser.data.token;
         const {signIn} = authContext;
         await signIn(token);
         console.log(addUser);
-        navigation.navigate('MainStackNavigator');
+        navigation.navigate("MainStackNavigator");
       } else {
         // properly handle errors [TODO]
-        alert('Cannot create user');
+        alert("Cannot create user");
       }
     } catch (err) {
       console.log(err);
@@ -78,36 +56,34 @@ const SignupScreen2 = ({navigation, route}) => {
         <TextInput
           style={styles.textInput}
           label="Password"
-          secureTextEntry={true}
-          autoCapitalize={'none'}
+          secureTextEntry
+          autoCapitalize="none"
           mode="outlined"
-          autoFocus={true}
+          autoFocus
           onChangeText={pw => handlePasswordChange(pw)}
           theme={{
             colors: {
               primary: Colors.primary.color,
-              underlineColor: 'transparent',
-              background: '#fff',
+              underlineColor: "transparent",
+              background: "#fff",
             },
           }}
         />
-        {!!pwErrors.length && (
-          <Text style={styles.helperText}>{pwErrors[0]}</Text>
-        )}
+        {!!pwErrors.length && <Text style={styles.helperText}>{pwErrors[0]}</Text>}
       </View>
       <View>
         <TextInput
           style={styles.textInput}
           label="Re enter password"
-          secureTextEntry={true}
+          secureTextEntry
           mode="outlined"
-          autoCapitalize={'none'}
+          autoCapitalize="none"
           onChangeText={pw => handlePasswordChange(pw, true)}
           theme={{
             colors: {
               primary: Colors.primary.color,
-              underlineColor: 'transparent',
-              background: '#fff',
+              underlineColor: "transparent",
+              background: "#fff",
             },
           }}
         />
@@ -124,64 +100,64 @@ const SignupScreen2 = ({navigation, route}) => {
         </TouchableOpacity>
       )}
 
-      <TouchableOpacity onPress={() => navigation.navigate('SignUpPathDeciderScreen')}>
+      <TouchableOpacity onPress={() => navigation.navigate("SignUpPathDeciderScreen")}>
         <Text style={styles.linkText}>Change of mind? Buy or sell?</Text>
-        </TouchableOpacity>
+      </TouchableOpacity>
     </View>
   );
 };
 export default SignupScreen2;
 
 const styles = StyleSheet.create({
+  btnText: {
+    color: "#fff",
+    fontSize: 18,
+    textAlign: "center",
+  },
+  button: {
+    alignSelf: "center",
+    backgroundColor: Colors.primary.color,
+    borderRadius: 10,
+    marginTop: 25,
+    padding: 15,
+    width: "80%",
+  },
   container: {
     flex: 1,
     // alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    justifyContent: "center",
+    backgroundColor: "#fff",
   },
   error: {
     color: Colors.errorColor,
   },
   heading: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
     color: Colors.primary.color,
+    fontSize: 25,
+    fontWeight: "bold",
     marginBottom: 20,
+    textAlign: "center",
+  },
+  helperText: {
+    color: Colors.errorColor.color,
+    fontSize: 12,
+    marginTop: 10,
+    textAlign: "center",
+  },
+  linkText: {
+    color: Colors.secondary.color,
+    fontSize: 14,
+    marginTop: 20,
+    textAlign: "center",
+    textDecorationLine: "underline",
   },
   logo: {
     ...Base.logoLarge,
-    alignSelf: 'center',
-  },
-  linkText: {
-    fontSize: 14,
-    color: Colors.secondary.color,
-    textDecorationLine: 'underline',
-    textAlign: 'center',
-    marginTop: 20,
+    alignSelf: "center",
   },
   textInput: {
-    alignSelf: 'center',
-    width: '80%',
+    alignSelf: "center",
     marginTop: 20,
-  },
-  button: {
-    padding: 15,
-    backgroundColor: Colors.primary.color,
-    marginTop: 25,
-    borderRadius: 10,
-    width: '80%',
-    alignSelf: 'center',
-  },
-  btnText: {
-    fontSize: 18,
-    color: '#fff',
-    textAlign: 'center',
-  },
-  helperText: {
-    fontSize: 12,
-    textAlign: 'center',
-    color: Colors.errorColor.color,
-    marginTop: 10,
+    width: "80%",
   },
 });

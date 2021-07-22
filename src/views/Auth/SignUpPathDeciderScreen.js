@@ -49,9 +49,9 @@ export default SignUpPathDeciderScreen;
 const styles = StyleSheet.create({
   button_round: {
     // ...Buttons.btn_round,
+    backgroundColor: Colors.primary.color,
     padding: 15,
     width: "100%",
-    backgroundColor: Colors.primary.color,
     marginBottom: 20,
     alignItems: "center",
     borderRadius: 10,
