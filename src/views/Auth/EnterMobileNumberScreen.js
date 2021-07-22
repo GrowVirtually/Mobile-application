@@ -12,9 +12,9 @@ import axios from 'axios';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {HOST, PORT} from '@env';
 
-const EnterMobileNumberScreen = ({ navigation }) => {
+const EnterMobileNumberScreen = ({navigation}) => {
 
-  const [mobileNumber, setMobileNumber] = useState("07");
+  const [mobileNumber, setMobileNumber] = useState('07');
   const [disabledNext, setDisabledNext] = useState(false);
 
   useEffect(() => {
@@ -38,23 +38,23 @@ const EnterMobileNumberScreen = ({ navigation }) => {
 
   const handleSendOTP = async () => {
     // serialize phone number
-    const newMobile = mobileNumber.replace(mobileNumber.charAt(0), "+94");
+    const newMobile = mobileNumber.replace(mobileNumber.charAt(0), '+94');
 
     // 1. send OTP code to mobile
     try {
       // backend call to get the OTP
 
       const otpWithDetails = await axios.post(`http://${HOST}:${PORT}/api/v1/users/sendOTP`, {
-        phone: newMobile
+        phone: newMobile,
       });
 
       console.log(otpWithDetails);
-      if (otpWithDetails.data.status === "success") {
-        const { otp, hash } = otpWithDetails.data;
-        navigation.navigate("MobileNumberVerifyScreen", {
+      if (otpWithDetails.data.status === 'success') {
+        const {otp, hash} = otpWithDetails.data;
+        navigation.navigate('MobileNumberVerifyScreen', {
           phone: newMobile,
           hash,
-          otp
+          otp,
         });
 
       } else {
@@ -74,20 +74,20 @@ const EnterMobileNumberScreen = ({ navigation }) => {
       </Text>
       <View style={styles.btnContainer}>
         <TextInput
-          label="Mobile number"
+          label='Mobile number'
           value={mobileNumber}
           onChangeText={validateMobileNumber}
           style={styles.textInput}
           keyboardType={'numeric'}
-          mode="outlined"
+          mode='outlined'
           autoFocus={true}
           selectionColor={Colors.secondary.color}
           theme={{
             colors: {
               primary: Colors.primary.color,
-              underlineColor: "transparent",
-              background: "#fff"
-            }
+              underlineColor: 'transparent',
+              background: '#fff',
+            },
           }}
         />
         <TouchableOpacity
@@ -121,46 +121,46 @@ const widthTextInput = width * 0.9;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    backgroundColor: "#fff",
-    paddingTop: 40
+    justifyContent: 'flex-start',
+    backgroundColor: '#fff',
+    paddingTop: 40,
   },
   heading: {
     fontSize: 25,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: Colors.primary.color
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: Colors.primary.color,
   },
   subHeading: {
     fontSize: 15,
-    textAlign: "center",
+    textAlign: 'center',
     padding: 30,
-    color: Colors.fontColor.color
+    color: Colors.fontColor.color,
   },
   textInput: {
     width: widthTextInput,
-    marginBottom: 20
+    marginBottom: 20,
   },
   button: {
     padding: 15,
     backgroundColor: Colors.primary.color,
     marginTop: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   buttonDisabled: {
     padding: 15,
-    backgroundColor: "grey",
+    backgroundColor: 'grey',
     marginTop: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   btnContainer: {
-    alignSelf: "center",
-    flexDirection: "column"
+    alignSelf: 'center',
+    flexDirection: 'column',
   },
   btnText: {
     fontSize: 18,
-    color: "#fff",
-    textAlign: "center"
+    color: '#fff',
+    textAlign: 'center',
   },
   linkText: {
     fontSize: 14,
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   miniBtn: {
-    flex:1,
+    flex: 1,
     backgroundColor: Colors.secondary.color,
     padding: 5,
   },

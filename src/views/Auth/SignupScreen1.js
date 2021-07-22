@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {TouchableOpacity, StyleSheet, Text, View} from 'react-native';
-import * as Colors from '../../styles/abstracts/colors';
-import * as Base from '../../styles/base/base';
-import {TextInput} from 'react-native-paper';
+import React, {useState} from "react";
+import {TouchableOpacity, StyleSheet, Text, View} from "react-native";
+import {TextInput} from "react-native-paper";
+import * as Colors from "../../styles/abstracts/colors";
+import * as Base from "../../styles/base/base";
 
 export const SignupScreen1 = ({navigation, route}) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
 
   const [validationErrors, setError] = useState([]);
 
@@ -23,17 +23,17 @@ export const SignupScreen1 = ({navigation, route}) => {
   };
 
   const validateEmail = email => {
-    const emailRegex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (!email || emailRegex.test(email)) {
-      setError(validationErrors.filter(error => error !== 'email'));
+      setError(validationErrors.filter(error => error !== "email"));
       setEmail(email);
     } else {
-      setError([...validationErrors, 'email']);
+      setError([...validationErrors, "email"]);
     }
   };
 
   return (
+    // eslint-disable-next-line no-use-before-define
     <View style={styles.container}>
       {/* <Image
         animation={'bounceIn'}
@@ -56,13 +56,13 @@ export const SignupScreen1 = ({navigation, route}) => {
           onChangeText={name => validateName(name)}
           style={styles.textInput}
           mode="outlined"
-          autoFocus={true}
+          autoFocus
           selectionColor={Colors.secondary.color}
           theme={{
             colors: {
               primary: Colors.primary.color,
-              underlineColor: 'transparent',
-              background: '#fff',
+              underlineColor: "transparent",
+              background: "#fff",
             },
           }}
         />
@@ -84,8 +84,8 @@ export const SignupScreen1 = ({navigation, route}) => {
           theme={{
             colors: {
               primary: Colors.primary.color,
-              underlineColor: 'transparent',
-              background: '#fff',
+              underlineColor: "transparent",
+              background: "#fff",
             },
           }}
         />
@@ -100,26 +100,24 @@ export const SignupScreen1 = ({navigation, route}) => {
           onChangeText={email => validateEmail(email)}
           style={styles.textInput}
           mode="outlined"
-          error={validationErrors.includes('email') && true}
+          error={validationErrors.includes("email") && true}
           selectionColor={Colors.secondary.color}
           theme={{
             colors: {
               primary: Colors.primary.color,
-              underlineColor: 'transparent',
-              background: '#fff',
+              underlineColor: "transparent",
+              background: "#fff",
             },
           }}
         />
 
-        {validationErrors.includes('email') && (
-          <Text style={styles.helperText}>Wrong email</Text>
-        )}
+        {validationErrors.includes("email") && <Text style={styles.helperText}>Wrong email</Text>}
       </View>
       {!!firstName && !!lastName && !!email && !validationErrors.length && (
         <TouchableOpacity
           style={styles.button}
           onPress={() =>
-            navigation.navigate('SignupScreen2', {
+            navigation.navigate("SignupScreen2", {
               firstName,
               lastName,
               email,
@@ -130,8 +128,7 @@ export const SignupScreen1 = ({navigation, route}) => {
         </TouchableOpacity>
       )}
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('SignUpPathDeciderScreen')}>
+      <TouchableOpacity onPress={() => navigation.navigate("SignUpPathDeciderScreen")}>
         <Text style={styles.linkText}>Change of mind, buy or sell ?</Text>
       </TouchableOpacity>
     </View>
@@ -141,55 +138,55 @@ export const SignupScreen1 = ({navigation, route}) => {
 export default SignupScreen1;
 
 const styles = StyleSheet.create({
+  btnText: {
+    color: "#fff",
+    fontSize: 18,
+    textAlign: "center",
+  },
+  button: {
+    alignSelf: "center",
+    backgroundColor: Colors.primary.color,
+    borderRadius: 10,
+    marginTop: 25,
+    padding: 15,
+    width: "80%",
+  },
   container: {
-    flex: 1,
+    backgroundColor: "#fff",
     // alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    flex: 1,
+    justifyContent: "center",
   },
   error: {
     color: Colors.errorColor,
   },
   heading: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
     color: Colors.primary.color,
+    fontSize: 25,
+    fontWeight: "bold",
     marginBottom: 20,
+    textAlign: "center",
+  },
+  helperText: {
+    color: Colors.errorColor.color,
+    fontSize: 12,
+    marginTop: 10,
+    textAlign: "center",
+  },
+  linkText: {
+    color: Colors.secondary.color,
+    fontSize: 14,
+    marginTop: 50,
+    textAlign: "center",
+    textDecorationLine: "underline",
   },
   logo: {
     ...Base.logoLarge,
-    alignSelf: 'center',
-  },
-  linkText: {
-    fontSize: 14,
-    color: Colors.secondary.color,
-    textDecorationLine: 'underline',
-    textAlign: 'center',
-    marginTop: 50,
+    alignSelf: "center",
   },
   textInput: {
-    alignSelf: 'center',
-    width: '80%',
+    alignSelf: "center",
     marginTop: 20,
-  },
-  button: {
-    padding: 15,
-    backgroundColor: Colors.primary.color,
-    marginTop: 25,
-    borderRadius: 10,
-    width: '80%',
-    alignSelf: 'center',
-  },
-  btnText: {
-    fontSize: 18,
-    color: '#fff',
-    textAlign: 'center',
-  },
-  helperText: {
-    fontSize: 12,
-    textAlign: 'center',
-    color: Colors.errorColor.color,
-    marginTop: 10,
+    width: "80%",
   },
 });
