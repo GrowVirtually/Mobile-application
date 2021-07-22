@@ -10,6 +10,7 @@ import {
 import * as Base from '../../styles/base/base';
 import * as Colors from '../../styles/abstracts/colors';
 import AuthContext from '../../context/auth-context';
+import {HOST, PORT} from '@env';
 
 import {
   CodeField,
@@ -35,7 +36,7 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
   const handleOTPVerification = async () => {
     try {
       const otpVerification = await axios.post(
-        'http://10.0.2.2:3000/api/v1/users/verifyOTP',
+        `http://${HOST}:${PORT}/api/v1/users/verifyOTP`,
         {
           phone: route.params.phone,
           hash: route.params.hash,

@@ -10,7 +10,7 @@ import * as Colors from '../../styles/abstracts/colors';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import {HOST, PORT} from '@env';
 
 const EnterMobileNumberScreen = ({ navigation }) => {
 
@@ -44,7 +44,7 @@ const EnterMobileNumberScreen = ({ navigation }) => {
     try {
       // backend call to get the OTP
 
-      const otpWithDetails = await axios.post("http://10.0.2.2:3000/api/v1/users/sendOTP", {
+      const otpWithDetails = await axios.post(`http://${HOST}:${PORT}/api/v1/users/sendOTP`, {
         phone: newMobile
       });
 
