@@ -64,3 +64,4 @@ android/local.properties
 
 .vscode
 *.lock
+*.env
