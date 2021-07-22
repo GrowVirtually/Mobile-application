@@ -1,15 +1,20 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import axios from "axios";
 import {Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {TextInput} from "react-native-paper";
+import {HOST, PORT} from "@env";
 import * as Colors from "../../styles/abstracts/colors";
+import AuthContext from "../../context/auth-context";
 import {validateEmail, validatePassword} from "../../utils/validators";
 
 const PasswordLoginScreen = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [emailErrors, setEmailErrors] = useState([]);
   const [pwErrors, setPwErrors] = useState([]);
+  const [errors, setErrors] = useState([]);
+
+  const {authContext} = useContext(AuthContext);
 
   const handleEmailChange = email => {
     validateEmail(email, emailErrors, setEmailErrors);
@@ -19,6 +24,25 @@ const PasswordLoginScreen = ({navigation}) => {
   const handlePasswordChange = pwd => {
     validatePassword(pwd, pwErrors, setPwErrors);
     setPassword(pwd);
+  };
+
+  const handleSignIn = async () => {
+    try {
+      const logUser = await axios.post(`http://${HOST}:${PORT}/api/v1/users/login`, {
+        email,
+        password,
+      });
+      if (logUser.data.status === "success") {
+        const {token} = logUser.data.token;
+        const {signIn} = authContext;
+        await signIn(token);
+        navigation.navigate("MainStackNavigator");
+      }
+    } catch (err) {
+      const {message} = err.response.data;
+      setErrors([...errors, message]);
+      console.log(message);
+    }
   };
 
   return (
@@ -60,9 +84,12 @@ const PasswordLoginScreen = ({navigation}) => {
         />
         {!!pwErrors.length && <Text style={styles.helperText}>{pwErrors[0]}</Text>}
       </View>
+
+      {!!errors.length && <Text>{errors[0]}</Text>}
+
       {!!email && !!password && !emailErrors.length && !pwErrors.length && (
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
-          <Text style={styles.btnText}>Next</Text>
+        <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+          <Text style={styles.btnText}>Sign in</Text>
         </TouchableOpacity>
       )}
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -72,7 +99,6 @@ const PasswordLoginScreen = ({navigation}) => {
     </View>
   );
 };
-
 export default PasswordLoginScreen;
 
 const {width} = Dimensions.get("screen");

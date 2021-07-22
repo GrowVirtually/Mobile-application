@@ -1,29 +1,21 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {
-  StyleSheet,
-  Button,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import * as Base from '../../styles/base/base';
-import * as Colors from '../../styles/abstracts/colors';
-import AuthContext from '../../context/auth-context';
-import {HOST, PORT} from '@env';
-
+import React, {useState, useEffect, useContext} from "react";
+import {StyleSheet, Button, Text, View, Image, TouchableOpacity} from "react-native";
+import {HOST, PORT} from "@env";
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
   useClearByFocusCell,
-} from 'react-native-confirmation-code-field';
-import axios from 'axios';
+} from "react-native-confirmation-code-field";
+import axios from "axios";
+import * as Base from "../../styles/base/base";
+import * as Colors from "../../styles/abstracts/colors";
+import AuthContext from "../../context/auth-context";
 
 const MobileNumberVerifyScreen = ({navigation, route}) => {
   const CELL_COUNT = 4;
 
-  const [userOTP, setValue] = useState('');
+  const [userOTP, setValue] = useState("");
   const ref = useBlurOnFulfill({userOTP, cellCount: CELL_COUNT});
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     userOTP,
@@ -35,16 +27,13 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
 
   const handleOTPVerification = async () => {
     try {
-      const otpVerification = await axios.post(
-        `http://${HOST}:${PORT}/api/v1/users/verifyOTP`,
-        {
-          phone: route.params.phone,
-          hash: route.params.hash,
-          otp: userOTP,
-        },
-      );
+      const otpVerification = await axios.post(`http://${HOST}:${PORT}/api/v1/users/verifyOTP`, {
+        phone: route.params.phone,
+        hash: route.params.hash,
+        otp: userOTP,
+      });
 
-      if (otpVerification.data.status === 'success') {
+      if (otpVerification.data.status === "success") {
         // otp verified
         // check user found or not
         if (otpVerification.data.userFound) {
@@ -53,9 +42,9 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
           const {signIn} = authContext;
           // 1) set the token to async storage
           await signIn(token);
-          navigation.navigate('MainStackNavigator');
+          navigation.navigate("MainStackNavigator");
         } else if (!otpVerification.data.userFound) {
-          navigation.navigate('SignupScreen1', {
+          navigation.navigate("SignupScreen1", {
             phone: otpVerification.data.phone,
           });
         }
@@ -70,11 +59,11 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <Image
-        animation={'bounceIn'}
+        animation="bounceIn"
         duration={1500}
-        source={require('../../assets/logo.png')}
+        source={require("../../assets/logo.png")}
         style={styles.logo}
-        resizeMode={'stretch'}
+        resizeMode="stretch"
       />
       <Text style={styles.heading}>{`Enter the code\nwe sent to you`}</Text>
       <CodeField
@@ -104,8 +93,7 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
 
       {!!errors.length && <Text>{errors[0]}</Text>}
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('EnterMobileNumberScreen')}>
+      <TouchableOpacity onPress={() => navigation.navigate("EnterMobileNumberScreen")}>
         <Text style={styles.linkText}>Not your number?</Text>
       </TouchableOpacity>
     </View>
@@ -115,57 +103,57 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
 export default MobileNumberVerifyScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    ...Base.container,
-    backgroundColor: '#fff',
-    justifyContent: 'flex-start',
-    paddingTop: 30,
+  btnText: {
+    color: "#fff",
+    fontSize: 18,
+    textAlign: "center",
   },
-  root: {flex: 1, padding: 20},
-  title: {textAlign: 'center', fontSize: 30},
-  codeFieldRoot: {marginTop: 20},
+  button: {
+    alignSelf: "center",
+    backgroundColor: Colors.primary.color,
+    borderRadius: 10,
+    marginTop: 25,
+    padding: 15,
+    width: "80%",
+  },
   cell: {
-    width: 40,
+    borderColor: "#ccc",
+    borderWidth: 2,
+    fontSize: 24,
     height: 40,
     lineHeight: 38,
-    fontSize: 24,
-    borderWidth: 2,
-    borderColor: '#ccc',
-    textAlign: 'center',
+    textAlign: "center",
+    width: 40,
+  },
+  codeFieldRoot: {marginTop: 20},
+  container: {
+    ...Base.container,
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+    paddingTop: 30,
   },
   focusCell: {
     borderColor: Colors.secondary.color,
     borderWidth: 3,
   },
   heading: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
     color: Colors.primary.color,
+    fontSize: 25,
+    fontWeight: "bold",
     marginBottom: 10,
+    textAlign: "center",
+  },
+  linkText: {
+    color: Colors.secondary.color,
+    fontSize: 14,
+    marginTop: 20,
+    textAlign: "center",
+    textDecorationLine: "underline",
   },
   logo: {
     ...Base.logoLarge,
     // width:'100%',
   },
-  linkText: {
-    fontSize: 14,
-    color: Colors.secondary.color,
-    textDecorationLine: 'underline',
-    textAlign: 'center',
-    marginTop: 20,
-  },
-  button: {
-    padding: 15,
-    backgroundColor: Colors.primary.color,
-    marginTop: 25,
-    borderRadius: 10,
-    width: '80%',
-    alignSelf: 'center',
-  },
-  btnText: {
-    fontSize: 18,
-    color: '#fff',
-    textAlign: 'center',
-  },
+  root: {flex: 1, padding: 20},
+  title: {fontSize: 30, textAlign: "center"},
 });
