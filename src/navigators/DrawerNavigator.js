@@ -1,16 +1,17 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-cycle */
 /* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable prettier/prettier */
 import * as React from "react";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {useNavigation} from "@react-navigation/core";
-import {ConsumerHomeScreen} from "../views/Consumer/ConsumerHomeScreen";
 import {Notifications} from "../views/Consumer/Notifications";
 import {GrowerHomeScreen} from "../views/Grower/GrowerHomeScreen";
 import {GrowerOther} from "../views/Grower/GrowerOther";
-import {GigScreen} from "../views/Consumer/GigScreen";
-
 import ConsumerDrawer from "./ConsumerDrawer";
 import GrowerDrawer from "./GrowerDrawer";
+import ConsumerStack from "./ConsumerStack";
+import ProfileScreen from "../views/ProfileScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -18,11 +19,14 @@ function ConsumerDrawerNavigator() {
   const navigation = useNavigation();
 
   return (
+    // Only the screen that should be displayed in drawer is here
     <Drawer.Navigator
       drawerContent={ConsumerDrawer}
       navigation={navigation}
       drawerStyle={{backgroundColor: "green"}}>
-      <Drawer.Screen name={"ConsumerHome"} component={ConsumerHomeScreen} />
+      {/* ConsumerStack contains all other consumer related screens not on drawer */}
+      <Drawer.Screen name={"ConsumerHome"} component={ConsumerStack} />
+      <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
       <Drawer.Screen name={"Notifications"} component={Notifications} />
     </Drawer.Navigator>
   );
