@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-unused-styles */
-/* eslint-disable react-native/no-color-literals */
 import React, {useState} from "react";
 import {TouchableOpacity, StyleSheet, Text, View} from "react-native";
 import {TextInput} from "react-native-paper";
