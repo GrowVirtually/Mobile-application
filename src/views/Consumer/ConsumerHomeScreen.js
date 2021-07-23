@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable arrow-body-style */
+import React from "react";
 import {
   ScrollView,
   TouchableOpacity,
@@ -6,12 +7,12 @@ import {
   View,
   StatusBar,
   SafeAreaView,
-} from 'react-native';
-import {Searchbar} from 'react-native-paper';
-import {ConsumerContent} from './Components/ConsumerContent';
-import {ConsumerHeader} from './Components/ConsumerHeader';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as Colors from '../../styles/abstracts/colors';
+} from "react-native";
+import {Searchbar} from "react-native-paper";
+import {ConsumerContent} from "./Components/ConsumerContent";
+import {ConsumerHeader} from "./Components/ConsumerHeader";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import * as Colors from "../../styles/abstracts/colors";
 
 export const ConsumerHomeScreen = ({navigation}) => {
   return (
@@ -34,17 +35,17 @@ export const ConsumerHomeScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   searchbarContainer: {
     padding: 5,
-    flexDirection: 'row',
+    flexDirection: "row",
     backgroundColor: Colors.primary.color,
   },
   searchbarLeft: {
-    width: '80%',
+    width: "80%",
   },
   searchbarRight: {
     padding: 10,
-    alignSelf: 'center',
-    alignItems: 'center',
+    alignSelf: "center",
+    alignItems: "center",
     backgroundColor: Colors.primary.color,
-    width: '20%',
+    width: "20%",
   },
 });
