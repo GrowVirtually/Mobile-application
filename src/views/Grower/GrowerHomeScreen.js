@@ -1,15 +1,30 @@
 import React from 'react';
-import {Text, View, StatusBar,StyleSheet} from 'react-native';
+import {Text, View, StatusBar,StyleSheet, Button} from 'react-native';
 import {ConsumerContent} from './Components/ConsumerContent';
-import {ConsumerHeader} from './Components/ConsumerHeader';
+import {GrowerHeader} from './Components/GrowerHeader';
+
 import * as Colors from '../../styles/abstracts/colors';
+
+
+
+
 
 export const GrowerHomeScreen = ({navigation}) => {
   return (
     <View>
        <StatusBar backgroundColor={Colors.primary.color} />
-       <ConsumerHeader navigation={navigation} title="Grower" />
+       <GrowerHeader navigation={navigation} title="Grower" />
+      
+       <Text>Grower Dashboard</Text>
+
+       <Button
+        onPress={() => navigation.navigate('Notifications')}
+        title="Go to notifications"
+        onPress={() => navigation.navigate("AddGig")}
+      />
+     
     </View>
+    
   );
 };
 
@@ -19,14 +34,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.primary.color,
   },
-  searchbarLeft: {
-    width: '80%',
-  },
-  searchbarRight: {
-    padding: 10,
-    alignSelf: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.primary.color,
-    width: '20%',
-  },
+ 
 });

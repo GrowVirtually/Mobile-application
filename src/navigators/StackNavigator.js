@@ -17,6 +17,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name={'CommonHome'} component={HomeScreen} />
       <Stack.Screen name={'ConsumerHome'} component={ConsumerDrawerNavigator} />
       <Stack.Screen name={'GrowerHome'} component={GrowerDrawerNavigator} />
+      <Stack.Screen name={'AddGig'} component={GrowerDrawerNavigator} />
       <Stack.Screen name={'ProfileScreen'} component={ProfileScreen} />
       <Stack.Screen name={'AuthStackNavigator'} component={AuthStackNavigator} />
     </Stack.Navigator>

@@ -8,7 +8,7 @@ import {SafeAreaView, Text, StyleSheet, View} from 'react-native';
 import {Avatar} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-function ConsumerDrawer(props) {
+function GrowerDrawer(props) {
   return (
     <DrawerContentScrollView {...props}>
       <SafeAreaView style={cusomDrawerStyle.header}>
@@ -17,7 +17,7 @@ function ConsumerDrawer(props) {
           label="DD"
           style={{backgroundColor: 'white', color: 'green'}}
         />
-        <Text style={cusomDrawerStyle.txt}>Dimuthu Dhanushka</Text>
+        <Text style={cusomDrawerStyle.txt}>Anjana Dodampe</Text>
       </SafeAreaView>
 
       {/* Default items */}
@@ -27,7 +27,7 @@ function ConsumerDrawer(props) {
           <MaterialCommunityIcons name="home" color="white" size={24} />
         )}
         label={() => <Text style={cusomDrawerStyle.menuTxt}>Gigs</Text>}
-        onPress={() => props.navigation.navigate('ConsumerHome')}
+        onPress={() => props.navigation.navigate('GrowerHome')}
       />
       <DrawerItem
         icon={({color, size}) => (
@@ -72,4 +72,4 @@ const cusomDrawerStyle = StyleSheet.create({
   },
 });
 
-export default ConsumerDrawer;
+export default GrowerDrawer;
