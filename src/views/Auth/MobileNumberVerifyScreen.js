@@ -91,7 +91,7 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
         </TouchableOpacity>
       )}
 
-      {!!errors.length && <Text>{errors[0]}</Text>}
+      {!!errors.length && <Text style={styles.helperText}>{errors[0]}</Text>}
 
       <TouchableOpacity onPress={() => navigation.navigate("EnterMobileNumberScreen")}>
         <Text style={styles.linkText}>Not your number?</Text>
@@ -141,6 +141,12 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     marginBottom: 10,
+    textAlign: "center",
+  },
+  helperText: {
+    color: Colors.errorColor.color,
+    fontSize: 12,
+    marginTop: 10,
     textAlign: "center",
   },
   linkText: {

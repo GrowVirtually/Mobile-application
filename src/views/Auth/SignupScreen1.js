@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-unused-styles */
+/* eslint-disable react-native/no-color-literals */
 import React, {useState} from "react";
 import {TouchableOpacity, StyleSheet, Text, View} from "react-native";
 import {TextInput} from "react-native-paper";
@@ -55,13 +57,6 @@ export const SignupScreen1 = ({navigation, route}) => {
             },
           }}
         />
-
-        {/* <Text>Please enter your last name</Text> */}
-        {/* <TextInput
-          style={styles.textInput}
-          value={lastName}
-          onChangeText={name => validateName(name, false)}
-        /> */}
 
         <TextInput
           label="Last name"

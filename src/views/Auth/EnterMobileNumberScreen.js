@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-color-literals */
+/* eslint-disable react-native/no-unused-styles */
 import React, {useEffect, useState} from "react";
 import {Dimensions, StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import {TextInput} from "react-native-paper";
@@ -61,10 +63,10 @@ const EnterMobileNumberScreen = ({navigation}) => {
       <Text style={styles.subHeading}>
         We will text you a verification code. Message and data rates may apply
       </Text>
-      <Text>Enter your phone number to Signup or login</Text>
+
       <View style={styles.btnContainer}>
         <TextInput
-          label="Mobile number"
+          label="Your mobile number"
           value={mobileNumber}
           onChangeText={validateMobileNumber}
           style={styles.textInput}
@@ -80,15 +82,14 @@ const EnterMobileNumberScreen = ({navigation}) => {
             },
           }}
         />
+
         <TouchableOpacity onPress={() => navigation.goBack()}>
           {/* <MaterialIcons name="arrow-back" /> */}
           <Text style={styles.linkText}>Go back</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("PasswordLoginScreen")}>
           {/* <MaterialIcons name="arrow-back" /> */}
-          <Text style={styles.linkText}>
-            Already a signed up user and don't have access to phone? Use the password login
-          </Text>
+          <Text style={styles.linkText}>No access to phone?</Text>
         </TouchableOpacity>
         {/* validate input and if there is number proceed */}
         {mobileNumber.length === 10 && (
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     flexDirection: "column",
   },
+  // eslint-disable-next-line react-native/no-color-literals
   btnText: {
     color: "#fff",
     fontSize: 18,
