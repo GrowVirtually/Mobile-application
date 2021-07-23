@@ -77,7 +77,7 @@ const App = () => {
   return (
     <AuthContext.Provider value={{authContext}}>
       <NavigationContainer>
-        {!!loginState.userToken ? (
+        {!loginState.userToken ? (
           <RootStack.Navigator headerMode="none">
             <RootStack.Screen name="MainStackNavigator" component={MainStackNavigator} />
           </RootStack.Navigator>

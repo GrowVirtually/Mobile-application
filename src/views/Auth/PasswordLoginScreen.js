@@ -1,3 +1,4 @@
+/* eslint-disable react-native/sort-styles */
 import React, {useState, useContext} from "react";
 import axios from "axios";
 import {Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
@@ -47,45 +48,43 @@ const PasswordLoginScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <TextInput
-          label="Email"
-          onChangeText={email => handleEmailChange(email)}
-          style={styles.textInput}
-          mode="outlined"
-          error={emailErrors.includes("email") && true}
-          selectionColor={Colors.secondary.color}
-          theme={{
-            colors: {
-              primary: Colors.primary.color,
-              underlineColor: "transparent",
-              background: "#fff",
-            },
-          }}
-        />
-        {!!emailErrors.length && <Text style={styles.helperText}>{emailErrors[0]}</Text>}
-      </View>
-      <View>
-        <TextInput
-          style={styles.textInput}
-          label="Password"
-          secureTextEntry
-          autoCapitalize="none"
-          mode="outlined"
-          autoFocus
-          onChangeText={pw => handlePasswordChange(pw)}
-          theme={{
-            colors: {
-              primary: Colors.primary.color,
-              underlineColor: "transparent",
-              background: "#fff",
-            },
-          }}
-        />
-        {!!pwErrors.length && <Text style={styles.helperText}>{pwErrors[0]}</Text>}
-      </View>
+      <Text style={styles.heading}>Login using {"\n"}your password</Text>
+      <TextInput
+        label="Email"
+        onChangeText={email => handleEmailChange(email)}
+        style={styles.textInput}
+        mode="outlined"
+        error={emailErrors.includes("email") && true}
+        selectionColor={Colors.secondary.color}
+        theme={{
+          colors: {
+            primary: Colors.primary.color,
+            underlineColor: "transparent",
+            background: "#fff",
+          },
+        }}
+      />
+      {!!emailErrors.length && <Text style={styles.helperText}>{emailErrors[0]}</Text>}
 
-      {!!errors.length && <Text>{errors[0]}</Text>}
+      <TextInput
+        style={styles.textInput}
+        label="Password"
+        secureTextEntry
+        autoCapitalize="none"
+        mode="outlined"
+        autoFocus
+        onChangeText={pw => handlePasswordChange(pw)}
+        theme={{
+          colors: {
+            primary: Colors.primary.color,
+            underlineColor: "transparent",
+            background: "#fff",
+          },
+        }}
+      />
+      {!!pwErrors.length && <Text style={styles.helperText}>{pwErrors[0]}</Text>}
+
+      {!!errors.length && <Text style={styles.helperText}>{errors[0]}</Text>}
 
       {!!email && !!password && !emailErrors.length && !pwErrors.length && (
         <TouchableOpacity style={styles.button} onPress={handleSignIn}>
@@ -101,63 +100,48 @@ const PasswordLoginScreen = ({navigation}) => {
 };
 export default PasswordLoginScreen;
 
-const {width} = Dimensions.get("screen");
-const widthTextInput = width * 0.9;
-
 const styles = StyleSheet.create({
-  btnContainer: {
-    alignSelf: "center",
-    flexDirection: "column",
-  },
   btnText: {
     color: "#fff",
     fontSize: 18,
     textAlign: "center",
   },
   button: {
+    alignSelf: "center",
     backgroundColor: Colors.primary.color,
     borderRadius: 10,
-    marginTop: 10,
+    marginTop: 25,
     padding: 15,
-  },
-  buttonDisabled: {
-    backgroundColor: "grey",
-    borderRadius: 10,
-    marginTop: 10,
-    padding: 15,
+    width: "80%",
   },
   container: {
     backgroundColor: "#fff",
     flex: 1,
-    justifyContent: "flex-start",
-    paddingTop: 40,
+    justifyContent: "center",
+    alignItems: "center",
   },
   heading: {
     color: Colors.primary.color,
     fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
+    marginBottom: 10,
   },
   linkText: {
     color: Colors.secondary.color,
     fontSize: 14,
-    marginBottom: 20,
+    marginTop: 30,
     textAlign: "center",
     textDecorationLine: "underline",
   },
-  miniBtn: {
-    backgroundColor: Colors.secondary.color,
-    flex: 1,
-    padding: 5,
-  },
-  subHeading: {
-    color: Colors.fontColor.color,
-    fontSize: 15,
-    padding: 30,
+  helperText: {
+    color: Colors.errorColor.color,
+    fontSize: 12,
+    marginTop: 10,
     textAlign: "center",
   },
   textInput: {
-    marginBottom: 20,
-    width: widthTextInput,
+    marginTop: 20,
+    width: "80%",
   },
 });

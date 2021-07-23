@@ -9,29 +9,20 @@
     "browser": true,
     "react-native/react-native": true
   },
-  "plugins": [
-    "react",
-    "react-native",
-    "react-hooks",
-    "prettier"
-  ],
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "airbnb",
-    "prettier"
-  ],
+  "plugins": ["react", "react-native", "react-hooks", "prettier"],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "airbnb", "prettier"],
   "rules": {
-    "react-native/no-unused-styles": 0,
+    "react-native/no-unused-styles": 2,
     "react-native/split-platform-components": 2,
-    "react-native/no-inline-styles": 2,
+    "react-native/no-inline-styles": 0,
     "react-native/no-color-literals": 0,
     "react-native/no-raw-text": 2,
-    "no-console":0,
-    "import/order":0,
-    "default-case":0,
-    "no-extra-boolean-cast":1,
-    "consistent-return":0,
+    "no-console": 0,
+    "import/order": 0,
+    "default-case": 0,
+    "import/prefer-default-export": 0,
+    "no-extra-boolean-cast": 1,
+    "consistent-return": 0,
     "no-unused-vars": [
       "error",
       {
@@ -39,8 +30,9 @@
         "args": "none"
       }
     ],
+    " prefer-template":0,
     "react-native/sort-styles": [
-      "error",
+      "off",
       "asc",
       {
         "ignoreClassNames": false,
@@ -51,9 +43,7 @@
     "no-use-before-define": "off",
     "no-unused-expressions": "off",
     "avoidEscape": "off",
-    "no-shadow": [
-      "warn"
-    ],
+    "no-shadow": ["warn"],
     "prettier/prettier": [
       "error",
       {
@@ -64,10 +54,7 @@
     "react/jsx-filename-extension": [
       "error",
       {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".js", ".jsx"]
       }
     ]
   },
