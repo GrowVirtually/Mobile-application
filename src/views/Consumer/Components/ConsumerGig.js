@@ -1,23 +1,17 @@
-import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
-import * as Colors from '../../../styles/abstracts/colors';
-import {useNavigation} from '@react-navigation/core';
+/* eslint-disable prettier/prettier */
+import React from "react";
+import {Text, View, StyleSheet} from "react-native";
+import {Avatar, Button, Card, Title, Paragraph} from "react-native-paper";
+import * as Colors from "../../../styles/abstracts/colors";
+import {useNavigation} from "@react-navigation/core";
 
-export const ConsumerGig = ({
-  gigTitle,
-  priceTag,
-  expireDate,
-  growerName,
-  imgUrl,
-  id,
-}) => {
+export const ConsumerGig = ({gigTitle, priceTag, expireDate, growerName, imgUrl, id}) => {
   const navigation = useNavigation();
   return (
     <Card
       style={ConsumerGigStyle.gridItem}
       onPress={() =>
-        navigation.navigate('GigScreen', {
+        navigation.navigate("GigScreen", {
           gigTitle,
           priceTag,
           expireDate,
@@ -32,24 +26,21 @@ export const ConsumerGig = ({
           <Text style={ConsumerGigStyle.gigTitle}>{gigTitle}</Text>
           <Text style={ConsumerGigStyle.gigSubTitle}>{priceTag}</Text>
           <Text style={ConsumerGigStyle.expireTxt}>
-            Expires in{' '}
-            {expireDate + ' ' + (expireDate > 1 ? 'days' : 'day')}
+            Expires in {expireDate + " " + (expireDate > 1 ? "days" : "day")}
           </Text>
         </View>
         <View style={ConsumerGigStyle.cardRight}>
           <Avatar.Text
             size={24}
             label={growerName
-              .split(' ')
+              .split(" ")
               .map(name => name.charAt(0))
-              .join('')}
+              .join("")}
             color="#fff"
             style={{backgroundColor: Colors.primary.color}}
           />
           <Text style={ConsumerGigStyle.avatarTxt}>
-            {growerName.length > 10
-              ? growerName.slice(0, 9) + '..'
-              : growerName}
+            {growerName.length > 10 ? growerName.slice(0, 9) + ".." : growerName}
           </Text>
         </View>
       </View>
@@ -58,7 +49,7 @@ export const ConsumerGig = ({
 };
 const ConsumerGigStyle = StyleSheet.create({
   gridItem: {
-    width: '46%',
+    width: "46%",
     margin: 5,
   },
   img: {
@@ -66,13 +57,13 @@ const ConsumerGigStyle = StyleSheet.create({
   },
   cardContent: {
     padding: 5,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   cardLeft: {},
   cardRight: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   gigTitle: {
     fontSize: 13,
@@ -80,7 +71,7 @@ const ConsumerGigStyle = StyleSheet.create({
   },
   gigSubTitle: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
     color: Colors.fontColor.color,
   },

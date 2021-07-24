@@ -1,5 +1,5 @@
 import React, {useReducer} from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View, StatusBar} from "react-native";
 import * as Animatable from "react-native-animatable";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import userTypeReducer from "../../reducers/userType";
@@ -20,6 +20,7 @@ const SignUpPathDeciderScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor={Colors.primary.color} />
       <View style={styles.header}>
         <Text style={styles.heading}>W e l c o m e</Text>
         <Animatable.Image

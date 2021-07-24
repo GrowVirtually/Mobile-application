@@ -1,6 +1,7 @@
-import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {ConsumerGigs} from './ConsumerGigs';
+/* eslint-disable arrow-body-style */
+import React from "react";
+import {Text, View, StyleSheet} from "react-native";
+import {ConsumerGigs} from "./ConsumerGigs";
 
 export const ConsumerContent = () => {
   return (
@@ -11,7 +12,7 @@ export const ConsumerContent = () => {
 };
 const style = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     flex: 1,
   },
 });

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {TouchableOpacity, StyleSheet, Text, View} from "react-native";
+import {TouchableOpacity, StyleSheet, Text, View, StatusBar} from "react-native";
 import {TextInput} from "react-native-paper";
 import * as Colors from "../../styles/abstracts/colors";
 import * as Base from "../../styles/base/base";
@@ -24,21 +24,9 @@ export const SignupScreen1 = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      {/* <Image
-        animation={'bounceIn'}
-        duration={1500}
-        source={require('../../assets/logo.png')}
-        style={styles.logo}
-        resizeMode={'stretch'}
-      /> */}
+      <StatusBar backgroundColor={Colors.primary.color} />
       <Text style={styles.heading}>Tell us about you</Text>
       <View>
-        {/* <TextInput
-          style={styles.textInput}
-          value={firstName}
-          onChangeText={name => validateName(name)}
-        /> */}
-
         <TextInput
           label="First name"
           value={firstName}
@@ -56,13 +44,6 @@ export const SignupScreen1 = ({navigation, route}) => {
           }}
         />
 
-        {/* <Text>Please enter your last name</Text> */}
-        {/* <TextInput
-          style={styles.textInput}
-          value={lastName}
-          onChangeText={name => validateName(name, false)}
-        /> */}
-
         <TextInput
           label="Last name"
           value={lastName}
@@ -79,11 +60,6 @@ export const SignupScreen1 = ({navigation, route}) => {
           }}
         />
 
-        {/* <Text>Enter your email</Text>
-        <TextInput
-          style={styles.textInput}
-          onChangeText={email => validateEmail(email)}
-        /> */}
         <TextInput
           label="Email"
           onChangeText={email => handleEmailChange(email)}
@@ -142,12 +118,8 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "#fff",
-    // alignItems: 'center',
     flex: 1,
     justifyContent: "center",
-  },
-  error: {
-    color: Colors.errorColor,
   },
   heading: {
     color: Colors.primary.color,
@@ -168,10 +140,6 @@ const styles = StyleSheet.create({
     marginTop: 50,
     textAlign: "center",
     textDecorationLine: "underline",
-  },
-  logo: {
-    ...Base.logoLarge,
-    alignSelf: "center",
   },
   textInput: {
     alignSelf: "center",

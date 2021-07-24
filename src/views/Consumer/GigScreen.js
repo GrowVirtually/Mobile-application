@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StatusBar,
   Image,
@@ -8,11 +8,11 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
-} from 'react-native';
-import * as Colors from '../../styles/abstracts/colors';
-import {ConsumerHeader} from '../Consumer/Components/ConsumerHeader';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import NumericInput from 'react-native-numeric-input';
+} from "react-native";
+import * as Colors from "../../styles/abstracts/colors";
+import {ConsumerHeader} from "../Consumer/Components/ConsumerHeader";
+import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import NumericInput from "react-native-numeric-input";
 
 export const GigScreen = ({route, navigation}) => {
   const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = route.params;
@@ -33,44 +33,28 @@ export const GigScreen = ({route, navigation}) => {
               <Text style={styles.gigPrice}>{priceTag}</Text>
             </View>
             <TouchableOpacity>
-              <MaterialIcon
-                name="heart"
-                size={25}
-                color={Colors.secondary.color}
-              />
+              <MaterialIcon name="heart" size={25} color={Colors.secondary.color} />
             </TouchableOpacity>
           </View>
           <View style={styles.secondRow}>
             <Text style={styles.availableTxt}>34KG Available</Text>
-            <MaterialIcon
-              style={styles.expireTxt}
-              size={8}
-              name="checkbox-blank-circle"
-            />
+            <MaterialIcon style={styles.expireTxt} size={8} name="checkbox-blank-circle" />
             <Text style={styles.expireTxt}>
-              Expires in {expireDate + ' ' + (expireDate > 1 ? 'days' : 'day')}
+              Expires in {expireDate + " " + (expireDate > 1 ? "days" : "day")}
             </Text>
           </View>
           <View style={styles.addressRow}>
-            <MaterialIcon
-              color={Colors.fontColor.color}
-              size={25}
-              name="map-marker"
-            />
+            <MaterialIcon color={Colors.fontColor.color} size={25} name="map-marker" />
             <View style={styles.addresRight}>
               <View style={styles.locationRow}>
-                <Text style={{fontWeight: 'bold'}}>1.4 Km</Text>
+                <Text style={{fontWeight: "bold"}}>1.4 Km</Text>
                 <TouchableOpacity>
                   <Text style={styles.viewOnMap}>View on map</Text>
                 </TouchableOpacity>
               </View>
               <View>
-                <Text style={styles.address}>
-                  No. 33/2, Siebel Avnue, Kirulapone
-                </Text>
-                <Text style={styles.deliverMethod}>
-                  Seller will deliver to you
-                </Text>
+                <Text style={styles.address}>No. 33/2, Siebel Avnue, Kirulapone</Text>
+                <Text style={styles.deliverMethod}>Seller will deliver to you</Text>
               </View>
             </View>
           </View>
@@ -82,13 +66,13 @@ export const GigScreen = ({route, navigation}) => {
               minValue={0}
               rightButtonBackgroundColor={Colors.secondary.color}
               leftButtonBackgroundColor={Colors.secondary.color}
-              iconStyle={{color: '#FFF'}}
+              iconStyle={{color: "#FFF"}}
               borderColor={Colors.secondary.color}
               totalHeight={35}
               totalWidth={90}
             />
             <Text style={{marginLeft: 15}}>Price (Rs): </Text>
-            <Text style={{fontWeight: 'bold'}}>6799.00</Text>
+            <Text style={{fontWeight: "bold"}}>6799.00</Text>
           </View>
           <View style={styles.hr} />
         </View>
@@ -114,52 +98,52 @@ const styles = StyleSheet.create({
   },
 
   gigTitlesHeart: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 10,
   },
   availableTxt: {
     fontSize: 14,
     color: Colors.primary.color,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   secondRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 15,
   },
   expireTxt: {
     marginLeft: 10,
     color: Colors.errorColor.color,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   addressRow: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
+    flexDirection: "row",
+    alignItems: "stretch",
   },
   addresRight: {
     marginLeft: 10,
   },
   locationRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   viewOnMap: {
     marginLeft: 15,
     marginBottom: 5,
     color: Colors.secondary.color,
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
   address: {
     color: Colors.fontColor.color,
     marginBottom: 5,
   },
   deliverMethod: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.fontColor.color,
   },
   qtyRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 15,
   },
   hr: {
