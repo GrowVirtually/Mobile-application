@@ -5,6 +5,7 @@ import MainStackNavigator from "./navigators/StackNavigator";
 import {createStackNavigator} from "@react-navigation/stack";
 import AuthContext from "./context/auth-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {Provider as PaperProvider} from "react-native-paper";
 
 const RootStack = createStackNavigator();
 
@@ -75,19 +76,21 @@ const App = () => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{authContext}}>
-      <NavigationContainer>
-        {!loginState.userToken ? (
-          <RootStack.Navigator headerMode="none">
-            <RootStack.Screen name="MainStackNavigator" component={MainStackNavigator} />
-          </RootStack.Navigator>
-        ) : (
-          <RootStack.Navigator headerMode="none">
-            <RootStack.Screen name="AuthStackNavigator" component={AuthStackNavigator} />
-          </RootStack.Navigator>
-        )}
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <PaperProvider>
+      <AuthContext.Provider value={{authContext}}>
+        <NavigationContainer>
+          {!loginState.userToken ? (
+            <RootStack.Navigator headerMode="none">
+              <RootStack.Screen name="MainStackNavigator" component={MainStackNavigator} />
+            </RootStack.Navigator>
+          ) : (
+            <RootStack.Navigator headerMode="none">
+              <RootStack.Screen name="AuthStackNavigator" component={AuthStackNavigator} />
+            </RootStack.Navigator>
+          )}
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </PaperProvider>
   );
 };
 
