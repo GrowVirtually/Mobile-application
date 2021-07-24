@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as Colors from "../../styles/abstracts/colors";
+import * as Btn from "../../styles/base/button";
 import {ConsumerHeader} from "../Consumer/Components/ConsumerHeader";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import NumericInput from "react-native-numeric-input";
@@ -75,6 +76,57 @@ export const GigScreen = ({route, navigation}) => {
             <Text style={{fontWeight: "bold"}}>6799.00</Text>
           </View>
           <View style={styles.hr} />
+          <View style={styles.ratingRow}>
+            <View style={{flexDirection: "row"}}>
+              <MaterialIcon name="storefront-outline" size={22} color={Colors.fontColor.color} />
+              <View style={styles.sellerDetail}>
+                <Text>For sale by N. Sumana</Text>
+                <View style={styles.verfiedSeller}>
+                  <MaterialIcon name="star-circle" size={18} color={Colors.secondary.color} />
+                  <Text style={styles.verfiedSellerTxt}>GroVi verified seller</Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.ratings}>
+              <MaterialIcon name="star" size={18} color={Colors.secondary.color} />
+              <MaterialIcon name="star" size={18} color={Colors.secondary.color} />
+              <MaterialIcon name="star" size={18} color={Colors.secondary.color} />
+              <MaterialIcon name="star-outline" size={18} color={Colors.secondary.color} />
+              <MaterialIcon name="star-outline" size={18} color={Colors.secondary.color} />
+            </View>
+          </View>
+          <View style={styles.detailRow}>
+            <MaterialIcon name="tag-outline" size={22} color={Colors.fontColor.color} />
+            <View style={styles.sellerDetail}>
+              <View style={{flexDirection: "row"}}>
+                <Text style={styles.detailTitle}>Category: </Text>
+                <Text style={styles.descripton}>Organic</Text>
+              </View>
+            </View>
+            <View style={{flexDirection: "row"}}>
+              <Text style={styles.detailTitle}>Type: </Text>
+              <Text style={styles.descripton}>Vegetable</Text>
+            </View>
+          </View>
+          <View style={styles.detailRow}>
+            <MaterialIcon name="information-outline" size={22} color={Colors.fontColor.color} />
+            <View style={styles.sellerDetail}>
+              <Text style={styles.detailTitle}>Descripton</Text>
+              <Text style={styles.descripton}>
+                Fresh yellow pumpkin harvested and available for sale. Can buy total lot or 5KG lot.
+                Price can be slightly negotiable after confirmation. Call for more details.
+              </Text>
+            </View>
+          </View>
+          <View style={styles.hr} />
+          <TouchableOpacity style={[styles.button, {backgroundColor: Colors.secondary.color}]}>
+            <MaterialIcon name="cart-plus" size={22} color="#fff" style={{marginRight: 5}} />
+            <Text style={Btn.btnText}>Add to cart</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <MaterialIcon name="shopping-outline" size={22} color="#fff" style={{marginRight: 5}} />
+            <Text style={Btn.btnText}>Place order</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -95,8 +147,9 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 10,
+    paddingBottom: 100,
+    backgroundColor: "#fff",
   },
-
   gigTitlesHeart: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -151,5 +204,41 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginTop: 15,
     marginBottom: 15,
+  },
+  ratingRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  sellerDetail: {
+    marginLeft: 20,
+    paddingRight: 30,
+    color: Colors.fontColor.color,
+  },
+  verfiedSeller: {
+    flexDirection: "row",
+    marginTop: 3,
+    alignItems: "center",
+  },
+  verfiedSellerTxt: {
+    fontSize: 12,
+    marginLeft: 5,
+    fontWeight: "bold",
+    color: Colors.fontColor.color,
+  },
+  ratings: {
+    flexDirection: "row",
+  },
+  detailRow: {
+    marginTop: 13,
+    flexDirection: "row",
+  },
+  detailTitle: {
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  button: {
+    ...Btn.button,
+    width: "100%",
+    marginTop: 10,
   },
 });

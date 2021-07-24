@@ -1,12 +1,12 @@
-import { Dimensions } from 'react-native';
+import {Dimensions} from "react-native";
 
-const { height } = Dimensions.get('screen');
+const {height} = Dimensions.get("screen");
 const height_logo = height * 0.28;
 
 export const container = {
   flex: 1,
-  alignItems: 'center',
-  justifyContent: 'center',
+  alignItems: "center",
+  justifyContent: "center",
 };
 
 export const logoLarge = {
