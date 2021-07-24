@@ -14,9 +14,15 @@ import * as Btn from "../../styles/base/button";
 import {ConsumerHeader} from "../Consumer/Components/ConsumerHeader";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import NumericInput from "react-native-numeric-input";
+import {AddToCartDialog} from "./Components/AddToCartDialog";
 
 export const GigScreen = ({route, navigation}) => {
   const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = route.params;
+
+  const [visible, setVisible] = React.useState(false);
+  const showDialog = () => setVisible(true);
+  const hideDialog = () => setVisible(false);
+
   return (
     <SafeAreaView>
       <StatusBar backgroundColor={Colors.primary.color} />
@@ -119,7 +125,9 @@ export const GigScreen = ({route, navigation}) => {
             </View>
           </View>
           <View style={styles.hr} />
-          <TouchableOpacity style={[styles.button, {backgroundColor: Colors.secondary.color}]}>
+          <TouchableOpacity
+            onPress={showDialog}
+            style={[styles.button, {backgroundColor: Colors.secondary.color}]}>
             <MaterialIcon name="cart-plus" size={22} color="#fff" style={{marginRight: 5}} />
             <Text style={Btn.btnText}>Add to cart</Text>
           </TouchableOpacity>
@@ -127,6 +135,12 @@ export const GigScreen = ({route, navigation}) => {
             <MaterialIcon name="shopping-outline" size={22} color="#fff" style={{marginRight: 5}} />
             <Text style={Btn.btnText}>Place order</Text>
           </TouchableOpacity>
+          <AddToCartDialog
+            gig={{gigTitle, priceTag, expireDate, growerName, imgUrl, id}}
+            visible={visible}
+            hideDialog={hideDialog}
+            showDialog={showDialog}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
