@@ -33,6 +33,13 @@ function ConsumerDrawer(props) {
         label={() => <Text style={cusomDrawerStyle.menuTxt}>My Profile</Text>}
         onPress={() => props.navigation.navigate("ProfileScreen")}
       />
+      <DrawerItem
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="account-circle" color="white" size={24} />
+        )}
+        label={() => <Text style={cusomDrawerStyle.menuTxt}>Map</Text>}
+        onPress={() => props.navigation.navigate("Map")}
+      />
       <View style={cusomDrawerStyle.divider} />
 
       <DrawerItem

@@ -12,6 +12,7 @@ import ConsumerDrawer from "./ConsumerDrawer";
 import GrowerDrawer from "./GrowerDrawer";
 import ConsumerStack from "./ConsumerStack";
 import ProfileScreen from "../views/ProfileScreen";
+import {Map} from "../views/Map";
 
 const Drawer = createDrawerNavigator();
 
@@ -27,6 +28,8 @@ function ConsumerDrawerNavigator() {
       {/* ConsumerStack contains all other consumer related screens not on drawer */}
       <Drawer.Screen name={"ConsumerHome"} component={ConsumerStack} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
+      <Drawer.Screen name={"Map"} component={Map} />
+
       <Drawer.Screen name={"Notifications"} component={Notifications} />
     </Drawer.Navigator>
   );
