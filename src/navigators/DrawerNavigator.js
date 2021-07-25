@@ -13,6 +13,7 @@ import GrowerDrawer from "./GrowerDrawer";
 import ConsumerStack from "./ConsumerStack";
 import ProfileScreen from "../views/ProfileScreen";
 import {Map} from "../views/Map";
+import * as Colors from "../styles/abstracts/colors";
 
 const Drawer = createDrawerNavigator();
 
@@ -24,7 +25,7 @@ function ConsumerDrawerNavigator() {
     <Drawer.Navigator
       drawerContent={ConsumerDrawer}
       navigation={navigation}
-      drawerStyle={{backgroundColor: "green"}}>
+      drawerStyle={{backgroundColor: Colors.primary.color}}>
       {/* ConsumerStack contains all other consumer related screens not on drawer */}
       <Drawer.Screen name={"ConsumerHome"} component={ConsumerStack} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
