@@ -67,4 +67,4 @@ android/local.properties
 *.env
 
 # GOOGLE API KEY is in with this file
-/android/app/src/main/api-keys.xml
+/android/app/src/main/res/values/api-keys.xml
