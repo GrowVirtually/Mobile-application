@@ -65,3 +65,6 @@ android/local.properties
 .vscode
 *.lock
 *.env
+
+# GOOGLE API KEY is in with this file
+/android/app/src/main/api-keys.xml
