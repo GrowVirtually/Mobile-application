@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 import React from "react";
 import {
   StatusBar,
@@ -30,6 +31,7 @@ export const GigScreen = ({route, navigation}) => {
         navigation={navigation}
         title={gigTitle}
         subtitle={`${priceTag} from ${growerName}`}
+        showBackButton={true}
       />
       <ScrollView>
         <Image source={{uri: imgUrl}} style={styles.gigImg} />
