@@ -1,26 +1,17 @@
+/* eslint-disable import/no-useless-path-segments */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-boolean-value */
 import React from "react";
-import {
-  StatusBar,
-  Image,
-  View,
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import {Image, View, StyleSheet, Text, SafeAreaView, ScrollView} from "react-native";
 import * as Colors from "../../../styles/abstracts/colors";
-import * as Btn from "../../../styles/base/button";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
-import NumericInput from "react-native-numeric-input";
-import {AddToCartDialog} from "../Components/AddToCartDialog";
-import {AppHeader} from "../../Common/AppHeader";
+import AddToCartDialog from "../gigScreen/components/AddToCartDialog";
+import AppHeader from "../../Common/AppHeader";
 import BigButton from "../../Common/BigButton";
 import Ratings from "../../Common/Ratings";
 import GigTitle from "./components/GigTitle";
 import GigLocation from "./components/GigLocation";
+import QtyPrice from "./components/QtyPrice";
 
 export const GigScreen = ({route, navigation}) => {
   const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = route.params;
@@ -43,22 +34,8 @@ export const GigScreen = ({route, navigation}) => {
 
           <GigLocation />
 
-          <View style={styles.qtyRow}>
-            <Text style={{marginRight: 10}}>Quantity (KG):</Text>
-            <NumericInput
-              rounded
-              onChange={value => console.log(value)}
-              minValue={0}
-              rightButtonBackgroundColor={Colors.secondary.color}
-              leftButtonBackgroundColor={Colors.secondary.color}
-              iconStyle={{color: "#FFF"}}
-              borderColor={Colors.secondary.color}
-              totalHeight={35}
-              totalWidth={90}
-            />
-            <Text style={{marginLeft: 15}}>Price (Rs): </Text>
-            <Text style={{fontWeight: "bold"}}>6799.00</Text>
-          </View>
+          <QtyPrice />
+
           <View style={styles.hr} />
           <View style={styles.ratingRow}>
             <View style={{flexDirection: "row"}}>
@@ -127,11 +104,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 
-  qtyRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 15,
-  },
   hr: {
     borderBottomColor: Colors.tertiary.color,
     borderBottomWidth: 1,

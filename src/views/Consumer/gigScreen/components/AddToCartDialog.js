@@ -1,14 +1,14 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable arrow-body-style */
 import React, {useState} from "react";
-import {Paragraph, Dialog, Portal} from "react-native-paper";
+import {Dialog, Portal} from "react-native-paper";
 import {Image, View, Text, TouchableOpacity, StyleSheet} from "react-native";
-import * as Colors from "../../../styles/abstracts/colors";
-import * as Btn from "../../../styles/base/button";
+import * as Colors from "../../../../styles/abstracts/colors";
+import * as Btn from "../../../../styles/base/button";
 import NumericInput from "react-native-numeric-input";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-export const AddToCartDialog = props => {
+const AddToCartDialog = props => {
   const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = props.gig;
   const [val, setVal] = useState(1);
   return (
@@ -45,13 +45,14 @@ export const AddToCartDialog = props => {
 
               <Text style={styles.btnTxt}>Add to cart</Text>
             </TouchableOpacity>
-
           </View>
         </Dialog>
       </Portal>
     </View>
   );
 };
+
+export default AddToCartDialog;
 
 const styles = StyleSheet.create({
   title: {

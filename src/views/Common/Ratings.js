@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from "react";
 import {StyleSheet, Text, View} from "react-native";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -18,11 +19,11 @@ const Ratings = ({val}) => {
 
   return (
     <View style={{flexDirection: "row"}}>
-      {stars.map(val =>
+      {stars.map((val, index) =>
         val === 1 ? (
-          <MaterialIcon name="star" size={18} color={Colors.secondary.color} />
+          <MaterialIcon key={index} name="star" size={18} color={Colors.secondary.color} />
         ) : (
-          <MaterialIcon name="star-outline" size={18} color={Colors.secondary.color} />
+          <MaterialIcon key={index} name="star-outline" size={18} color={Colors.secondary.color} />
         ),
       )}
     </View>

@@ -5,7 +5,7 @@ import {Appbar} from "react-native-paper";
 import {StatusBar} from "react-native";
 import * as Colors from "../../styles/abstracts/colors";
 
-export const AppHeader = ({navigation, title, subtitle, showBackButton}) => {
+const AppHeader = ({navigation, title, subtitle, showBackButton}) => {
   return (
     <>
       <StatusBar backgroundColor={Colors.primary.color} />
@@ -21,6 +21,8 @@ export const AppHeader = ({navigation, title, subtitle, showBackButton}) => {
     </>
   );
 };
+
+export default AppHeader;
 
 const styles = {
   header: {
