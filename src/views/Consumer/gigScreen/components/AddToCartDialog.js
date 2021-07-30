@@ -16,7 +16,6 @@ const AddToCartDialog = props => {
       <Portal>
         <Dialog visible={props.visible} onDismiss={props.hideDialog}>
           <View style={styles.container}>
-            <Dialog.Title style={styles.title}>Add to cart</Dialog.Title>
             <Dialog.Content>
               <View style={styles.row}>
                 <Image source={{uri: imgUrl}} style={styles.gigImg} />
@@ -55,10 +54,6 @@ const AddToCartDialog = props => {
 export default AddToCartDialog;
 
 const styles = StyleSheet.create({
-  title: {
-    color: Colors.primary.color,
-    textAlign: "center",
-  },
   button: {
     ...Btn.button,
     width: "90%",
@@ -73,6 +68,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingBottom: 10,
+    paddingTop: 25,
   },
   gigImg: {
     height: 80,

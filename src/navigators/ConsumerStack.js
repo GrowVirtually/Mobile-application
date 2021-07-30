@@ -4,8 +4,8 @@
 import React from "react";
 
 import {createStackNavigator} from "@react-navigation/stack";
-import {ConsumerHomeScreen} from "../views/Consumer/ConsumerHomeScreen";
 import {GigScreen} from "../views/Consumer/gigScreen/GigScreen";
+import {ConsumerHomeScreen} from "../views/Consumer/homeScreen/ConsumerHomeScreen";
 const Stack = createStackNavigator();
 
 const ConsumerStack = () => {

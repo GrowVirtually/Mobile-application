@@ -2,10 +2,10 @@
 import React from "react";
 import {ScrollView, TouchableOpacity, StyleSheet, View, SafeAreaView} from "react-native";
 import {Searchbar} from "react-native-paper";
-import {ConsumerContent} from "./Components/ConsumerContent";
+import {ConsumerContent} from "./components/ConsumerContent";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import * as Colors from "../../styles/abstracts/colors";
-import AppHeader from "../Common/AppHeader";
+import * as Colors from "../../../styles/abstracts/colors";
+import AppHeader from "../../Common/AppHeader";
 
 export const ConsumerHomeScreen = ({navigation}) => {
   return (
