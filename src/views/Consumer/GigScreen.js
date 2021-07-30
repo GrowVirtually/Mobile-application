@@ -12,22 +12,20 @@ import {
 } from "react-native";
 import * as Colors from "../../styles/abstracts/colors";
 import * as Btn from "../../styles/base/button";
-import {ConsumerHeader} from "../Consumer/Components/ConsumerHeader";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import NumericInput from "react-native-numeric-input";
 import {AddToCartDialog} from "./Components/AddToCartDialog";
+import {AppHeader} from "../Common/AppHeader";
 
 export const GigScreen = ({route, navigation}) => {
   const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = route.params;
-
   const [visible, setVisible] = React.useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
   return (
     <SafeAreaView>
-      <StatusBar backgroundColor={Colors.primary.color} />
-      <ConsumerHeader
+      <AppHeader
         navigation={navigation}
         title={gigTitle}
         subtitle={`${priceTag} from ${growerName}`}

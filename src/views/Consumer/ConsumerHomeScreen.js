@@ -10,15 +10,14 @@ import {
 } from "react-native";
 import {Searchbar} from "react-native-paper";
 import {ConsumerContent} from "./Components/ConsumerContent";
-import {ConsumerHeader} from "./Components/ConsumerHeader";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../styles/abstracts/colors";
+import {AppHeader} from "../Common/AppHeader";
 
 export const ConsumerHomeScreen = ({navigation}) => {
   return (
     <SafeAreaView>
-      <StatusBar backgroundColor={Colors.primary.color} />
-      <ConsumerHeader navigation={navigation} title="Gigs" />
+      <AppHeader navigation={navigation} title="Gigs" />
       <View style={styles.searchbarContainer}>
         <Searchbar style={styles.searchbarLeft} placeholder="Search" />
         <TouchableOpacity style={styles.searchbarRight}>
