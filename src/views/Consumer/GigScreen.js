@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-boolean-value */
 import React from "react";
 import {
@@ -16,6 +17,8 @@ import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import NumericInput from "react-native-numeric-input";
 import {AddToCartDialog} from "./Components/AddToCartDialog";
 import {AppHeader} from "../Common/AppHeader";
+import BigButton from "../Common/BigButton";
+import Ratings from "../Common/Ratings";
 
 export const GigScreen = ({route, navigation}) => {
   const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = route.params;
@@ -94,11 +97,7 @@ export const GigScreen = ({route, navigation}) => {
               </View>
             </View>
             <View style={styles.ratings}>
-              <MaterialIcon name="star" size={18} color={Colors.secondary.color} />
-              <MaterialIcon name="star" size={18} color={Colors.secondary.color} />
-              <MaterialIcon name="star" size={18} color={Colors.secondary.color} />
-              <MaterialIcon name="star-outline" size={18} color={Colors.secondary.color} />
-              <MaterialIcon name="star-outline" size={18} color={Colors.secondary.color} />
+              <Ratings val={1} />
             </View>
           </View>
           <View style={styles.detailRow}>
@@ -124,17 +123,11 @@ export const GigScreen = ({route, navigation}) => {
               </Text>
             </View>
           </View>
+
           <View style={styles.hr} />
-          <TouchableOpacity
-            onPress={showDialog}
-            style={[styles.button, {backgroundColor: Colors.secondary.color}]}>
-            <MaterialIcon name="cart-plus" size={22} color="#fff" style={{marginRight: 5}} />
-            <Text style={Btn.btnText}>Add to cart</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <MaterialIcon name="shopping-outline" size={22} color="#fff" style={{marginRight: 5}} />
-            <Text style={Btn.btnText}>Place order</Text>
-          </TouchableOpacity>
+          <BigButton text="Add to cart" icon="cart-plus" type="secondary" onPress={showDialog} />
+          <BigButton text="Place Order" icon="shopping-outline" />
+
           <AddToCartDialog
             gig={{gigTitle, priceTag, expireDate, growerName, imgUrl, id}}
             visible={visible}
@@ -239,9 +232,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: Colors.fontColor.color,
   },
-  ratings: {
-    flexDirection: "row",
-  },
+
   detailRow: {
     marginTop: 13,
     flexDirection: "row",
@@ -249,10 +240,5 @@ const styles = StyleSheet.create({
   detailTitle: {
     fontWeight: "bold",
     marginBottom: 5,
-  },
-  button: {
-    ...Btn.button,
-    width: "100%",
-    marginTop: 10,
   },
 });

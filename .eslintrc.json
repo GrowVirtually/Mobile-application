@@ -23,6 +23,7 @@
     "import/prefer-default-export": 0,
     "no-extra-boolean-cast": 1,
     "consistent-return": 0,
+    "arrow-body-style": 0,
     "no-unused-vars": [
       "error",
       {
@@ -30,7 +31,7 @@
         "args": "none"
       }
     ],
-    " prefer-template":0,
+    " prefer-template": 0,
     "react-native/sort-styles": [
       "off",
       "asc",
