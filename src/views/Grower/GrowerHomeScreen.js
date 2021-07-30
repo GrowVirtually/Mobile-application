@@ -1,14 +1,13 @@
 import React from 'react';
 import {Text, View, StatusBar,StyleSheet} from 'react-native';
-import {ConsumerContent} from './Components/ConsumerContent';
-import {ConsumerHeader} from './Components/ConsumerHeader';
 import * as Colors from '../../styles/abstracts/colors';
+import { AppHeader } from '../Common/AppHeader';
 
 export const GrowerHomeScreen = ({navigation}) => {
   return (
     <View>
        <StatusBar backgroundColor={Colors.primary.color} />
-       <ConsumerHeader navigation={navigation} title="Grower" />
+       <AppHeader navigation={navigation} title="Grower" />
     </View>
   );
 };

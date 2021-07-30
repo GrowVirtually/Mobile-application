@@ -1,14 +1,14 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable arrow-body-style */
 import React, {useState} from "react";
-import {Paragraph, Dialog, Portal} from "react-native-paper";
+import {Dialog, Portal} from "react-native-paper";
 import {Image, View, Text, TouchableOpacity, StyleSheet} from "react-native";
-import * as Colors from "../../../styles/abstracts/colors";
-import * as Btn from "../../../styles/base/button";
+import * as Colors from "../../../../styles/abstracts/colors";
+import * as Btn from "../../../../styles/base/button";
 import NumericInput from "react-native-numeric-input";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-export const AddToCartDialog = props => {
+const AddToCartDialog = props => {
   const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = props.gig;
   const [val, setVal] = useState(1);
   return (
@@ -16,7 +16,6 @@ export const AddToCartDialog = props => {
       <Portal>
         <Dialog visible={props.visible} onDismiss={props.hideDialog}>
           <View style={styles.container}>
-            <Dialog.Title style={styles.title}>Add to cart</Dialog.Title>
             <Dialog.Content>
               <View style={styles.row}>
                 <Image source={{uri: imgUrl}} style={styles.gigImg} />
@@ -45,7 +44,6 @@ export const AddToCartDialog = props => {
 
               <Text style={styles.btnTxt}>Add to cart</Text>
             </TouchableOpacity>
-
           </View>
         </Dialog>
       </Portal>
@@ -53,11 +51,9 @@ export const AddToCartDialog = props => {
   );
 };
 
+export default AddToCartDialog;
+
 const styles = StyleSheet.create({
-  title: {
-    color: Colors.primary.color,
-    textAlign: "center",
-  },
   button: {
     ...Btn.button,
     width: "90%",
@@ -72,6 +68,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingBottom: 10,
+    paddingTop: 25,
   },
   gigImg: {
     height: 80,
