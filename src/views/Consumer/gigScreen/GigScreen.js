@@ -12,6 +12,8 @@ import Ratings from "../../Common/Ratings";
 import GigTitle from "./components/GigTitle";
 import GigLocation from "./components/GigLocation";
 import QtyPrice from "./components/QtyPrice";
+import HorizontalRule from "../../Common/HorizontalRule";
+import SellerInfo from "./components/SellerInfo";
 
 export const GigScreen = ({route, navigation}) => {
   const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = route.params;
@@ -36,22 +38,9 @@ export const GigScreen = ({route, navigation}) => {
 
           <QtyPrice />
 
-          <View style={styles.hr} />
-          <View style={styles.ratingRow}>
-            <View style={{flexDirection: "row"}}>
-              <MaterialIcon name="storefront-outline" size={22} color={Colors.fontColor.color} />
-              <View style={styles.sellerDetail}>
-                <Text>For sale by N. Sumana</Text>
-                <View style={styles.verfiedSeller}>
-                  <MaterialIcon name="star-circle" size={18} color={Colors.secondary.color} />
-                  <Text style={styles.verfiedSellerTxt}>GroVi verified seller</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.ratings}>
-              <Ratings val={1} />
-            </View>
-          </View>
+          <HorizontalRule />
+
+          <SellerInfo />
 
           <View style={styles.detailRow}>
             <MaterialIcon name="tag-outline" size={22} color={Colors.fontColor.color} />
@@ -78,7 +67,8 @@ export const GigScreen = ({route, navigation}) => {
             </View>
           </View>
 
-          <View style={styles.hr} />
+          <HorizontalRule />
+
           <BigButton text="Add to cart" icon="cart-plus" type="secondary" onPress={showDialog} />
           <BigButton text="Place Order" icon="shopping-outline" />
 
@@ -103,34 +93,11 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
     backgroundColor: "#fff",
   },
-
-  hr: {
-    borderBottomColor: Colors.tertiary.color,
-    borderBottomWidth: 1,
-    marginTop: 15,
-    marginBottom: 15,
-  },
-  ratingRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
   sellerDetail: {
     marginLeft: 20,
     paddingRight: 30,
     color: Colors.fontColor.color,
   },
-  verfiedSeller: {
-    flexDirection: "row",
-    marginTop: 3,
-    alignItems: "center",
-  },
-  verfiedSellerTxt: {
-    fontSize: 12,
-    marginLeft: 5,
-    fontWeight: "bold",
-    color: Colors.fontColor.color,
-  },
-
   detailRow: {
     marginTop: 13,
     flexDirection: "row",
