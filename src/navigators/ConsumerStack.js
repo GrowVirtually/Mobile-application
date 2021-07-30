@@ -4,13 +4,12 @@
 import React from "react";
 
 import {createStackNavigator} from "@react-navigation/stack";
-import { ConsumerHomeScreen } from "../views/Consumer/ConsumerHomeScreen";
-import {GigScreen} from "../views/Consumer/GigScreen";
-
+import {ConsumerHomeScreen} from "../views/Consumer/ConsumerHomeScreen";
+import {GigScreen} from "../views/Consumer/gigScreen/GigScreen";
 const Stack = createStackNavigator();
 
 const ConsumerStack = () => {
-    // Consumer Screens which are not on drawer are here
+  // Consumer Screens which are not on drawer are here
   return (
     <Stack.Navigator headerMode={"none"}>
       <Stack.Screen name={"Gigs"} component={ConsumerHomeScreen} />
