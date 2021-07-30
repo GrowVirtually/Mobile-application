@@ -2,19 +2,17 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-boolean-value */
 import React from "react";
-import {Image, View, StyleSheet, Text, SafeAreaView, ScrollView} from "react-native";
-import * as Colors from "../../../styles/abstracts/colors";
-import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import {Image, View, StyleSheet, SafeAreaView, ScrollView} from "react-native";
 import AddToCartDialog from "../gigScreen/components/AddToCartDialog";
 import AppHeader from "../../Common/AppHeader";
 import BigButton from "../../Common/BigButton";
-import Ratings from "../../Common/Ratings";
 import GigTitle from "./components/GigTitle";
 import GigLocation from "./components/GigLocation";
 import QtyPrice from "./components/QtyPrice";
 import HorizontalRule from "../../Common/HorizontalRule";
 import SellerInfo from "./components/SellerInfo";
 import CategoryInfo from "./components/CategoryInfo";
+import GigDesc from "./components/GigDesc";
 
 export const GigScreen = ({route, navigation}) => {
   const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = route.params;
@@ -45,16 +43,7 @@ export const GigScreen = ({route, navigation}) => {
 
           <CategoryInfo />
 
-          <View style={styles.detailRow}>
-            <MaterialIcon name="information-outline" size={22} color={Colors.fontColor.color} />
-            <View style={styles.sellerDetail}>
-              <Text style={styles.detailTitle}>Descripton</Text>
-              <Text style={styles.descripton}>
-                Fresh yellow pumpkin harvested and available for sale. Can buy total lot or 5KG lot.
-                Price can be slightly negotiable after confirmation. Call for more details.
-              </Text>
-            </View>
-          </View>
+          <GigDesc />
 
           <HorizontalRule />
 
@@ -81,18 +70,5 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingBottom: 100,
     backgroundColor: "#fff",
-  },
-  sellerDetail: {
-    marginLeft: 20,
-    paddingRight: 30,
-    color: Colors.fontColor.color,
-  },
-  detailRow: {
-    marginTop: 13,
-    flexDirection: "row",
-  },
-  detailTitle: {
-    fontWeight: "bold",
-    marginBottom: 5,
   },
 });
