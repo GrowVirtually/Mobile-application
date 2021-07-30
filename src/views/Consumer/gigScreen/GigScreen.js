@@ -14,6 +14,7 @@ import GigLocation from "./components/GigLocation";
 import QtyPrice from "./components/QtyPrice";
 import HorizontalRule from "../../Common/HorizontalRule";
 import SellerInfo from "./components/SellerInfo";
+import CategoryInfo from "./components/CategoryInfo";
 
 export const GigScreen = ({route, navigation}) => {
   const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = route.params;
@@ -42,19 +43,7 @@ export const GigScreen = ({route, navigation}) => {
 
           <SellerInfo />
 
-          <View style={styles.detailRow}>
-            <MaterialIcon name="tag-outline" size={22} color={Colors.fontColor.color} />
-            <View style={styles.sellerDetail}>
-              <View style={{flexDirection: "row"}}>
-                <Text style={styles.detailTitle}>Category: </Text>
-                <Text style={styles.descripton}>Organic</Text>
-              </View>
-            </View>
-            <View style={{flexDirection: "row"}}>
-              <Text style={styles.detailTitle}>Type: </Text>
-              <Text style={styles.descripton}>Vegetable</Text>
-            </View>
-          </View>
+          <CategoryInfo />
 
           <View style={styles.detailRow}>
             <MaterialIcon name="information-outline" size={22} color={Colors.fontColor.color} />
