@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {TouchableOpacity, StyleSheet, Text, View, StatusBar} from "react-native";
 import {TextInput} from "react-native-paper";
 import * as Colors from "../../styles/abstracts/colors";
-import * as Base from "../../styles/base/base";
 
 import {validateName, validateEmail} from "../../utils/validators";
 

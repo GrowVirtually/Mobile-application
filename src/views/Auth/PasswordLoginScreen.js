@@ -54,6 +54,7 @@ const PasswordLoginScreen = ({navigation}) => {
         onChangeText={email => handleEmailChange(email)}
         style={styles.textInput}
         mode="outlined"
+        autoFocus
         error={emailErrors.includes("email") && true}
         selectionColor={Colors.secondary.color}
         theme={{
@@ -72,7 +73,6 @@ const PasswordLoginScreen = ({navigation}) => {
         secureTextEntry
         autoCapitalize="none"
         mode="outlined"
-        autoFocus
         onChangeText={pw => handlePasswordChange(pw)}
         theme={{
           colors: {
@@ -91,6 +91,10 @@ const PasswordLoginScreen = ({navigation}) => {
           <Text style={styles.btnText}>Sign in</Text>
         </TouchableOpacity>
       )}
+      <TouchableOpacity onPress={() => navigation.navigate("PasswordResetScreen")}>
+        {/* <MaterialIcons name="arrow-back" /> */}
+        <Text style={styles.linkText}>Forgot password?</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         {/* <MaterialIcons name="arrow-back" /> */}
         <Text style={styles.linkText}>Go back</Text>

@@ -31,7 +31,7 @@ const SignupScreen2 = ({navigation, route}) => {
         fname: route.params.firstName,
         lname: route.params.lastName,
         email: route.params.email,
-        tel: route.params.phone,
+        phone: route.params.phone,
         password,
       });
       if (addUser.data.status === "success") {
