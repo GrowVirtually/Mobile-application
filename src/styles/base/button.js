@@ -10,9 +10,9 @@ export const button = {
   alignSelf: "center",
   backgroundColor: Colors.primary.color,
   borderRadius: 10,
-  marginTop: 25,
+  marginTop: 10,
   padding: 15,
-  width: "80%",
+  width: "100%",
   flexDirection: "row",
   justifyContent: "center",
 };

@@ -2,7 +2,7 @@
 import React from "react";
 import {Text, View, StyleSheet} from "react-native";
 import {Avatar, Button, Card, Title, Paragraph} from "react-native-paper";
-import * as Colors from "../../../styles/abstracts/colors";
+import * as Colors from "../../../../styles/abstracts/colors";
 import {useNavigation} from "@react-navigation/core";
 
 export const ConsumerGig = ({gigTitle, priceTag, expireDate, growerName, imgUrl, id}) => {
