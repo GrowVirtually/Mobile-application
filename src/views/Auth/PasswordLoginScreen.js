@@ -91,6 +91,10 @@ const PasswordLoginScreen = ({navigation}) => {
           <Text style={styles.btnText}>Sign in</Text>
         </TouchableOpacity>
       )}
+      <TouchableOpacity onPress={() => navigation.navigate("PasswordResetScreen")}>
+        {/* <MaterialIcons name="arrow-back" /> */}
+        <Text style={styles.linkText}>Forgot password?</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         {/* <MaterialIcons name="arrow-back" /> */}
         <Text style={styles.linkText}>Go back</Text>
