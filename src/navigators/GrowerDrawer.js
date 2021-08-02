@@ -17,7 +17,7 @@ function ConsumerDrawer(props) {
           label="DD"
           style={{backgroundColor: 'white', color: 'green'}}
         />
-        <Text style={cusomDrawerStyle.txt}>Dimuthu Dhanushka</Text>
+        <Text style={cusomDrawerStyle.txt}>Anjana </Text>
       </SafeAreaView>
 
       {/* Default items */}
@@ -26,8 +26,8 @@ function ConsumerDrawer(props) {
         icon={({color, size}) => (
           <MaterialCommunityIcons name="home" color="white" size={24} />
         )}
-        label={() => <Text style={cusomDrawerStyle.menuTxt}>Gigs</Text>}
-        onPress={() => props.navigation.navigate('ConsumerHome')}
+        label={() => <Text style={cusomDrawerStyle.menuTxt}>Home</Text>}
+        onPress={() => props.navigation.navigate('GrowerHome')}
       />
       <DrawerItem
         icon={({color, size}) => (
@@ -37,6 +37,17 @@ function ConsumerDrawer(props) {
           <Text style={cusomDrawerStyle.menuTxt}>Notifications</Text>
         )}
         onPress={() => props.navigation.navigate('Notifications')}
+      />
+ 
+
+      <DrawerItem
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="bell" color="white" size={24} />
+        )}
+        label={() => (
+          <Text style={cusomDrawerStyle.menuTxt}>Profile</Text>
+        )}
+        onPress={() => props.navigation.navigate('ProfileScreen')}
       />
       <View style={cusomDrawerStyle.divider} />
 
