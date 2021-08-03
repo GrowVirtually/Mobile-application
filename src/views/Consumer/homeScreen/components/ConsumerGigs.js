@@ -4,11 +4,10 @@ import GigRow from "./GigRow";
 import GigGrid from "./GigGrid";
 
 const gigs = [
-
   {
     id: 1,
     gigTitle: "Pumpking / Organic",
-    priceTag: "Rs. 170 /KG",
+    priceTag: 170.43,
     expireDate: 1,
     growerName: "Dingiri Banda",
     imgUrl: "https://picsum.photos/200/300?random=1",
@@ -74,7 +73,6 @@ export const ConsumerGigs = () => {
 
       {/* Gigs Row  */}
       <GigGrid gigs={gigs} title="Vegetables" />
-
     </>
   );
 };

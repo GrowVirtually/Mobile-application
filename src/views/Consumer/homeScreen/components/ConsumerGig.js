@@ -34,7 +34,7 @@ export const ConsumerGig = ({
       <View style={ConsumerGigStyle.cardContent}>
         <View style={ConsumerGigStyle.cardLeft}>
           <Text style={ConsumerGigStyle.gigTitle}>{gigTitle}</Text>
-          <Text style={ConsumerGigStyle.gigSubTitle}>{priceTag}</Text>
+          <Text style={ConsumerGigStyle.gigSubTitle}>Rs.{priceTag} /Kg</Text>
           <Text style={ConsumerGigStyle.expireTxt}>
             Expires in {expireDate + " " + (expireDate > 1 ? "days" : "day")}
           </Text>

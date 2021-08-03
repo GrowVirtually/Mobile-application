@@ -24,8 +24,9 @@ const AddToCartDialog = props => {
                   <Text style={styles.avail}>45KG Available</Text>
                   <NumericInput
                     rounded
-                    onChange={value => setVal(value)}
-                    minValue={0}
+                    onChange={value => props.handleQty(value)}
+                    minValue={1}
+                    value={props.qty}
                     rightButtonBackgroundColor={Colors.secondary.color}
                     leftButtonBackgroundColor={Colors.secondary.color}
                     iconStyle={{color: "#FFF"}}
@@ -33,7 +34,7 @@ const AddToCartDialog = props => {
                     totalHeight={30}
                     totalWidth={70}
                   />
-                  <Text style={styles.price}>{`Rs. ${val * 170}.00`}</Text>
+                  <Text style={styles.price}>Rs. {(priceTag * props.qty).toFixed(2)}</Text>
                 </View>
               </View>
             </Dialog.Content>

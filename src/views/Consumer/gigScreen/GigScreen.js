@@ -1,7 +1,7 @@
 /* eslint-disable import/no-useless-path-segments */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-boolean-value */
-import React from "react";
+import React, {useState} from "react";
 import {Image, View, StyleSheet, SafeAreaView, ScrollView} from "react-native";
 import AddToCartDialog from "../gigScreen/components/AddToCartDialog";
 import AppHeader from "../../Common/AppHeader";
@@ -15,6 +15,11 @@ import CategoryInfo from "./components/CategoryInfo";
 import GigDesc from "./components/GigDesc";
 
 export const GigScreen = ({route, navigation}) => {
+  const [qty, setQty] = useState(1);
+  const handleQty = value => {
+    setQty(value);
+  };
+
   // Axios get
   // api/gigInfo/id:x
   const gigInfo = {
@@ -59,7 +64,7 @@ export const GigScreen = ({route, navigation}) => {
             }}
           />
 
-          <QtyPrice />
+          <QtyPrice priceTag={priceTag} qty={qty} handleQty={handleQty} />
 
           <HorizontalRule />
 
@@ -76,6 +81,8 @@ export const GigScreen = ({route, navigation}) => {
 
           <AddToCartDialog
             gig={{gigTitle, priceTag, expireDate, growerName, imgUrl, id}}
+            qty={qty}
+            handleQty={handleQty}
             visible={visible}
             hideDialog={hideDialog}
             showDialog={showDialog}
