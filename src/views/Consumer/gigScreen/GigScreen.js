@@ -70,9 +70,12 @@ export const GigScreen = ({route, navigation}) => {
 
           <SellerInfo sellerInfo={"For sale by N. Sumanas"} isVerified={true} ratingVal={4} />
 
-          <CategoryInfo />
+          <CategoryInfo category="Organic" type="Vegetable" />
 
-          <GigDesc />
+          <GigDesc
+            descripton="Fresh yellow pumpkin harvested and available for sale. Can buy total lot or 5KG lot.
+            Price can be slightly negotiable after confirmation. Call for more details."
+          />
 
           <HorizontalRule />
 

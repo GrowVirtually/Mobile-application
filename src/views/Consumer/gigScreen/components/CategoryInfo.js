@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from "react-native";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
 
-const CategoryInfo = () => {
+const CategoryInfo = ({category, type}) => {
   return (
     <View>
       <View style={styles.detailRow}>
@@ -11,12 +11,12 @@ const CategoryInfo = () => {
         <View style={styles.sellerDetail}>
           <View style={{flexDirection: "row"}}>
             <Text style={styles.detailTitle}>Category: </Text>
-            <Text style={styles.descripton}>Organic</Text>
+            <Text style={styles.descripton}>{category}</Text>
           </View>
         </View>
         <View style={{flexDirection: "row"}}>
           <Text style={styles.detailTitle}>Type: </Text>
-          <Text style={styles.descripton}>Vegetable</Text>
+          <Text style={styles.descripton}>{type}</Text>
         </View>
       </View>
     </View>
