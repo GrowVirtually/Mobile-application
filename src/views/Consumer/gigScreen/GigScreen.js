@@ -29,6 +29,22 @@ export const GigScreen = ({route, navigation}) => {
     growerName: route.params.growerName,
     imgUrl: route.params.imgUrl,
     id: route.params.id,
+    distance: "1.3 Km",
+    address: "No. 33/2, Siebel Avnue, Kirulapone",
+    geoData: {
+      latitude: 6.911650087805625,
+      longitude: 79.8589850944203,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    },
+    willSellerDeliver: true,
+    sellerInfo: "For sale by N. Sumanas",
+    isVerified: true,
+    ratingVal: 4,
+    category: "Organic",
+    type: "Vegetable",
+    descripton:
+      "Fresh yellow pumpkin harvested and available for sale. Can buy total lot or 5KG lot. Price can be slightly negotiable after confirmation. Call for more details.",
   };
 
   // Destructure gig info
@@ -53,7 +69,7 @@ export const GigScreen = ({route, navigation}) => {
           <GigTitle {...{priceTag, gigTitle, expireDate}} />
 
           <GigLocation
-            distance="1.3 Km"
+            distance={"1.3 Km"}
             address="No. 33/2, Siebel Avnue, Kirulapone"
             willSellerDeliver={true}
             geoData={{

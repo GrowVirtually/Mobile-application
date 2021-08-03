@@ -1,26 +1,14 @@
-import React, {useState} from "react";
+import React from "react";
 import {StyleSheet, Text, View} from "react-native";
-import * as Colors from "../../../../styles/abstracts/colors";
-import NumericInput from "react-native-numeric-input";
+
+import NumInput from "./NumInput";
 
 const QtyPrice = ({priceTag, qty, handleQty}) => {
-
   return (
     <View>
       <View style={styles.qtyRow}>
-        <Text style={{marginRight: 10}}>Quantity (KG):</Text>
-        <NumericInput
-          rounded
-          onChange={value => handleQty(value)}
-          value={qty}
-          minValue={1}
-          rightButtonBackgroundColor={Colors.secondary.color}
-          leftButtonBackgroundColor={Colors.secondary.color}
-          iconStyle={{color: "#FFF"}}
-          borderColor={Colors.secondary.color}
-          totalHeight={35}
-          totalWidth={90}
-        />
+        <Text style={{marginRight: 3}}>Quantity (KG):</Text>
+        <NumInput val={qty} setVal={handleQty} />
         <Text style={{marginLeft: 15}}>Price (Rs): </Text>
         <Text style={{fontWeight: "bold"}}>{(priceTag * qty).toFixed(2)}</Text>
       </View>
