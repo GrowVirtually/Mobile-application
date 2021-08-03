@@ -15,7 +15,21 @@ import CategoryInfo from "./components/CategoryInfo";
 import GigDesc from "./components/GigDesc";
 
 export const GigScreen = ({route, navigation}) => {
-  const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = route.params;
+  // Axios get
+  // api/gigInfo/id:x
+  const gigInfo = {
+    gigTitle: route.params.gigTitle,
+    priceTag: route.params.priceTag,
+    expireDate: route.params.expireDate,
+    growerName: route.params.growerName,
+    imgUrl: route.params.imgUrl,
+    id: route.params.id,
+  };
+
+  // Destructure gig info
+  const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = gigInfo;
+
+  // Dialog box popup
   const [visible, setVisible] = React.useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
@@ -33,7 +47,11 @@ export const GigScreen = ({route, navigation}) => {
         <View style={styles.container}>
           <GigTitle {...{priceTag, gigTitle, expireDate}} />
 
-          <GigLocation />
+          <GigLocation
+            distance="1.3 Km"
+            address="No. 33/2, Siebel Avnue, Kirulapone"
+            willSellerDeliver={true}
+          />
 
           <QtyPrice />
 

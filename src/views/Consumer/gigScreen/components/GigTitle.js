@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 import React from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
