@@ -51,6 +51,12 @@ export const GigScreen = ({route, navigation}) => {
             distance="1.3 Km"
             address="No. 33/2, Siebel Avnue, Kirulapone"
             willSellerDeliver={true}
+            geoData={{
+              latitude: 6.911650087805625,
+              longitude: 79.8589850944203,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            }}
           />
 
           <QtyPrice />

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-unused-styles */
 /* eslint-disable prettier/prettier */
 /* eslint-disable arrow-body-style */
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import React, {useState} from "react";
 import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
 import MapView from "react-native-maps";
@@ -11,13 +11,9 @@ import * as Colors from "../../../../styles/abstracts/colors";
 
 export const ConsumerMap = () => {
   const navigation = useNavigation();
+  const route = useRoute();
 
-  const [region, setRegion] = useState({
-    latitude: 6.911650087805625,
-    longitude: 79.8589850944203,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  });
+  const {region} = route.params;
 
   return (
     <View style={styles.container}>

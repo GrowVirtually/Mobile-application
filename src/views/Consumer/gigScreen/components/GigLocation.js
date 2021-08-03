@@ -4,7 +4,7 @@ import {StyleSheet, TouchableOpacity, Text, View} from "react-native";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
 
-const GigLocation = ({distance, address, willSellerDeliver}) => {
+const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
   const navigation = useNavigation();
 
   return (
@@ -15,7 +15,13 @@ const GigLocation = ({distance, address, willSellerDeliver}) => {
           <View style={styles.locationRow}>
             <Text style={{fontWeight: "bold"}}>{distance}</Text>
             <TouchableOpacity>
-              <Text style={styles.viewOnMap} onPress={() => navigation.navigate("ConsumerMap")}>
+              <Text
+                style={styles.viewOnMap}
+                onPress={() =>
+                  navigation.navigate("ConsumerMap", {
+                    region: geoData,
+                  })
+                }>
                 View on map
               </Text>
             </TouchableOpacity>
