@@ -9,6 +9,7 @@ import ProfileScreen from "../views/ProfileScreen";
 import {ConsumerDrawerNavigator, GrowerDrawerNavigator} from "./DrawerNavigator";
 import AuthStackNavigator from "./AuthStackNavigator";
 
+
 const Stack = createStackNavigator();
 
 const MainStackNavigator = () => {
@@ -20,6 +21,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name={"AuthStackNavigator"} component={AuthStackNavigator} />
       <Stack.Screen name={"ConsumerHome"} component={ConsumerDrawerNavigator} />
       <Stack.Screen name={"GrowerHome"} component={GrowerDrawerNavigator} />
+      
     </Stack.Navigator>
   );
 };
