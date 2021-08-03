@@ -29,3 +29,5 @@
   sudo yarn react-native start --reset-cache
   sudo yarn react-native run-android
 ```
+--------------------------------
+Feel free to add any documentation
