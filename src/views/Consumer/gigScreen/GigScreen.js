@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-boolean-value */
 import React, {useState} from "react";
-import {Image, View, StyleSheet, SafeAreaView, ScrollView} from "react-native";
+import {Image, Text, View, StyleSheet, SafeAreaView, ScrollView} from "react-native";
 import AddToCartDialog from "../gigScreen/components/AddToCartDialog";
 import AppHeader from "../../Common/AppHeader";
 import BigButton from "../../Common/BigButton";
@@ -68,7 +68,7 @@ export const GigScreen = ({route, navigation}) => {
 
           <HorizontalRule />
 
-          <SellerInfo />
+          <SellerInfo sellerInfo={"For sale by N. Sumanas"} isVerified={true} ratingVal={4} />
 
           <CategoryInfo />
 
