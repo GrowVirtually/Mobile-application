@@ -1,7 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
+import * as Colors from "../../../../styles/abstracts/colors";
 import {ConsumerGig} from "./ConsumerGig";
+import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import GigRow from "./GigRow";
+import GigGrid from "./GigGrid";
 
 const gigs = [
   {
@@ -56,21 +60,16 @@ const gigs = [
 
 export const ConsumerGigs = () => {
   return (
-    <View style={ConsumerGigsStyle.grid}>
-      {gigs.map((gig, index) => (
-        <ConsumerGig {...gig} key={index} />
-      ))}
-    </View>
+    <>
+      {/* Gigs Grid */}
+      <GigRow gigs={gigs} title="From top sellers" />
+
+      {/* Gigs Row  */}
+      <GigRow gigs={gigs} title="Fruits" />
+
+      {/* Gigs Row  */}
+      <GigGrid gigs={gigs} title="Vegetables" />
+
+    </>
   );
 };
-
-const ConsumerGigsStyle = StyleSheet.create({
-  grid: {
-    flex: 1,
-    flexWrap: "wrap",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    paddingBottom: 130,
-    backgroundColor: "#ddd",
-  },
-});
