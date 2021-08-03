@@ -5,11 +5,11 @@
 2. Create a file named **.env** on root direcotory.
 
 3. Update the **.env** file with below info according to your workspace.
-
 ``` 
   HOST=192.168.1.102
   PORT=3000
 ```
+
 4. Create the following file.
 ```
   /android/app/src/main/res/values/api-keys.xml
@@ -22,6 +22,7 @@
       <string name="google_api_key">MY_API_KEY_HERE</string>    
   </resources>
 ```
+
 6. Run these commands after adding your API key.
 ```
   sudo yarn insall
