@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React from "react";
 import {Text, View, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
 import * as Colors from "../../../../styles/abstracts/colors";
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     paddingLeft: 5,
-    backgroundColor:"#eee",
+    backgroundColor: "#eee",
   },
   gigRowTitle: {
     padding: 10,

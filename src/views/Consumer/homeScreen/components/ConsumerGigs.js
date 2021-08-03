@@ -1,19 +1,16 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import {Text, View, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
-import * as Colors from "../../../../styles/abstracts/colors";
-import {ConsumerGig} from "./ConsumerGig";
-import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import GigRow from "./GigRow";
 import GigGrid from "./GigGrid";
 
 const gigs = [
+
   {
     id: 1,
     gigTitle: "Pumpking / Organic",
     priceTag: "Rs. 170 /KG",
     expireDate: 1,
-    growerName: "A. Dodampe",
+    growerName: "Dingiri Banda",
     imgUrl: "https://picsum.photos/200/300?random=1",
   },
   {
@@ -55,6 +52,14 @@ const gigs = [
     expireDate: 2,
     growerName: "N. Sumana",
     imgUrl: "https://picsum.photos/200/300?random=6",
+  },
+  {
+    id: 7,
+    gigTitle: "Pumpking",
+    priceTag: "Rs. 160 /KG",
+    expireDate: 2,
+    growerName: "A. Dodampe",
+    imgUrl: "https://picsum.photos/200/300?random=1",
   },
 ];
 

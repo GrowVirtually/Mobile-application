@@ -12,7 +12,6 @@ export const ConsumerContent = () => {
 };
 const style = StyleSheet.create({
   container: {
-    // backgroundColor: "white",
     flex: 1,
   },
 });
