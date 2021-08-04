@@ -13,7 +13,7 @@ import {loginReducer, initialLoginState} from "./reducers/loginReducer";
 const RootStack = createStackNavigator();
 
 const App = () => {
-  const [loginState, dispatch] = useReducer(loginReducer, initialLoginState);
+  const [loginState, loginDispatch] = useReducer(loginReducer, initialLoginState);
 
   const authContext = React.useMemo(
     () => ({
@@ -25,7 +25,7 @@ const App = () => {
             console.log(e);
           }
         }
-        dispatch({type: "LOGIN", token});
+        loginDispatch({type: "LOGIN", token});
       },
       signOut: async () => {
         try {
@@ -33,7 +33,7 @@ const App = () => {
         } catch (e) {
           console.log(e);
         }
-        dispatch({type: "LOGOUT"});
+        loginDispatch({type: "LOGOUT"});
       },
     }),
     [],
@@ -46,12 +46,12 @@ const App = () => {
     } catch (e) {
       console.log(e);
     }
-    dispatch({type: "RETRIEVE_TOKEN", token: userToken});
+    loginDispatch({type: "RETRIEVE_TOKEN", token: userToken});
   }, []);
 
   return (
     <PaperProvider>
-      <AuthContext.Provider value={{authContext}}>
+      <AuthContext.Provider value={{authContext, loginState}}>
         <StoreProvider reducer={storeReducer} initialState={storeState}>
           <NavigationContainer>
             {loginState.userToken ? (

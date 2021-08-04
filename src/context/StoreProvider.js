@@ -5,7 +5,9 @@ const StoreContext = createContext();
 export const useStore = () => useContext(StoreContext);
 
 export const StoreProvider = ({children, initialState, reducer}) => {
-  const [globalState, dispatch] = useReducer(reducer, initialState);
+  const [globalState, globalDispatch] = useReducer(reducer, initialState);
 
-  return <StoreContext.Provider value={{globalState, dispatch}}>{children}</StoreContext.Provider>;
+  return (
+    <StoreContext.Provider value={{globalState, globalDispatch}}>{children}</StoreContext.Provider>
+  );
 };

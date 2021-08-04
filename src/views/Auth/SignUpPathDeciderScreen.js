@@ -7,14 +7,17 @@ import userTypeReducer from "../../reducers/userType";
 import * as Base from "../../styles/base/base";
 import * as Typography from "../../styles/base/typography";
 import * as Colors from "../../styles/abstracts/colors";
+import {useStore} from "../../context/StoreProvider";
 
 const SignUpPathDeciderScreen = ({navigation}) => {
-  const [userType, userTypeDispatch] = useReducer(userTypeReducer, "consumer");
+  // const [userType, userTypeDispatch] = useReducer(userTypeReducer, "consumer");
+  const {globalState, globalDispatch} = useStore();
 
-  const handlePath = userType => {
-    userType === "consumer"
-      ? userTypeDispatch({type: "CONSUMER"})
-      : userTypeDispatch({type: "GROWER"});
+  const handlePath = usertype => {
+    usertype === "consumer"
+      ? globalDispatch({type: "CHANGE_USER_TYPE_TO_CONSUMER"})
+      : globalDispatch({type: "CHANGE_USER_TYPE_TO_GROWER"});
+
     navigation.navigate("EnterMobileNumberScreen");
   };
 

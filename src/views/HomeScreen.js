@@ -6,8 +6,8 @@ import AuthContext from "../context/auth-context";
 import {useStore} from "../context/StoreProvider";
 
 const HomeScreen = ({navigation}) => {
-  const {authContext} = useContext(AuthContext);
-  const {globalState, dispatch} = useStore();
+  const {authContext, loginState} = useContext(AuthContext);
+  const {globalState, globalDispatch} = useStore();
 
   const handleLogout = async () => {
     const {signOut} = authContext;
@@ -28,9 +28,9 @@ const HomeScreen = ({navigation}) => {
       </TouchableOpacity>
       <Button title="Logout" onPress={handleLogout} />
       <Text>
-        You are: {globalState.username} / {globalState.usertype}
+        You are: {globalState.username} / {globalState.usertype} / {loginState.userToken}
       </Text>
-      <Button title="toggle" onPress={() => dispatch({type: "TOGGLE_USER_TYPE"})} />
+      <Button title="toggle" onPress={() => globalDispatch({type: "TOGGLE_USER_TYPE"})} />
     </View>
   );
 };
