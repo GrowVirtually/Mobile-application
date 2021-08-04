@@ -1,28 +1,43 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable prettier/prettier */
-import * as React from "react";
+import React, {useContext} from "react";
 import {DrawerContentScrollView, DrawerItemList, DrawerItem} from "@react-navigation/drawer";
-import {SafeAreaView, Text, StyleSheet, View} from "react-native";
+import {SafeAreaView, Text, StyleSheet, View, TouchableOpacity} from "react-native";
+import * as Colors from "../styles/abstracts/colors";
 import {Avatar} from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import AuthContext from "../context/auth-context";
+import {useStore} from "../context/StoreProvider";
 
-function ConsumerDrawer(props) {
+const ConsumerDrawer = props => {
+  const handleLogout = () => {
+    alert("should done logout");
+  };
+
+  const handleSwichRole = () => {
+    alert('handle role change');
+  };
+
   return (
     <DrawerContentScrollView {...props}>
-      <SafeAreaView style={cusomDrawerStyle.header}>
+      <SafeAreaView style={styles.header}>
         <Avatar.Text size={64} label="DD" style={{backgroundColor: "white", color: "green"}} />
-        <Text style={cusomDrawerStyle.txt}>Dimuthu Dhanushka</Text>
+        <Text style={styles.txt}>Dimuthu Dhanushka</Text>
+        <TouchableOpacity style={styles.switchRole} onPress={() => handleSwichRole()}>
+          <Text>Change srole {props.xxx}</Text>
+        </TouchableOpacity>
       </SafeAreaView>
 
       {/* Default items */}
       {/* <DrawerItemList {...props} /> */}
       <DrawerItem
         icon={({color, size}) => <MaterialCommunityIcons name="home" color="white" size={24} />}
-        label={() => <Text style={cusomDrawerStyle.menuTxt}>Gigs</Text>}
+        label={() => <Text style={styles.menuTxt}>Gigs</Text>}
         onPress={() => props.navigation.navigate("ConsumerHome")}
       />
       <DrawerItem
         icon={({color, size}) => <MaterialCommunityIcons name="bell" color="white" size={24} />}
-        label={() => <Text style={cusomDrawerStyle.menuTxt}>Notifications</Text>}
+        label={() => <Text style={styles.menuTxt}>Notifications</Text>}
         onPress={() => props.navigation.navigate("Notifications")}
       />
 
@@ -30,26 +45,26 @@ function ConsumerDrawer(props) {
         icon={({color, size}) => (
           <MaterialCommunityIcons name="account-circle" color="white" size={24} />
         )}
-        label={() => <Text style={cusomDrawerStyle.menuTxt}>My Profile</Text>}
+        label={() => <Text style={styles.menuTxt}>My Profile</Text>}
         onPress={() => props.navigation.navigate("ProfileScreen")}
       />
       <DrawerItem
         icon={({color, size}) => <MaterialCommunityIcons name="map" color="white" size={24} />}
-        label={() => <Text style={cusomDrawerStyle.menuTxt}>Map</Text>}
+        label={() => <Text style={styles.menuTxt}>Map</Text>}
         onPress={() => props.navigation.navigate("Map")}
       />
-      <View style={cusomDrawerStyle.divider} />
+      <View style={styles.divider} />
 
       <DrawerItem
         icon={({color, size}) => <MaterialCommunityIcons name="logout" color="white" size={24} />}
-        label={() => <Text style={cusomDrawerStyle.menuTxt}>Log out</Text>}
-        onPress={() => props.navigation.navigate("SignInScreen")}
+        label={() => <Text style={styles.menuTxt}>Log out</Text>}
+        onPress={() => handleLogout()}
       />
     </DrawerContentScrollView>
   );
-}
+};
 
-const cusomDrawerStyle = StyleSheet.create({
+const styles = StyleSheet.create({
   header: {
     padding: 20,
     flex: 1,
@@ -67,6 +82,11 @@ const cusomDrawerStyle = StyleSheet.create({
     marginRight: 10,
     marginTop: 10,
     marginBottom: 10,
+  },
+  switchRole: {
+    backgroundColor: Colors.secondary.color,
+    alignItems: "center",
+    padding: 10,
   },
 });
 

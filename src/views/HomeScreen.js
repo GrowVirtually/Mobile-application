@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {StyleSheet, Text, TouchableOpacity, View, Button} from "react-native";
 import AuthContext from "../context/auth-context";
 import {useStore} from "../context/StoreProvider";
@@ -13,9 +13,18 @@ const HomeScreen = ({navigation}) => {
     navigation.navigate("AuthStackNavigator");
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      globalState.usertype === "grower"
+        ? navigation.navigate("GrowerHome")
+        : navigation.navigate("ConsumerHome");
+    }, 2000);
+  });
+
   return (
     <View style={newStyle.container}>
       <Text style={newStyle.title}>Home screen</Text>
+
       <TouchableOpacity
         style={[newStyle.btn, newStyle.btnFocused]}
         onPress={() => navigation.navigate("ConsumerHome")}>
@@ -26,7 +35,7 @@ const HomeScreen = ({navigation}) => {
       </TouchableOpacity>
       <Button title="Logout" onPress={handleLogout} />
       <Text>
-        You are: {globalState.username} / {globalState.usertype} / {loginState.userToken}
+        You are: {globalState.username} / {globalState.usertype} \ {loginState.userToken}
       </Text>
       <Button title="toggle" onPress={() => globalDispatch({type: "TOGGLE_USER_TYPE"})} />
     </View>

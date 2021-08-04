@@ -22,10 +22,12 @@ import MyGigs from "../views/Grower/MyGigs";
 import NewGig from "../views/Grower/NewGig";
 import Orders from "../views/Grower/Orders";
 import Support from "../views/Grower/Support";
+import {useStore} from "../context/StoreProvider";
 
 const Drawer = createDrawerNavigator();
 
 function ConsumerDrawerNavigator() {
+  const {globalState, globalDispatch} = useStore();
   const navigation = useNavigation();
 
   return (
@@ -38,7 +40,6 @@ function ConsumerDrawerNavigator() {
       <Drawer.Screen name={"ConsumerHome"} component={ConsumerStack} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
       <Drawer.Screen name={"Map"} component={Map} />
-
       <Drawer.Screen name={"Notifications"} component={Notifications} />
     </Drawer.Navigator>
   );
@@ -62,8 +63,6 @@ function GrowerDrawerNavigator() {
 
       <Drawer.Screen name={"Notifications"} component={Notifications} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
-      
-    
     </Drawer.Navigator>
   );
 }
