@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useReducer} from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import AuthStackNavigator from "./navigators/AuthStackNavigator";
 import MainStackNavigator from "./navigators/StackNavigator";
@@ -6,42 +6,14 @@ import {createStackNavigator} from "@react-navigation/stack";
 import AuthContext from "./context/auth-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Provider as PaperProvider} from "react-native-paper";
-import {StoreProvider} from "./context/StoreProvider";
+import {StoreProvider, useStore} from "./context/StoreProvider";
 import {storeReducer, storeState} from "./reducers/storeReducer";
+import {loginReducer, initialLoginState} from "./reducers/loginReducer";
 
 const RootStack = createStackNavigator();
 
 const App = () => {
-  const initialLoginState = {
-    isLoading: true,
-    userToken: null,
-  };
-
-  const loginReducer = (prevState, action) => {
-    switch (action.type) {
-      case "RETRIEVE_TOKEN":
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case "LOGIN":
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case "LOGOUT":
-        return {
-          ...prevState,
-          userName: null,
-          userToken: null,
-          isLoading: false,
-        };
-    }
-  };
-
-  const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
+  const [loginState, dispatch] = useReducer(loginReducer, initialLoginState);
 
   const authContext = React.useMemo(
     () => ({
