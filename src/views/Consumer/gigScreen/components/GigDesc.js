@@ -3,17 +3,14 @@ import {StyleSheet, Text, View} from "react-native";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
 
-const GigDesc = () => {
+const GigDesc = ({descripton}) => {
   return (
     <View>
       <View style={styles.detailRow}>
         <MaterialIcon name="information-outline" size={22} color={Colors.fontColor.color} />
         <View style={styles.sellerDetail}>
           <Text style={styles.detailTitle}>Descripton</Text>
-          <Text style={styles.descripton}>
-            Fresh yellow pumpkin harvested and available for sale. Can buy total lot or 5KG lot.
-            Price can be slightly negotiable after confirmation. Call for more details.
-          </Text>
+          <Text style={styles.descripton}>{descripton}</Text>
         </View>
       </View>
     </View>

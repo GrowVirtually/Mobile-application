@@ -1,15 +1,15 @@
 /* eslint-disable prettier/prettier */
 import React from "react";
-import {Text, View, StyleSheet} from "react-native";
-import {ConsumerGig} from "./ConsumerGig";
+import GigRow from "./GigRow";
+import GigGrid from "./GigGrid";
 
 const gigs = [
   {
     id: 1,
     gigTitle: "Pumpking / Organic",
-    priceTag: "Rs. 170 /KG",
+    priceTag: 170.43,
     expireDate: 1,
-    growerName: "A. Dodampe",
+    growerName: "Dingiri Banda",
     imgUrl: "https://picsum.photos/200/300?random=1",
   },
   {
@@ -52,25 +52,27 @@ const gigs = [
     growerName: "N. Sumana",
     imgUrl: "https://picsum.photos/200/300?random=6",
   },
+  {
+    id: 7,
+    gigTitle: "Pumpking",
+    priceTag: "Rs. 160 /KG",
+    expireDate: 2,
+    growerName: "A. Dodampe",
+    imgUrl: "https://picsum.photos/200/300?random=1",
+  },
 ];
 
 export const ConsumerGigs = () => {
   return (
-    <View style={ConsumerGigsStyle.grid}>
-      {gigs.map((gig, index) => (
-        <ConsumerGig {...gig} key={index} />
-      ))}
-    </View>
+    <>
+      {/* Gigs Grid */}
+      <GigRow gigs={gigs} title="From top sellers" />
+
+      {/* Gigs Row  */}
+      <GigRow gigs={gigs} title="Fruits" />
+
+      {/* Gigs Row  */}
+      <GigGrid gigs={gigs} title="Vegetables" />
+    </>
   );
 };
-
-const ConsumerGigsStyle = StyleSheet.create({
-  grid: {
-    flex: 1,
-    flexWrap: "wrap",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    paddingBottom: 130,
-    backgroundColor: "#ddd",
-  },
-});

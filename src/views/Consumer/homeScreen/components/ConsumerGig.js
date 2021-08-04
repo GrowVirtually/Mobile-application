@@ -4,12 +4,22 @@ import {Text, View, StyleSheet} from "react-native";
 import {Avatar, Button, Card, Title, Paragraph} from "react-native-paper";
 import * as Colors from "../../../../styles/abstracts/colors";
 import {useNavigation} from "@react-navigation/core";
+import {Dimensions} from "react-native";
+const {width} = Dimensions.get("screen");
 
-export const ConsumerGig = ({gigTitle, priceTag, expireDate, growerName, imgUrl, id}) => {
+export const ConsumerGig = ({
+  gigTitle,
+  priceTag,
+  expireDate,
+  growerName,
+  imgUrl,
+  id,
+  direction,
+}) => {
   const navigation = useNavigation();
   return (
     <Card
-      style={ConsumerGigStyle.gridItem}
+      style={direction === "row" ? ConsumerGigStyle.rowItem : ConsumerGigStyle.gridItem}
       onPress={() =>
         navigation.navigate("GigScreen", {
           gigTitle,
@@ -24,7 +34,7 @@ export const ConsumerGig = ({gigTitle, priceTag, expireDate, growerName, imgUrl,
       <View style={ConsumerGigStyle.cardContent}>
         <View style={ConsumerGigStyle.cardLeft}>
           <Text style={ConsumerGigStyle.gigTitle}>{gigTitle}</Text>
-          <Text style={ConsumerGigStyle.gigSubTitle}>{priceTag}</Text>
+          <Text style={ConsumerGigStyle.gigSubTitle}>Rs.{priceTag} /Kg</Text>
           <Text style={ConsumerGigStyle.expireTxt}>
             Expires in {expireDate + " " + (expireDate > 1 ? "days" : "day")}
           </Text>
@@ -51,6 +61,11 @@ const ConsumerGigStyle = StyleSheet.create({
   gridItem: {
     width: "46%",
     margin: 5,
+  },
+  rowItem: {
+    width: width / 2,
+    margin: 5,
+    marginBottom: 15,
   },
   img: {
     height: 116,

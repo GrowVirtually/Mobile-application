@@ -7,6 +7,7 @@ import * as Colors from "../../../../styles/abstracts/colors";
 import * as Btn from "../../../../styles/base/button";
 import NumericInput from "react-native-numeric-input";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import NumInput from "./NumInput";
 
 const AddToCartDialog = props => {
   const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = props.gig;
@@ -22,18 +23,8 @@ const AddToCartDialog = props => {
                 <View style={styles.rightCol}>
                   <Text style={styles.gigTitle}>{gigTitle}</Text>
                   <Text style={styles.avail}>45KG Available</Text>
-                  <NumericInput
-                    rounded
-                    onChange={value => setVal(value)}
-                    minValue={0}
-                    rightButtonBackgroundColor={Colors.secondary.color}
-                    leftButtonBackgroundColor={Colors.secondary.color}
-                    iconStyle={{color: "#FFF"}}
-                    borderColor={Colors.secondary.color}
-                    totalHeight={30}
-                    totalWidth={70}
-                  />
-                  <Text style={styles.price}>{`Rs. ${val * 170}.00`}</Text>
+                  <NumInput val={props.qty} setVal={props.handleQty} />
+                  <Text style={styles.price}>Rs. {(priceTag * props.qty).toFixed(2)}</Text>
                 </View>
               </View>
             </Dialog.Content>
