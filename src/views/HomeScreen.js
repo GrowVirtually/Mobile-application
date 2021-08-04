@@ -1,7 +1,5 @@
 import React, {useContext} from "react";
 import {StyleSheet, Text, TouchableOpacity, View, Button} from "react-native";
-// import {Button} from 'react-native-paper';
-
 import AuthContext from "../context/auth-context";
 import {useStore} from "../context/StoreProvider";
 

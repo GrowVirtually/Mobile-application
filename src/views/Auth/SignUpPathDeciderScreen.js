@@ -1,16 +1,12 @@
 import React, {useReducer} from "react";
 import {StyleSheet, Text, TouchableOpacity, View, StatusBar} from "react-native";
 import * as Animatable from "react-native-animatable";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import userTypeReducer from "../../reducers/userType";
-
 import * as Base from "../../styles/base/base";
 import * as Typography from "../../styles/base/typography";
 import * as Colors from "../../styles/abstracts/colors";
 import {useStore} from "../../context/StoreProvider";
 
 const SignUpPathDeciderScreen = ({navigation}) => {
-  // const [userType, userTypeDispatch] = useReducer(userTypeReducer, "consumer");
   const {globalState, globalDispatch} = useStore();
 
   const handlePath = usertype => {
