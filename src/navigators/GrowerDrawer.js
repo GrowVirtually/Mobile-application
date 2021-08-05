@@ -8,7 +8,7 @@ import {SafeAreaView, Text, StyleSheet, View} from 'react-native';
 import {Avatar} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-function ConsumerDrawer(props) {
+function GrowerDrawer(props) {
   return (
     <DrawerContentScrollView {...props}>
       <SafeAreaView style={cusomDrawerStyle.header}>
@@ -83,4 +83,4 @@ const cusomDrawerStyle = StyleSheet.create({
   },
 });
 
-export default ConsumerDrawer;
+export default GrowerDrawer;

@@ -6,23 +6,16 @@ import * as React from "react";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import {useNavigation} from "@react-navigation/core";
 import {Notifications} from "../views/Consumer/Notifications";
-import {GrowerHomeScreen} from "../views/Grower/GrowerHomeScreen";
+
+
 
 import ConsumerDrawer from "./ConsumerDrawer";
 import GrowerDrawer from "./GrowerDrawer";
 import ConsumerStack from "./ConsumerStack";
+import GrowerStack from "./GrowerStack";
 import ProfileScreen from "../views/ProfileScreen";
 import {Map} from "../views/Map";
 import * as Colors from "../styles/abstracts/colors";
-
-// Grower's Menu Screens
-import Earnings from "../views/Grower/Earnings";
-import FindConsumer from "../views/Grower/FindConsumer";
-import MyGigs from "../views/Grower/MyGigs";
-import NewGig from "../views/Grower/NewGig";
-import Orders from "../views/Grower/Orders";
-import Support from "../views/Grower/Support";
-import {useStore} from "../context/StoreProvider";
 
 const Drawer = createDrawerNavigator();
 
@@ -53,13 +46,9 @@ function GrowerDrawerNavigator() {
       drawerContent={GrowerDrawer}
       navigation={navigation}
       drawerStyle={{backgroundColor: "red"}}>
-      <Drawer.Screen name={"GrowerHome"} component={GrowerHomeScreen} />
-      <Drawer.Screen name={"Earnings"} component={Earnings} />
-      <Drawer.Screen name={"FindConsumer"} component={FindConsumer} />
-      <Drawer.Screen name={"MyGigs"} component={MyGigs} />
-      <Drawer.Screen name={"NewGig"} component={NewGig} />
-      <Drawer.Screen name={"Orders"} component={Orders} />
-      <Drawer.Screen name={"Support"} component={Support} />
+
+      <Drawer.Screen name={"GrowerStack"} component={GrowerStack} />
+      
 
       <Drawer.Screen name={"Notifications"} component={Notifications} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
