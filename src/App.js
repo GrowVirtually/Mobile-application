@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useReducer} from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import AuthStackNavigator from "./navigators/AuthStackNavigator";
 import MainStackNavigator from "./navigators/StackNavigator";
@@ -6,40 +6,14 @@ import {createStackNavigator} from "@react-navigation/stack";
 import AuthContext from "./context/auth-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Provider as PaperProvider} from "react-native-paper";
+import {StoreProvider, useStore} from "./context/StoreProvider";
+import {storeReducer, storeState} from "./reducers/storeReducer";
+import {loginReducer, initialLoginState} from "./reducers/loginReducer";
 
 const RootStack = createStackNavigator();
 
 const App = () => {
-  const initialLoginState = {
-    isLoading: true,
-    userToken: null,
-  };
-
-  const loginReducer = (prevState, action) => {
-    switch (action.type) {
-      case "RETRIEVE_TOKEN":
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case "LOGIN":
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case "LOGOUT":
-        return {
-          ...prevState,
-          userName: null,
-          userToken: null,
-          isLoading: false,
-        };
-    }
-  };
-
-  const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
+  const [loginState, loginDispatch] = useReducer(loginReducer, initialLoginState);
 
   const authContext = React.useMemo(
     () => ({
@@ -51,7 +25,7 @@ const App = () => {
             console.log(e);
           }
         }
-        dispatch({type: "LOGIN", token});
+        loginDispatch({type: "LOGIN", token});
       },
       signOut: async () => {
         try {
@@ -59,7 +33,7 @@ const App = () => {
         } catch (e) {
           console.log(e);
         }
-        dispatch({type: "LOGOUT"});
+        loginDispatch({type: "LOGOUT"});
       },
     }),
     [],
@@ -72,23 +46,25 @@ const App = () => {
     } catch (e) {
       console.log(e);
     }
-    dispatch({type: "RETRIEVE_TOKEN", token: userToken});
+    loginDispatch({type: "RETRIEVE_TOKEN", token: userToken});
   }, []);
 
   return (
     <PaperProvider>
-      <AuthContext.Provider value={{authContext}}>
-        <NavigationContainer>
-          {!loginState.userToken ? (
-            <RootStack.Navigator headerMode="none">
-              <RootStack.Screen name="MainStackNavigator" component={MainStackNavigator} />
-            </RootStack.Navigator>
-          ) : (
-            <RootStack.Navigator headerMode="none">
-              <RootStack.Screen name="AuthStackNavigator" component={AuthStackNavigator} />
-            </RootStack.Navigator>
-          )}
-        </NavigationContainer>
+      <AuthContext.Provider value={{authContext, loginState}}>
+        <StoreProvider reducer={storeReducer} initialState={storeState}>
+          <NavigationContainer>
+            {loginState.userToken ? (
+              <RootStack.Navigator headerMode="none">
+                <RootStack.Screen name="MainStackNavigator" component={MainStackNavigator} />
+              </RootStack.Navigator>
+            ) : (
+              <RootStack.Navigator headerMode="none">
+                <RootStack.Screen name="AuthStackNavigator" component={AuthStackNavigator} />
+              </RootStack.Navigator>
+            )}
+          </NavigationContainer>
+        </StoreProvider>
       </AuthContext.Provider>
     </PaperProvider>
   );

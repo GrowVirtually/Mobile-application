@@ -17,11 +17,10 @@ import ProfileScreen from "../views/ProfileScreen";
 import {Map} from "../views/Map";
 import * as Colors from "../styles/abstracts/colors";
 
-
-
 const Drawer = createDrawerNavigator();
 
 function ConsumerDrawerNavigator() {
+  const {globalState, globalDispatch} = useStore();
   const navigation = useNavigation();
 
   return (
@@ -34,7 +33,6 @@ function ConsumerDrawerNavigator() {
       <Drawer.Screen name={"ConsumerHome"} component={ConsumerStack} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
       <Drawer.Screen name={"Map"} component={Map} />
-
       <Drawer.Screen name={"Notifications"} component={Notifications} />
     </Drawer.Navigator>
   );
@@ -54,8 +52,6 @@ function GrowerDrawerNavigator() {
 
       <Drawer.Screen name={"Notifications"} component={Notifications} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
-      
-    
     </Drawer.Navigator>
   );
 }
