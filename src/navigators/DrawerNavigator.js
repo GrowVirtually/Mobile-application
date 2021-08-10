@@ -20,7 +20,6 @@ import * as Colors from "../styles/abstracts/colors";
 const Drawer = createDrawerNavigator();
 
 function ConsumerDrawerNavigator() {
-  const {globalState, globalDispatch} = useStore();
   const navigation = useNavigation();
 
   return (

@@ -13,13 +13,13 @@ const HomeScreen = ({navigation}) => {
     navigation.navigate("AuthStackNavigator");
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      globalState.usertype === "grower"
-        ? navigation.navigate("GrowerHome")
-        : navigation.navigate("ConsumerHome");
-    }, 2000);
-  });
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     globalState.usertype === "grower"
+  //       ? navigation.navigate("GrowerHome")
+  //       : navigation.navigate("ConsumerHome");
+  //   }, 2000);
+  // });
 
   return (
     <View style={newStyle.container}>
