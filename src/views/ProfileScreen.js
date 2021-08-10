@@ -9,6 +9,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AuthContext from "../context/auth-context";
 import {useStore} from "../context/StoreProvider";
 import * as Colors from "../styles/abstracts/colors";
+import AppHeader from "./Common/AppHeader";
 
 const ProfileScreen = () => {
   const {authContext, loginState} = useContext(AuthContext);
@@ -23,118 +24,134 @@ const ProfileScreen = () => {
       : navigation.navigate("ConsumerHome");
   };
 
+  const handleLogout = async () => {
+    const {signOut} = authContext;
+    await signOut();
+    navigation.navigate("AuthStackNavigator");
+  };
+
   const userinfo = {
     username: "John Doe",
   };
 
   return (
-    <ScrollView>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.userInfoSection}>
-          <View style={{flexDirection: "row", marginTop: 15}}>
-            {/* <Avatar.Image
+    <>
+      <AppHeader navigation={navigation} title="My Profile" />
+      <ScrollView>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.userInfoSection}>
+            <View style={{flexDirection: "row", marginTop: 15}}>
+              {/* <Avatar.Image
               source={{
                 uri: "https://api.adorable.io/avatars/80/abott@adorable.png",
               }}
               size={80}
             /> */}
-            <Avatar.Text
-              size={80}
-              label={userinfo.username
-                .split(" ")
-                .map(name => name.charAt(0))
-                .join("")}
-              color="#fff"
-            />
-            <View style={{marginLeft: 20}}>
-              <Title
-                style={[
-                  styles.title,
-                  {
-                    marginTop: 15,
-                    marginBottom: 5,
-                  },
-                ]}>
-                John Doe
-              </Title>
-              <Caption style={styles.caption}>@j_doe</Caption>
+              <Avatar.Text
+                size={80}
+                label={userinfo.username
+                  .split(" ")
+                  .map(name => name.charAt(0))
+                  .join("")}
+                color="#fff"
+              />
+              <View style={{marginLeft: 20}}>
+                <Title
+                  style={[
+                    styles.title,
+                    {
+                      marginTop: 15,
+                      marginBottom: 5,
+                    },
+                  ]}>
+                  John Doe
+                </Title>
+                <Caption style={styles.caption}>@j_doe</Caption>
+              </View>
             </View>
+            <Button
+              style={{marginTop: 20}}
+              icon="sync"
+              mode="contained"
+              onPress={() => handleToggleRole()}>
+              Switch to {globalState.usertype === "grower" ? "Grower mode" : "Consumer mode"}
+            </Button>
+          </View>
+          <View style={styles.userInfoSection}>
+            <View style={styles.row}>
+              <Icon name="map-marker-radius" color="#777777" size={20} />
+              <Text style={{marginLeft: 20}}>Nugegoda, Colombo 05</Text>
+            </View>
+            <View style={styles.row}>
+              <Icon name="phone" color="#777777" size={20} />
+              <Text style={{marginLeft: 20}}>+94-712345792</Text>
+            </View>
+            <View style={styles.row}>
+              <Icon name="email" color="#777777" size={20} />
+              <Text style={{marginLeft: 20}}>john_doe@email.com</Text>
+            </View>
+          </View>
+
+          <View style={styles.infoBoxWrapper}>
+            <View
+              style={[
+                styles.infoBox,
+                {
+                  borderRightColor: "#dddddd",
+                  borderRightWidth: 1,
+                },
+              ]}>
+              <Title style={{color: Colors.primary.color}}>0 / 8</Title>
+              <Caption>Active Gig Orders</Caption>
+            </View>
+            <View style={styles.infoBox}>
+              <Title style={{color: Colors.primary.color}}>LKR 140.50</Title>
+              <Caption>Pending Clearence</Caption>
+            </View>
+          </View>
+
+          <View style={styles.menuWrapper}>
+            <TouchableRipple onPress={() => {}}>
+              <View style={styles.menuItem}>
+                <Icon name="barley" color={Colors.secondary.color} size={25} />
+                <Text style={styles.menuItemText}>My Gigs</Text>
+              </View>
+            </TouchableRipple>
+            <TouchableRipple onPress={() => {}}>
+              <View style={styles.menuItem}>
+                <Icon name="bank" color={Colors.secondary.color} size={25} />
+                <Text style={styles.menuItemText}>Bank Details</Text>
+              </View>
+            </TouchableRipple>
+            <TouchableRipple onPress={() => {}}>
+              <View style={styles.menuItem}>
+                <Icon name="cart-arrow-down" color={Colors.secondary.color} size={25} />
+                <Text style={styles.menuItemText}>My Orders</Text>
+              </View>
+            </TouchableRipple>
+            <TouchableRipple onPress={() => {}}>
+              <View style={styles.menuItem}>
+                <Icon name="cart-arrow-up" color={Colors.secondary.color} size={25} />
+                <Text style={styles.menuItemText}>Gig Orders</Text>
+              </View>
+            </TouchableRipple>
+            <TouchableRipple onPress={() => {}}>
+              <View style={styles.menuItem}>
+                <Icon name="account-edit-outline" color={Colors.secondary.color} size={25} />
+                <Text style={styles.menuItemText}>Edit Profile</Text>
+              </View>
+            </TouchableRipple>
           </View>
           <Button
-            style={{marginTop: 20}}
-            icon="sync"
-            mode="contained"
-            onPress={() => handleToggleRole()}>
-            Switch to {globalState.usertype === "grower" ? "Grower mode" : "Consumer mode"}
+            style={styles.logout}
+            icon="logout"
+            mode="outlined"
+            onPress={() => handleLogout()}>
+            Log Out
           </Button>
-        </View>
-        <View style={styles.userInfoSection}>
-          <View style={styles.row}>
-            <Icon name="map-marker-radius" color="#777777" size={20} />
-            <Text style={{marginLeft: 20}}>Nugegoda, Colombo 05</Text>
-          </View>
-          <View style={styles.row}>
-            <Icon name="phone" color="#777777" size={20} />
-            <Text style={{marginLeft: 20}}>+94-712345792</Text>
-          </View>
-          <View style={styles.row}>
-            <Icon name="email" color="#777777" size={20} />
-            <Text style={{marginLeft: 20}}>john_doe@email.com</Text>
-          </View>
-        </View>
-
-        <View style={styles.infoBoxWrapper}>
-          <View
-            style={[
-              styles.infoBox,
-              {
-                borderRightColor: "#dddddd",
-                borderRightWidth: 1,
-              },
-            ]}>
-            <Title style={{color: Colors.primary.color}}>0 / 8</Title>
-            <Caption>Active Gig Orders</Caption>
-          </View>
-          <View style={styles.infoBox}>
-            <Title style={{color: Colors.primary.color}}>LKR 140.50</Title>
-            <Caption>Pending Clearence</Caption>
-          </View>
-        </View>
-
-        <View style={styles.menuWrapper}>
-          <TouchableRipple onPress={() => {}}>
-            <View style={styles.menuItem}>
-              <Icon name="barley" color={Colors.secondary.color} size={25} />
-              <Text style={styles.menuItemText}>My Gigs</Text>
-            </View>
-          </TouchableRipple>
-          <TouchableRipple onPress={() => {}}>
-            <View style={styles.menuItem}>
-              <Icon name="bank" color={Colors.secondary.color} size={25} />
-              <Text style={styles.menuItemText}>Bank Details</Text>
-            </View>
-          </TouchableRipple>
-          <TouchableRipple onPress={() => {}}>
-            <View style={styles.menuItem}>
-              <Icon name="cart-arrow-down" color={Colors.secondary.color} size={25} />
-              <Text style={styles.menuItemText}>My Orders</Text>
-            </View>
-          </TouchableRipple>
-          <TouchableRipple onPress={() => {}}>
-            <View style={styles.menuItem}>
-              <Icon name="cart-arrow-up" color={Colors.secondary.color} size={25} />
-              <Text style={styles.menuItemText}>Gig Orders</Text>
-            </View>
-          </TouchableRipple>
-          <TouchableRipple onPress={() => {}}>
-            <View style={styles.menuItem}>
-              <Icon name="account-edit-outline" color={Colors.secondary.color} size={25} />
-              <Text style={styles.menuItemText}>Edit Profile</Text>
-            </View>
-          </TouchableRipple>
-        </View>
-      </SafeAreaView>
-    </ScrollView>
+        </SafeAreaView>
+      </ScrollView>
+    </>
   );
 };
 
@@ -144,7 +161,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingBottom: 59,
     paddingTop: 10,
   },
   userInfoSection: {
@@ -190,5 +206,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 16,
     lineHeight: 26,
+  },
+  logout: {
+    margin: 20,
   },
 });
