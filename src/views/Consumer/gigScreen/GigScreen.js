@@ -40,6 +40,7 @@ export const GigScreen = ({route, navigation}) => {
     willSellerDeliver: true,
     sellerInfo: "For sale by N. Sumanas",
     isVerified: true,
+    isExpiredGig: false,
     ratingVal: 4,
     category: "Organic",
     type: "Vegetable",
