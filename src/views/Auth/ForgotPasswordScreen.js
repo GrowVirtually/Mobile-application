@@ -1,54 +1,44 @@
-/* eslint-disable react-native/sort-styles */
-import React, {useState, useContext} from "react";
-import axios from "axios";
-import {Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import React, {useState} from "react";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {TextInput} from "react-native-paper";
 import {HOST, PORT} from "@env";
 import * as Colors from "../../styles/abstracts/colors";
-import AuthContext from "../../context/auth-context";
-import {validateEmail, validatePassword} from "../../utils/validators";
+import {validateEmail} from "../../utils/validators";
+import axios from "axios";
 
-const PasswordLoginScreen = ({navigation}) => {
+const ForgotPasswordScreen = ({navigation}) => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [emailErrors, setEmailErrors] = useState([]);
-  const [pwErrors, setPwErrors] = useState([]);
   const [errors, setErrors] = useState([]);
-
-  const {authContext} = useContext(AuthContext);
+  const [disabledSendPWResetEmail, setDisabledSendPWResetEmail] = useState(false);
 
   const handleEmailChange = email => {
     validateEmail(email, emailErrors, setEmailErrors);
     setEmail(email);
   };
 
-  const handlePasswordChange = pwd => {
-    validatePassword(pwd, pwErrors, setPwErrors);
-    setPassword(pwd);
-  };
-
-  const handleSignIn = async () => {
+  const handlePasswordReset = async () => {
     try {
-      const logUser = await axios.post(`http://${HOST}:${PORT}/api/v1/users/login`, {
+      const result = await axios.post(`http://${HOST}:${PORT}/api/v1/users/forgotPassword`, {
         email,
-        password,
       });
-      if (logUser.data.status === "success") {
-        const {token} = logUser.data.token;
-        const {signIn} = authContext;
-        await signIn(token);
-        navigation.navigate("MainStackNavigator");
+      if (result.data.status === "success") {
+        setErrors([]);
+        navigation.navigate("PasswordResetVerifyScreen", {
+          emailSuccessMessage: result.data.message,
+        });
+        setDisabledSendPWResetEmail(true);
       }
     } catch (err) {
       const {message} = err.response.data;
+      setDisabledSendPWResetEmail(false);
       setErrors([...errors, message]);
-      console.log(message);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Login using {"\n"}your password</Text>
+      <Text style={styles.heading}>Enter your email</Text>
       <TextInput
         label="Email"
         onChangeText={email => handleEmailChange(email)}
@@ -66,35 +56,20 @@ const PasswordLoginScreen = ({navigation}) => {
         }}
       />
       {!!emailErrors.length && <Text style={styles.helperText}>{emailErrors[0]}</Text>}
-
-      <TextInput
-        style={styles.textInput}
-        label="Password"
-        secureTextEntry
-        autoCapitalize="none"
-        mode="outlined"
-        onChangeText={pw => handlePasswordChange(pw)}
-        theme={{
-          colors: {
-            primary: Colors.primary.color,
-            underlineColor: "transparent",
-            background: "#fff",
-          },
-        }}
-      />
-      {!!pwErrors.length && <Text style={styles.helperText}>{pwErrors[0]}</Text>}
-
       {!!errors.length && <Text style={styles.helperText}>{errors[0]}</Text>}
 
-      {!!email && !!password && !emailErrors.length && !pwErrors.length && (
-        <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-          <Text style={styles.btnText}>Sign in</Text>
+      {!!email && !emailErrors.length && (
+        <TouchableOpacity
+          style={styles.button}
+          disabled={disabledSendPWResetEmail}
+          onPress={async () => {
+            setDisabledSendPWResetEmail(true);
+            await handlePasswordReset();
+          }}>
+          <Text style={styles.btnText}>Send password reset email</Text>
         </TouchableOpacity>
       )}
-      <TouchableOpacity onPress={() => navigation.navigate("ForgotPasswordScreen")}>
-        {/* <MaterialIcons name="arrow-back" /> */}
-        <Text style={styles.linkText}>Forgot password?</Text>
-      </TouchableOpacity>
+
       <TouchableOpacity onPress={() => navigation.goBack()}>
         {/* <MaterialIcons name="arrow-back" /> */}
         <Text style={styles.linkText}>Go back</Text>
@@ -102,7 +77,8 @@ const PasswordLoginScreen = ({navigation}) => {
     </View>
   );
 };
-export default PasswordLoginScreen;
+
+export default ForgotPasswordScreen;
 
 const styles = StyleSheet.create({
   btnText: {
