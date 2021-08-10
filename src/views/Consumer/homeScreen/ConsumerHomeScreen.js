@@ -8,6 +8,8 @@ import * as Colors from "../../../styles/abstracts/colors";
 import AppHeader from "../../Common/AppHeader";
 
 export const ConsumerHomeScreen = ({navigation}) => {
+
+
   return (
     <SafeAreaView>
       <AppHeader navigation={navigation} title="Gigs" />

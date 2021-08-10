@@ -7,8 +7,6 @@ import {createDrawerNavigator} from "@react-navigation/drawer";
 import {useNavigation} from "@react-navigation/core";
 import {Notifications} from "../views/Consumer/Notifications";
 
-
-
 import ConsumerDrawer from "./ConsumerDrawer";
 import GrowerDrawer from "./GrowerDrawer";
 import ConsumerStack from "./ConsumerStack";
@@ -31,7 +29,6 @@ function ConsumerDrawerNavigator() {
       {/* ConsumerStack contains all other consumer related screens not on drawer */}
       <Drawer.Screen name={"ConsumerHome"} component={ConsumerStack} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
-      <Drawer.Screen name={"Map"} component={Map} />
       <Drawer.Screen name={"Notifications"} component={Notifications} />
     </Drawer.Navigator>
   );
@@ -45,9 +42,7 @@ function GrowerDrawerNavigator() {
       drawerContent={GrowerDrawer}
       navigation={navigation}
       drawerStyle={{backgroundColor: "red"}}>
-
       <Drawer.Screen name={"GrowerStack"} component={GrowerStack} />
-      
 
       <Drawer.Screen name={"Notifications"} component={Notifications} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
