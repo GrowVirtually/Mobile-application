@@ -74,7 +74,7 @@ const ProfileScreen = () => {
               icon="sync"
               mode="contained"
               onPress={() => handleToggleRole()}>
-              Switch to {globalState.usertype === "grower" ? "Grower mode" : "Consumer mode"}
+              Switch to {globalState.usertype === "grower" ? "Consumer mode" : "Grower mode"}
             </Button>
           </View>
           <View style={styles.userInfoSection}>
