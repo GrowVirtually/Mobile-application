@@ -1,58 +1,25 @@
 import React from 'react';
-import {Text, View, StatusBar,StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, StatusBar,StyleSheet, SafeAreaView,TouchableOpacity, Image} from 'react-native';
 import * as Colors from '../../styles/abstracts/colors';
 import  AppHeader  from '../Common/AppHeader';
 
+import {GrowerMenu} from "./components/GrowerMenu";
+
 export const GrowerHomeScreen = ({navigation}) => {
   return (
-    <View>
-       <StatusBar backgroundColor={Colors.primary.color} />
-       <AppHeader navigation={navigation} title="Grower" />
+    <SafeAreaView>
+      <View>
+
+        <StatusBar backgroundColor={Colors.primary.color} />
+        <AppHeader navigation={navigation} title="Grower" />
+        <GrowerMenu navigation={navigation} />
 
 
-       <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate("NewGig")}>
-      
-        <Text style={styles.buttonText}>New Gig</Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('MyGigs')}
-      >
-        <Text style={styles.buttonText}>My Gigs</Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('FindConsumer')}
-      >
-        <Text style={styles.buttonText}>Find Consumers</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Orders')}
-      >
-        <Text style={styles.buttonText}>Orders</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Earnings')}
-      >
-        <Text style={styles.buttonText}>Earnings</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Support')}
-      >
-        <Text style={styles.buttonText}>Support</Text>
-      </TouchableOpacity>
-
-    </View>
+      </View>
+    </SafeAreaView>
+    
   );
 };
 
@@ -74,13 +41,19 @@ const styles = StyleSheet.create({
   },  
  
   buttonContainer: {
-    backgroundColor: '#222',
+   backgroundColor: 'black',
+    flexDirection:'row',
     borderRadius: 5,
-    padding: 10,
-    margin: 20
+    padding: 1,
+    margin: 20,
+    width: 150,
+    height: 150,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 12,
     color: '#fff'
+  },
+  buttonImage:{
+    flex:3,
   }
 });
