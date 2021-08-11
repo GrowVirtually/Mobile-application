@@ -9,6 +9,7 @@ import {Provider as PaperProvider} from "react-native-paper";
 import {StoreProvider, useStore} from "./context/StoreProvider";
 import {storeReducer, storeState} from "./reducers/storeReducer";
 import {loginReducer, initialLoginState} from "./reducers/loginReducer";
+import theme from "./styles/abstracts/theme";
 
 const RootStack = createStackNavigator();
 
@@ -50,7 +51,7 @@ const App = () => {
   }, []);
 
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <AuthContext.Provider value={{authContext, loginState}}>
         <StoreProvider reducer={storeReducer} initialState={storeState}>
           <NavigationContainer>
