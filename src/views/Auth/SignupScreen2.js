@@ -2,7 +2,7 @@ import React, {useContext, useState} from "react";
 import {TouchableOpacity, StyleSheet, Text, View} from "react-native";
 import axios from "axios";
 import {TextInput} from "react-native-paper";
-import {HOST, PORT} from "@env";
+import {HOST_PORT} from "@env";
 import * as Colors from "../../styles/abstracts/colors";
 import * as Base from "../../styles/base/base";
 import AuthContext from "../../context/auth-context";
@@ -27,7 +27,7 @@ const SignupScreen2 = ({navigation, route}) => {
 
   const handleSignup = async () => {
     try {
-      const addUser = await axios.post(`http://${HOST}:${PORT}/api/v1/users/signup`, {
+      const addUser = await axios.post(`${HOST_PORT}/api/v1/users/signup`, {
         fname: route.params.firstName,
         lname: route.params.lastName,
         email: route.params.email,
