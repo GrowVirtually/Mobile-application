@@ -4,6 +4,11 @@ import AuthContext from "../context/auth-context";
 import {useStore} from "../context/StoreProvider";
 
 const HomeScreen = ({navigation}) => {
+  const handler = () => {
+    const {globalDispatch} = useStore();
+    globalDispatch({type: "SET_USER", userLocation: {lat: 444.3}});
+    navigation.navigate("MainStackNavigator");
+  };
 
   return (
     <View style={newStyle.container}>

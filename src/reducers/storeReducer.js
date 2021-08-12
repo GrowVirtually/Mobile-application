@@ -3,27 +3,29 @@ export const storeState = {
   firstname: "ammo",
   lastname: "bbbo",
   userEmail: "sam@g.com",
-  userLocation: {},
+  userLocation: null,
 };
-export const storeReducer = (state, action) => {
+export const storeReducer = (prevState, action) => {
   switch (action.type) {
     case "CHANGE_USER_TYPE_TO_CONSUMER":
-      return {...state, usertype: "consumer"};
+      return {...prevState, usertype: "consumer"};
     case "CHANGE_USER_TYPE_TO_GROWER":
-      return {...state, usertype: "grower"};
+      return {...prevState, usertype: "grower"};
     case "TOGGLE_USER_TYPE": {
-      if (state.usertype === "consumer") {
-        return {...state, usertype: "grower"};
+      if (prevState.usertype === "consumer") {
+        return {...prevState, usertype: "grower"};
       }
-      return {...state, usertype: "consumer"};
+      return {...prevState, usertype: "consumer"};
     }
     case "SET_USER":
       return {
-        ...state,
+        ...prevState,
         firstname: action.firstname,
         lastname: action.lastname,
         userEmail: action.userEmail,
-        userLocation: action.location,
       };
+    case "SET_USER_LOCATION": {
+      return {...prevState, userLocation: action.userLocation};
+    }
   }
 };

@@ -35,6 +35,12 @@ const ProfileScreen = () => {
     email: globalState.userEmail,
   };
 
+  const gst = {
+    loc: {
+      lat: 444,
+    },
+  };
+
   return (
     <>
       <AppHeader navigation={navigation} title="My Profile" />
@@ -67,6 +73,7 @@ const ProfileScreen = () => {
                   ]}>
                   {userinfo.username}
                 </Title>
+
                 <Caption style={styles.caption}>{userinfo.email}</Caption>
               </View>
             </View>
@@ -81,7 +88,11 @@ const ProfileScreen = () => {
           <View style={styles.userInfoSection}>
             <View style={styles.row}>
               <Icon name="map-marker-radius" color="#777777" size={20} />
-              <Text style={{marginLeft: 20}}>Nugegoda, Colombo 05</Text>
+              <Text style={{marginLeft: 20}}>
+                {globalState.userLocation === null
+                  ? `empty`
+                  : `${globalState.userLocation.lat} / ${globalState.userLocation.long}`}
+              </Text>
             </View>
             <View style={styles.row}>
               <Icon name="phone" color="#777777" size={20} />

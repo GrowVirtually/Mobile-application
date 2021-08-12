@@ -15,16 +15,13 @@ const MainStackNavigator = () => {
   const {globalState, globalDispatch} = useStore();
   return (
     <Stack.Navigator headerMode="none">
-      {/* {globalState.userLocation.length === 0 && globalState.userLocation.constructor === Object && (
-        <Stack.Screen name="CommonHome" component={HomeScreen} />
-      )} */}
-
       {globalState.usertype === "grower" ? (
         <Stack.Screen name="GrowerHome" component={GrowerDrawerNavigator} />
       ) : (
         <Stack.Screen name="ConsumerHome" component={ConsumerDrawerNavigator} />
       )}
 
+      <Stack.Screen name="CommonHome" component={HomeScreen} />
       <Stack.Screen name="AuthStackNavigator" component={AuthStackNavigator} />
     </Stack.Navigator>
   );

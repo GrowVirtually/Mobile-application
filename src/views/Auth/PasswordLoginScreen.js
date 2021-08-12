@@ -43,7 +43,9 @@ const PasswordLoginScreen = ({navigation}) => {
 
         globalDispatch({type: "SET_USER", firstname: fname, lastname: lname, userEmail: email});
 
-        navigation.navigate("MainStackNavigator");
+        // navigation.navigate("MainStackNavigator");
+
+        globalState.userLocation === null && navigation.navigate("LocationSetter");
       }
     } catch (err) {
       const {message} = err.response.data;
