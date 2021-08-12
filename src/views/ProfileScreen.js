@@ -31,7 +31,7 @@ const ProfileScreen = () => {
   };
 
   const userinfo = {
-    username: "John Doe",
+    username: `${globalState.firstname} ${globalState.lastname}`,
   };
 
   return (
@@ -64,7 +64,7 @@ const ProfileScreen = () => {
                       marginBottom: 5,
                     },
                   ]}>
-                  John Doe
+                  {userinfo.username}
                 </Title>
                 <Caption style={styles.caption}>@j_doe</Caption>
               </View>

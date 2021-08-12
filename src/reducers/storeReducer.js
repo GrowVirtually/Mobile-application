@@ -1,4 +1,4 @@
-export const storeState = {username: "Amarabandu", usertype: "grower"};
+export const storeState = {usertype: "grower", firstname: "ammo", lastname: "bbbo"};
 export const storeReducer = (state, action) => {
   switch (action.type) {
     case "CHANGE_USER_TYPE_TO_CONSUMER":
@@ -11,5 +11,7 @@ export const storeReducer = (state, action) => {
       }
       return {...state, usertype: "consumer"};
     }
+    case "SET_USER":
+      return {...state, firstname: action.firstname, lastname: action.lastname};
   }
 };

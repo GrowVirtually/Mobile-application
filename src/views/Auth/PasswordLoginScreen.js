@@ -7,6 +7,7 @@ import {HOST_PORT} from "@env";
 import * as Colors from "../../styles/abstracts/colors";
 import AuthContext from "../../context/auth-context";
 import {validateEmail, validatePassword} from "../../utils/validators";
+import {useStore} from "../../context/StoreProvider";
 
 const PasswordLoginScreen = ({navigation}) => {
   const [email, setEmail] = useState("");
@@ -16,6 +17,7 @@ const PasswordLoginScreen = ({navigation}) => {
   const [errors, setErrors] = useState([]);
 
   const {authContext} = useContext(AuthContext);
+  const {globalState, globalDispatch} = useStore();
 
   const handleEmailChange = email => {
     validateEmail(email, emailErrors, setEmailErrors);
@@ -35,8 +37,12 @@ const PasswordLoginScreen = ({navigation}) => {
       });
       if (logUser.data.status === "success") {
         const {token} = logUser.data.token;
+        const {fname, lname} = logUser.data.user;
         const {signIn} = authContext;
         await signIn(token);
+
+        globalDispatch({type: "SET_USER", firstname: fname, lastname: lname});
+
         navigation.navigate("MainStackNavigator");
       }
     } catch (err) {
