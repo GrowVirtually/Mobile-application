@@ -1,6 +1,6 @@
 import React, {useState, StatusBar, useContext} from "react";
 import {StyleSheet, Text, View, Image, TouchableOpacity} from "react-native";
-import {HOST, PORT} from "@env";
+import {HOST_PORT} from "@env";
 import {
   CodeField,
   Cursor,
@@ -27,7 +27,7 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
 
   const handleOTPVerification = async () => {
     try {
-      const otpVerification = await axios.post(`http://${HOST}:${PORT}/api/v1/users/verifyOTP`, {
+      const otpVerification = await axios.post(`${HOST_PORT}/api/v1/users/verifyOTP`, {
         phone: route.params.phone,
         hash: route.params.hash,
         otp: userOTP,

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {TextInput} from "react-native-paper";
-import {HOST, PORT} from "@env";
+import {HOST_PORT} from "@env";
 import * as Colors from "../../styles/abstracts/colors";
 import {validateEmail} from "../../utils/validators";
 import axios from "axios";
@@ -19,7 +19,7 @@ const ForgotPasswordScreen = ({navigation}) => {
 
   const handlePasswordReset = async () => {
     try {
-      const result = await axios.post(`http://${HOST}:${PORT}/api/v1/users/forgotPassword`, {
+      const result = await axios.post(`${HOST_PORT}/api/v1/users/forgotPassword`, {
         email,
       });
       if (result.data.status === "success") {

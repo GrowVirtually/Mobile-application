@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {HOST, PORT} from "@env";
+import {HOST_PORT} from "@env";
 import * as Colors from "../../styles/abstracts/colors";
 import * as Base from "../../styles/base/base";
 import {
