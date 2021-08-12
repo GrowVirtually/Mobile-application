@@ -12,7 +12,7 @@ import GrowerDrawer from "./GrowerDrawer";
 import ConsumerStack from "./ConsumerStack";
 import GrowerStack from "./GrowerStack";
 import ProfileScreen from "../views/ProfileScreen";
-import {Map} from "../views/Map";
+import LocationUpdater from "../views/LocationUpdater";
 import * as Colors from "../styles/abstracts/colors";
 
 const Drawer = createDrawerNavigator();
@@ -30,6 +30,7 @@ function ConsumerDrawerNavigator() {
       <Drawer.Screen name={"ConsumerHome"} component={ConsumerStack} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
       <Drawer.Screen name={"Notifications"} component={Notifications} />
+      <Drawer.Screen name={"LocationUpdater"} component={LocationUpdater} />
     </Drawer.Navigator>
   );
 }
@@ -46,6 +47,7 @@ function GrowerDrawerNavigator() {
 
       <Drawer.Screen name={"Notifications"} component={Notifications} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
+      <Drawer.Screen name={"LocationUpdater"} component={LocationUpdater} />
     </Drawer.Navigator>
   );
 }

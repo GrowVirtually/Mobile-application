@@ -35,10 +35,8 @@ const ProfileScreen = () => {
     email: globalState.userEmail,
   };
 
-  const gst = {
-    loc: {
-      lat: 444,
-    },
+  const handleUpdateLoc = () => {
+    navigation.navigate("LocationUpdater", {prevLoc: globalState.userLocation});
   };
 
   return (
@@ -91,8 +89,11 @@ const ProfileScreen = () => {
               <Text style={{marginLeft: 20}}>
                 {globalState.userLocation === null
                   ? `empty`
-                  : `${globalState.userLocation.latitude} / ${globalState.userLocation.longitude}`}
+                  : `${globalState.userLocation.latitude.toFixed(
+                      4,
+                    )}, ${globalState.userLocation.longitude.toFixed(4)}`}
               </Text>
+              <Button mode="outlined" onPress={() => handleUpdateLoc()}>Update loc</Button>
             </View>
             <View style={styles.row}>
               <Icon name="phone" color="#777777" size={20} />
@@ -191,6 +192,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     marginBottom: 10,
+    alignItems: "center",
   },
   infoBoxWrapper: {
     borderBottomColor: "#dddddd",
