@@ -91,7 +91,7 @@ const ProfileScreen = () => {
               <Text style={{marginLeft: 20}}>
                 {globalState.userLocation === null
                   ? `empty`
-                  : `${globalState.userLocation.lat} / ${globalState.userLocation.long}`}
+                  : `${globalState.userLocation.latitude} / ${globalState.userLocation.longitude}`}
               </Text>
             </View>
             <View style={styles.row}>

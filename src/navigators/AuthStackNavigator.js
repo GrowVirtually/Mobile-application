@@ -11,7 +11,7 @@ import MobileNumberVerifyScreen from "../views/Auth/MobileNumberVerifyScreen";
 import MainStackNavigator from "./StackNavigator";
 import PasswordResetVerifyScreen from "../views/Auth/PasswordResetVerifyScreen";
 import PasswordResetScreen from "../views/Auth/PasswordResetScreen";
-import LocationSetter from "../views/Auth/LocationSetter";
+import LocationSetter from "../views/LocationSetter";
 
 const AuthStack = createStackNavigator();
 
