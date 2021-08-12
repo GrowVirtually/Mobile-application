@@ -3,6 +3,7 @@ export const storeState = {
   firstname: "ammo",
   lastname: "bbbo",
   userEmail: "sam@g.com",
+  userLocation: {},
 };
 export const storeReducer = (state, action) => {
   switch (action.type) {
@@ -22,6 +23,7 @@ export const storeReducer = (state, action) => {
         firstname: action.firstname,
         lastname: action.lastname,
         userEmail: action.userEmail,
+        userLocation: action.location,
       };
   }
 };

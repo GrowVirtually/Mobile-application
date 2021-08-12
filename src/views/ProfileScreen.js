@@ -32,7 +32,7 @@ const ProfileScreen = () => {
 
   const userinfo = {
     username: `${globalState.firstname} ${globalState.lastname}`,
-    email: globalState.email,
+    email: globalState.userEmail,
   };
 
   return (
