@@ -6,8 +6,11 @@
 
 3. Update the **.env** file with below info according to your workspace.
 ``` 
-  HOST=192.168.1.102
+  HOST=192.168.1.101
   PORT=3000
+  PROTOCOL=https
+
+  HOST_PORT=https://grovi-backend.herokuapp.com
 ```
 
 4. Create the following file.
