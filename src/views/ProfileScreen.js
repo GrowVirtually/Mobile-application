@@ -32,6 +32,7 @@ const ProfileScreen = () => {
 
   const userinfo = {
     username: `${globalState.firstname} ${globalState.lastname}`,
+    email: globalState.email,
   };
 
   return (
@@ -66,7 +67,7 @@ const ProfileScreen = () => {
                   ]}>
                   {userinfo.username}
                 </Title>
-                <Caption style={styles.caption}>@j_doe</Caption>
+                <Caption style={styles.caption}>{userinfo.email}</Caption>
               </View>
             </View>
             <Button
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
   },
   caption: {

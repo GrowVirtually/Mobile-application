@@ -37,11 +37,11 @@ const PasswordLoginScreen = ({navigation}) => {
       });
       if (logUser.data.status === "success") {
         const {token} = logUser.data.token;
-        const {fname, lname} = logUser.data.user;
+        const {fname, lname, userEmail} = logUser.data.user;
         const {signIn} = authContext;
         await signIn(token);
 
-        globalDispatch({type: "SET_USER", firstname: fname, lastname: lname});
+        globalDispatch({type: "SET_USER", firstname: fname, lastname: lname, userEmail});
 
         navigation.navigate("MainStackNavigator");
       }
