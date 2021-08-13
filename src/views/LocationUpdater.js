@@ -7,7 +7,7 @@ import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import MapView from "react-native-maps";
 import {Marker} from "react-native-maps";
 
-const LocationSetter = ({route, navigation}) => {
+const LocationUpdater = ({route, navigation}) => {
   const {globalDispatch} = useStore();
   const {prevLoc} = route.params;
   const delta = {latitudeDelta: 0.0922, longitudeDelta: 0.0421};
@@ -43,7 +43,7 @@ const LocationSetter = ({route, navigation}) => {
   );
 };
 
-export default LocationSetter;
+export default LocationUpdater;
 
 const styles = StyleSheet.create({
   container: {

@@ -5,6 +5,7 @@ import HomeScreen from "../views/HomeScreen";
 import {ConsumerDrawerNavigator, GrowerDrawerNavigator} from "./DrawerNavigator";
 import AuthStackNavigator from "./AuthStackNavigator";
 import {useStore} from "../context/StoreProvider";
+import LocationSetter from "../views/LocationSetter";
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,9 @@ const MainStackNavigator = () => {
   const {globalState, globalDispatch} = useStore();
   return (
     <Stack.Navigator headerMode="none">
+      {globalState.userLocation === null && (
+        <Stack.Screen name="LocationSetter" component={LocationSetter} />
+      )}
       {globalState.usertype === "grower" ? (
         <Stack.Screen name="GrowerHome" component={GrowerDrawerNavigator} />
       ) : (

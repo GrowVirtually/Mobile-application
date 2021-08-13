@@ -36,16 +36,20 @@ const PasswordLoginScreen = ({navigation}) => {
         password,
       });
       if (logUser.data.status === "success") {
-        const {token} = logUser.data.token;
-        const {fname, lname, email} = logUser.data.user;
+        const {token} = logUser.data;
         const {signIn} = authContext;
         await signIn(token);
 
+        const {fname, lname, email} = logUser.data.user;
         globalDispatch({type: "SET_USER", firstname: fname, lastname: lname, userEmail: email});
 
-        // navigation.navigate("MainStackNavigator");
+        navigation.navigate("MainStackNavigator");
 
-        globalState.userLocation === null && navigation.navigate("LocationSetter");
+        // if (globalState.userLocation === null) {
+        //   alert("nulll");
+        //   navigation.navigate("LocationSetter");
+        // }
+        // globalState.userLocation === null && navigation.navigate("LocationSetter");
       }
     } catch (err) {
       const {message} = err.response.data;
