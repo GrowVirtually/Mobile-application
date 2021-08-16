@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {TextInput} from "react-native-paper";
-import {HOST, PORT} from "@env";
+import {HOST_PORT} from "@env";
 import * as Colors from "../../styles/abstracts/colors";
 import {pwErrorMessages, validatePassword} from "../../utils/validators";
 import * as Base from "../../styles/base/base";
@@ -27,7 +27,7 @@ const PasswordResetScreen = ({navigation, route}) => {
   const handleResetPassword = async () => {
     try {
       const result = await axios.patch(
-        `http://${HOST}:${PORT}/api/v1/users/resetPassword/${route.params.token}`,
+        `${HOST_PORT}/api/v1/users/resetPassword/${route.params.token}`,
         {
           password,
         },

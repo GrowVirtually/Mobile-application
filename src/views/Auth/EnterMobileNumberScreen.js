@@ -1,10 +1,8 @@
-/* eslint-disable react-native/no-color-literals */
-/* eslint-disable react-native/no-unused-styles */
 import React, {useEffect, useState} from "react";
 import {Dimensions, StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import {TextInput} from "react-native-paper";
 import axios from "axios";
-import {HOST, PORT} from "@env";
+import {HOST_PORT} from "@env";
 import * as Colors from "../../styles/abstracts/colors";
 
 const EnterMobileNumberScreen = ({navigation}) => {
@@ -37,7 +35,7 @@ const EnterMobileNumberScreen = ({navigation}) => {
     try {
       // backend call to get the OTP
 
-      const otpWithDetails = await axios.post(`http://${HOST}:${PORT}/api/v1/users/sendOTP`, {
+      const otpWithDetails = await axios.post(`${HOST_PORT}/api/v1/users/sendOTP`, {
         phone: newMobile,
       });
 

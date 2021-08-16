@@ -3,7 +3,7 @@ import React, {useState, useContext} from "react";
 import axios from "axios";
 import {Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {TextInput} from "react-native-paper";
-import {HOST, PORT} from "@env";
+import {HOST_PORT} from "@env";
 import * as Colors from "../../styles/abstracts/colors";
 import AuthContext from "../../context/auth-context";
 import {validateEmail, validatePassword} from "../../utils/validators";
@@ -29,7 +29,7 @@ const PasswordLoginScreen = ({navigation}) => {
 
   const handleSignIn = async () => {
     try {
-      const logUser = await axios.post(`http://${HOST}:${PORT}/api/v1/users/login`, {
+      const logUser = await axios.post(`${HOST_PORT}/api/v1/users/login`, {
         email,
         password,
       });

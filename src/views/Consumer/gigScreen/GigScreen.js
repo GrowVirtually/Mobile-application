@@ -13,6 +13,7 @@ import HorizontalRule from "../../Common/HorizontalRule";
 import SellerInfo from "./components/SellerInfo";
 import CategoryInfo from "./components/CategoryInfo";
 import GigDesc from "./components/GigDesc";
+import ImageSlider from "./components/ImageSlider";
 
 export const GigScreen = ({route, navigation}) => {
   const [qty, setQty] = useState(1);
@@ -28,6 +29,12 @@ export const GigScreen = ({route, navigation}) => {
     expireDate: route.params.expireDate,
     growerName: route.params.growerName,
     imgUrl: route.params.imgUrl,
+    gigImages: [
+      "https://source.unsplash.com/1024x768/?nature",
+      "https://source.unsplash.com/1024x768/?water",
+      "https://source.unsplash.com/1024x768/?girl",
+      "https://source.unsplash.com/1024x768/?tree", // Network image
+    ],
     id: route.params.id,
     distance: "1.3 Km",
     address: "No. 33/2, Siebel Avnue, Kirulapone",
@@ -40,6 +47,7 @@ export const GigScreen = ({route, navigation}) => {
     willSellerDeliver: true,
     sellerInfo: "For sale by N. Sumanas",
     isVerified: true,
+    isExpiredGig: false,
     ratingVal: 4,
     category: "Organic",
     type: "Vegetable",
@@ -48,7 +56,7 @@ export const GigScreen = ({route, navigation}) => {
   };
 
   // Destructure gig info
-  const {gigTitle, priceTag, expireDate, growerName, imgUrl, id} = gigInfo;
+  const {gigTitle, priceTag, expireDate, growerName, imgUrl, id, sellerInfo} = gigInfo;
 
   // Dialog box popup
   const [visible, setVisible] = React.useState(false);
@@ -64,7 +72,7 @@ export const GigScreen = ({route, navigation}) => {
         showBackButton={true}
       />
       <ScrollView>
-        <Image source={{uri: imgUrl}} style={styles.gigImg} />
+        <ImageSlider gigImages={gigInfo.gigImages} />
         <View style={styles.container}>
           <GigTitle {...{priceTag, gigTitle, expireDate}} />
 
@@ -84,7 +92,7 @@ export const GigScreen = ({route, navigation}) => {
 
           <HorizontalRule />
 
-          <SellerInfo sellerInfo={"For sale by N. Sumanas"} isVerified={true} ratingVal={4} />
+          <SellerInfo sellerInfo={sellerInfo} isVerified={true} ratingVal={4} />
 
           <CategoryInfo category="Organic" type="Vegetable" />
 

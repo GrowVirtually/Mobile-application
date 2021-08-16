@@ -15,7 +15,7 @@ const ConsumerDrawer = props => {
   };
 
   const handleSwichRole = () => {
-    alert('handle role change');
+    alert("handle role change");
   };
 
   return (
@@ -23,9 +23,6 @@ const ConsumerDrawer = props => {
       <SafeAreaView style={styles.header}>
         <Avatar.Text size={64} label="DD" style={{backgroundColor: "white", color: "green"}} />
         <Text style={styles.txt}>Dimuthu Dhanushka</Text>
-        <TouchableOpacity style={styles.switchRole} onPress={() => handleSwichRole()}>
-          <Text>Change srole {props.xxx}</Text>
-        </TouchableOpacity>
       </SafeAreaView>
 
       {/* Default items */}
@@ -47,18 +44,6 @@ const ConsumerDrawer = props => {
         )}
         label={() => <Text style={styles.menuTxt}>My Profile</Text>}
         onPress={() => props.navigation.navigate("ProfileScreen")}
-      />
-      <DrawerItem
-        icon={({color, size}) => <MaterialCommunityIcons name="map" color="white" size={24} />}
-        label={() => <Text style={styles.menuTxt}>Map</Text>}
-        onPress={() => props.navigation.navigate("Map")}
-      />
-      <View style={styles.divider} />
-
-      <DrawerItem
-        icon={({color, size}) => <MaterialCommunityIcons name="logout" color="white" size={24} />}
-        label={() => <Text style={styles.menuTxt}>Log out</Text>}
-        onPress={() => handleLogout()}
       />
     </DrawerContentScrollView>
   );
