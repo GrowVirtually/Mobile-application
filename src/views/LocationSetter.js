@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     zIndex: 5,
     borderRadius: 3,
     elevation: 0,
-
     backgroundColor: "rgba(0,0,0,0.4)",
     bottom: 20,
     right: 20,

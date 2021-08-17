@@ -8,6 +8,7 @@ import * as Colors from "../../styles/abstracts/colors";
 import AuthContext from "../../context/auth-context";
 import {validateEmail, validatePassword} from "../../utils/validators";
 import {useStore} from "../../context/StoreProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PasswordLoginScreen = ({navigation}) => {
   const [email, setEmail] = useState("");
@@ -42,6 +43,13 @@ const PasswordLoginScreen = ({navigation}) => {
 
         const {fname, lname, email} = logUser.data.user;
         globalDispatch({type: "SET_USER", firstname: fname, lastname: lname, userEmail: email});
+        const globalStateStr = JSON.stringify(globalState);
+
+        try {
+          await AsyncStorage.setItem("globalState", globalStateStr);
+        } catch (e) {
+          console.log("GlobalState: ", globalStateStr);
+        }
 
         navigation.navigate("MainStackNavigator");
 

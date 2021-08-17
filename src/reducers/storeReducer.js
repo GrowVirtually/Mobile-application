@@ -27,5 +27,10 @@ export const storeReducer = (prevState, action) => {
     case "SET_USER_LOCATION": {
       return {...prevState, userLocation: action.userLocation};
     }
+    case "SET_STATE": {
+      return {
+        ...action.state,
+      };
+    }
   }
 };

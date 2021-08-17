@@ -31,6 +31,9 @@ const LocationUpdater = ({route, navigation}) => {
       <TouchableOpacity onPress={() => getLocation()} style={styles.backBtn}>
         <MaterialIcon style={styles.icon} name="map-marker-check" color="#fff" size={28} />
       </TouchableOpacity>
+      <View style={styles.label}>
+        <Text style={{color: "#DDD"}}>Tap on your location and press confirm</Text>
+      </View>
 
       <MapView
         style={styles.map}
@@ -79,5 +82,17 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: "relative",
+  },
+  label: {
+    position: "absolute",
+    padding: 5,
+    zIndex: 5,
+    borderRadius: 3,
+    elevation: 0,
+    backgroundColor: "rgba(0,0,0,0.4)",
+    bottom: 20,
+    right: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
