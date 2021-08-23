@@ -17,7 +17,7 @@ const LocationUpdater = ({route, navigation}) => {
   });
 
   const getLocation = () => {
-    alert(location.longitude);
+    alert("Your location has been updated");
     globalDispatch({type: "SET_USER_LOCATION", userLocation: location});
     navigation.goBack();
   };

@@ -18,7 +18,7 @@ const LocationSetter = () => {
   });
 
   const getLocation = () => {
-    alert(location.latitude);
+    alert("Your location has been set");
     globalDispatch({type: "SET_USER_LOCATION", userLocation: location});
     navigation.navigate("MainStackNavigator");
   };
