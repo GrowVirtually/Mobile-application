@@ -7,6 +7,8 @@ import {HOST_PORT} from "@env";
 import * as Colors from "../../styles/abstracts/colors";
 import AuthContext from "../../context/auth-context";
 import {validateEmail, validatePassword} from "../../utils/validators";
+import {useStore} from "../../context/StoreProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PasswordLoginScreen = ({navigation}) => {
   const [email, setEmail] = useState("");
@@ -16,6 +18,7 @@ const PasswordLoginScreen = ({navigation}) => {
   const [errors, setErrors] = useState([]);
 
   const {authContext} = useContext(AuthContext);
+  const {globalState, globalDispatch} = useStore();
 
   const handleEmailChange = email => {
     validateEmail(email, emailErrors, setEmailErrors);
@@ -34,10 +37,34 @@ const PasswordLoginScreen = ({navigation}) => {
         password,
       });
       if (logUser.data.status === "success") {
-        const {token} = logUser.data.token;
+        const {token} = logUser.data;
         const {signIn} = authContext;
         await signIn(token);
+
+        const {fname, lname, email} = logUser.data.user;
+        globalDispatch({type: "SET_USER", firstname: fname, lastname: lname, userEmail: email});
+        const globalStateStr = JSON.stringify({
+          usertype: "grower",
+          firstname: fname,
+          lastname: lname,
+          userEmail: email,
+          userLocation: null,
+        });
+
+        try {
+          await AsyncStorage.setItem("globalState", globalStateStr);
+          console.log("Login: ", globalStateStr);
+        } catch (e) {
+          console.log(e);
+        }
+
         navigation.navigate("MainStackNavigator");
+
+        // if (globalState.userLocation === null) {
+        //   alert("nulll");
+        //   navigation.navigate("LocationSetter");
+        // }
+        // globalState.userLocation === null && navigation.navigate("LocationSetter");
       }
     } catch (err) {
       const {message} = err.response.data;

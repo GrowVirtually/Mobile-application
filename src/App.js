@@ -34,6 +34,7 @@ const App = () => {
         } catch (e) {
           console.log(e);
         }
+
         loginDispatch({type: "LOGOUT"});
       },
     }),
@@ -50,10 +51,23 @@ const App = () => {
     loginDispatch({type: "RETRIEVE_TOKEN", token: userToken});
   }, []);
 
+  let globalStateObj;
+  useEffect(async () => {
+    let globalStateStr;
+    try {
+      globalStateStr = await AsyncStorage.getItem("globalState");
+      globalStateObj = JSON.parse(globalStateStr);
+    } catch (e) {
+      console.log("GlobalState: ");
+    }
+  }, []);
+
   return (
     <PaperProvider theme={theme}>
       <AuthContext.Provider value={{authContext, loginState}}>
-        <StoreProvider reducer={storeReducer} initialState={storeState}>
+        <StoreProvider
+          reducer={storeReducer}
+          initialState={loginState.userToken ? globalStateObj : storeState}>
           <NavigationContainer>
             {loginState.userToken ? (
               <RootStack.Navigator headerMode="none">

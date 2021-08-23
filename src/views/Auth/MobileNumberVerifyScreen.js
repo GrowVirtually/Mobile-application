@@ -10,7 +10,9 @@ import {
 import axios from "axios";
 import * as Base from "../../styles/base/base";
 import * as Colors from "../../styles/abstracts/colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthContext from "../../context/auth-context";
+import {useStore} from "../../context/StoreProvider";
 
 const MobileNumberVerifyScreen = ({navigation, route}) => {
   const CELL_COUNT = 4;
@@ -22,7 +24,7 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
     setValue,
   });
   const [errors, setErrors] = useState([]);
-
+  const {globalState, globalDispatch} = useStore();
   const {authContext} = useContext(AuthContext);
 
   const handleOTPVerification = async () => {
@@ -42,6 +44,24 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
           const {signIn} = authContext;
           // 1) set the token to async storage
           await signIn(token);
+
+          const {fname, lname, email} = otpVerification.data.user;
+          globalDispatch({type: "SET_USER", firstname: fname, lastname: lname, userEmail: email});
+          const globalStateStr = JSON.stringify({
+            usertype: "grower",
+            firstname: fname,
+            lastname: lname,
+            userEmail: email,
+            userLocation: null,
+          });
+
+          try {
+            await AsyncStorage.setItem("globalState", globalStateStr);
+            console.log("Login-otp: ", globalStateStr);
+          } catch (e) {
+            console.log(e);
+          }
+
           navigation.navigate("MainStackNavigator");
         } else if (!otpVerification.data.userFound) {
           navigation.navigate("SignupScreen1", {

@@ -4,22 +4,11 @@ import AuthContext from "../context/auth-context";
 import {useStore} from "../context/StoreProvider";
 
 const HomeScreen = ({navigation}) => {
-  const {authContext, loginState} = useContext(AuthContext);
-  const {globalState, globalDispatch} = useStore();
-
-  const handleLogout = async () => {
-    const {signOut} = authContext;
-    await signOut();
-    navigation.navigate("AuthStackNavigator");
+  const handler = () => {
+    const {globalDispatch} = useStore();
+    globalDispatch({type: "SET_USER", userLocation: {lat: 444.3}});
+    navigation.navigate("MainStackNavigator");
   };
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     globalState.usertype === "grower"
-  //       ? navigation.navigate("GrowerHome")
-  //       : navigation.navigate("ConsumerHome");
-  //   }, 2000);
-  // });
 
   return (
     <View style={newStyle.container}>
@@ -33,11 +22,6 @@ const HomeScreen = ({navigation}) => {
       <TouchableOpacity style={newStyle.btn} onPress={() => navigation.navigate("GrowerHome")}>
         <Text style={newStyle.btnText}>Sell things</Text>
       </TouchableOpacity>
-      <Button title="Logout" onPress={handleLogout} />
-      <Text>
-        You are: {globalState.username} / {globalState.usertype} \ {loginState.userToken}
-      </Text>
-      <Button title="toggle" onPress={() => globalDispatch({type: "TOGGLE_USER_TYPE"})} />
     </View>
   );
 };

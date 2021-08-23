@@ -1,10 +1,10 @@
 /* eslint-disable react-native/no-raw-text */
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {View, SafeAreaView, StyleSheet} from "react-native";
 import {ScrollView} from "react-native-gesture-handler";
 import {Avatar, Title, Caption, Text, TouchableRipple, Button} from "react-native-paper";
 import {useNavigation} from "@react-navigation/native";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AuthContext from "../context/auth-context";
 import {useStore} from "../context/StoreProvider";
@@ -27,11 +27,22 @@ const ProfileScreen = () => {
   const handleLogout = async () => {
     const {signOut} = authContext;
     await signOut();
+    try {
+      await AsyncStorage.removeItem("globalState");
+    } catch (e) {
+      // remove error
+    }
+
     navigation.navigate("AuthStackNavigator");
   };
 
   const userinfo = {
-    username: "John Doe",
+    username: `${globalState.firstname} ${globalState.lastname}`,
+    email: globalState.userEmail,
+  };
+
+  const handleUpdateLoc = () => {
+    navigation.navigate("LocationUpdater", {prevLoc: globalState.userLocation});
   };
 
   return (
@@ -64,9 +75,10 @@ const ProfileScreen = () => {
                       marginBottom: 5,
                     },
                   ]}>
-                  John Doe
+                  {userinfo.username}
                 </Title>
-                <Caption style={styles.caption}>@j_doe</Caption>
+
+                <Caption style={styles.caption}>{userinfo.email}</Caption>
               </View>
             </View>
             <Button
@@ -80,7 +92,16 @@ const ProfileScreen = () => {
           <View style={styles.userInfoSection}>
             <View style={styles.row}>
               <Icon name="map-marker-radius" color="#777777" size={20} />
-              <Text style={{marginLeft: 20}}>Nugegoda, Colombo 05</Text>
+              <Text style={{marginLeft: 20}}>
+                {globalState.userLocation === null
+                  ? `empty`
+                  : `${globalState.userLocation.latitude.toFixed(
+                      4,
+                    )}, ${globalState.userLocation.longitude.toFixed(4)}`}
+              </Text>
+              <Button mode="outlined" onPress={() => handleUpdateLoc()}>
+                Update loc
+              </Button>
             </View>
             <View style={styles.row}>
               <Icon name="phone" color="#777777" size={20} />
@@ -168,7 +189,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
   },
   caption: {
@@ -179,6 +200,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     marginBottom: 10,
+    alignItems: "center",
   },
   infoBoxWrapper: {
     borderBottomColor: "#dddddd",
