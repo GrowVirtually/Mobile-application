@@ -103,17 +103,21 @@ export const GigScreen = ({route, navigation}) => {
 
           <HorizontalRule />
 
-          <BigButton text="Add to cart" icon="cart-plus" type="secondary" onPress={showDialog} />
-          <BigButton text="Place Order" icon="shopping-outline" />
+          {/* <BigButton text="Add to cart" icon="cart-plus" type="secondary" onPress={showDialog} /> */}
+          <BigButton
+            text="Place Order"
+            icon="shopping-outline"
+            onPress={() => navigation.navigate("Payment")}
+          />
 
-          <AddToCartDialog
+          {/* <AddToCartDialog
             gig={{gigTitle, priceTag, expireDate, growerName, imgUrl, id}}
             qty={qty}
             handleQty={handleQty}
             visible={visible}
             hideDialog={hideDialog}
             showDialog={showDialog}
-          />
+          /> */}
         </View>
       </ScrollView>
     </SafeAreaView>
