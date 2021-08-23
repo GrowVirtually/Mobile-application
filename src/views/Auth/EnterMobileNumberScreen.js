@@ -87,7 +87,7 @@ const EnterMobileNumberScreen = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("PasswordLoginScreen")}>
           {/* <MaterialIcons name="arrow-back" /> */}
-          <Text style={styles.linkText}>No access to phone?</Text>
+          <Text style={styles.linkText}>Login using your email</Text>
         </TouchableOpacity>
         {/* validate input and if there is number proceed */}
         {mobileNumber.length === 10 && (
