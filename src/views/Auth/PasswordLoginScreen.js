@@ -43,12 +43,19 @@ const PasswordLoginScreen = ({navigation}) => {
 
         const {fname, lname, email} = logUser.data.user;
         globalDispatch({type: "SET_USER", firstname: fname, lastname: lname, userEmail: email});
-        const globalStateStr = JSON.stringify(globalState);
+        const globalStateStr = JSON.stringify({
+          usertype: "grower",
+          firstname: fname,
+          lastname: lname,
+          userEmail: email,
+          userLocation: null,
+        });
 
         try {
           await AsyncStorage.setItem("globalState", globalStateStr);
+          console.log("Login: ", globalStateStr);
         } catch (e) {
-          console.log("GlobalState: ", globalStateStr);
+          console.log(e);
         }
 
         navigation.navigate("MainStackNavigator");

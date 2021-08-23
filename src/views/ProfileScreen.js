@@ -1,10 +1,10 @@
 /* eslint-disable react-native/no-raw-text */
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {View, SafeAreaView, StyleSheet} from "react-native";
 import {ScrollView} from "react-native-gesture-handler";
 import {Avatar, Title, Caption, Text, TouchableRipple, Button} from "react-native-paper";
 import {useNavigation} from "@react-navigation/native";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AuthContext from "../context/auth-context";
 import {useStore} from "../context/StoreProvider";
@@ -27,6 +27,12 @@ const ProfileScreen = () => {
   const handleLogout = async () => {
     const {signOut} = authContext;
     await signOut();
+    try {
+      await AsyncStorage.removeItem("globalState");
+    } catch (e) {
+      // remove error
+    }
+
     navigation.navigate("AuthStackNavigator");
   };
 
@@ -93,7 +99,9 @@ const ProfileScreen = () => {
                       4,
                     )}, ${globalState.userLocation.longitude.toFixed(4)}`}
               </Text>
-              <Button mode="outlined" onPress={() => handleUpdateLoc()}>Update loc</Button>
+              <Button mode="outlined" onPress={() => handleUpdateLoc()}>
+                Update loc
+              </Button>
             </View>
             <View style={styles.row}>
               <Icon name="phone" color="#777777" size={20} />
