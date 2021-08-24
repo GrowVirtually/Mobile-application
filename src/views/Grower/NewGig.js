@@ -1,72 +1,108 @@
 // src/views/Grower/NewGig.js
 
-import React from 'react';
-import { StyleSheet, View, Text,StatusBar, Button, TextInput  } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, Text,StatusBar, TouchableOpacity,ToastAndroid  } from 'react-native';
+
+import t from 'tcomb-form-native'
+
 import * as Colors from '../../styles/abstracts/colors';
 import  AppHeader  from '../Common/AppHeader';
 
-import { Formik} from 'formik';
+let Form = t.form.Form;
+class NewGig extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: {
+        name: '',
+        surname: '',
+        age: 0,
+        rememberMe: false,
+        gender:'Select'
+      },
+    };
 
-export default function NewGig ({navigation}) {
-  return (
-    <View style={styles.container}>
-       <StatusBar backgroundColor={Colors.primary.color} />
-       <AppHeader navigation={navigation} title="Add new Gig" />
-      
-      <Text style={styles.text}>Create New Gig Screen</Text>
-      <Formik
-        initialValues={{ title: '', body: '', rating:''}}
-        onSubmit={(values) => {
-          console.log(values);
-
-        }}
-      >
-        {(props) => (
-          <View>
-            <TextInput
-              style={styles.input}
-              placeholder='Review title'
-              onChangeText={props.handleChange('title')}
-              value={props.values.title}
-            />
-
-            <TextInput
-              multiline
-              style={styles.input}
-              placeholder='Review body'
-              onChangeText={props.handleChange('body')}
-              value={props.values.body}
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder='Rating (1-5)'
-              onChangeText={props.handleChange('rating')}
-              value={props.values.rating}
-              keyboardType='numeric'
-            />  
-            <Button title='submit' color='maroon' onPress={props.handleSubmit}/>
-
-          </View>
-        )}
-
-      </Formik>
-      
-     
-   
-    </View>
-  );
-}
-
-
-
-const styles = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    padding: 10,
-    fontSize: 18,
-    borderRadius:6,
+    this.submitForm = this.submitForm.bind(this)
   }
 
+  submitForm() {
+    var value = this.refs.gigForm.getValue();
+    if (value) {
+      // if validation fails, value will be null
+      // console.log(value);
+      ToastAndroid.show('Validation successful', ToastAndroid.SHORT);
+    } else {
+      ToastAndroid.show('Please fix errors', ToastAndroid.SHORT);
+    }
+  }
+
+  render() {
+    let gigForm = t.struct({
+      name: t.String, // a required string
+      surname: t.maybe(t.String), // an optional string
+      age: t.Number, // a required number
+      rememberMe: t.Boolean, // a boolean
+      gender: t.enums({M: 'Male', F: 'Female'}, 'gender'),
+    });
+
+    let options = {
+      fields: {
+        name: {
+          label: 'First Name',
+          help: 'Must be less than 20 characters',
+        },
+        age: {
+          editable: true,
+        },
+        rememberMe: {
+          disabled: false,
+        },
+        gender: {
+          disabled: false,
+        },
+      },
+    };
+
+    return (
+      <View>
+       <StatusBar backgroundColor={Colors.primary.color} />
+       <AppHeader navigation={this.props.navigation} title="Add new Gig" />
+        <Form
+          ref='gigForm'
+          type={gigForm}
+          options={options}
+          value={this.state.value}
+          //   onChange={{}}
+        />
+        <TouchableOpacity style={styles.button} onPress={this.submitForm}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
+var styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: '#ffffff',
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center',
+  },
+  button: {
+    height: 36,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+  },
 });
+export default NewGig;
