@@ -1,9 +1,11 @@
-import React from 'react';
-import {Text, View, StatusBar,StyleSheet, SafeAreaView,TouchableOpacity, Image} from 'react-native';
-import * as Colors from '../../styles/abstracts/colors';
-import  AppHeader  from '../Common/AppHeader';
+import React from 'react'
+import { StyleSheet, StatusBar, Text, View,SafeAreaView } from 'react-native'
 
-import {GrowerMenu} from "./components/GrowerMenu";
+import * as Colors from '../../../styles/abstracts/colors';
+import  AppHeader  from '../../Common/AppHeader';
+
+
+import {GrowerMenu} from "../homeScreen/components/GrowerMenu";
 
 export const GrowerHomeScreen = ({navigation}) => {
   return (
@@ -19,9 +21,8 @@ export const GrowerHomeScreen = ({navigation}) => {
 
       </View>
     </SafeAreaView>
-    
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   searchbarContainer: {

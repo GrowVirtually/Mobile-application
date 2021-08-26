@@ -2,16 +2,16 @@ import React from "react";
 
 import {createStackNavigator} from "@react-navigation/stack";
 
+import {GrowerHomeScreen} from "../views/Grower/homeScreen/GrowerHomeScreen";
 
-import {GrowerHomeScreen} from "../views/Grower/GrowerHomeScreen";
 
 // Grower's Menu Screens
-import Earnings from "../views/Grower/Earnings";
-import FindConsumer from "../views/Grower/FindConsumer";
-import MyGigs from "../views/Grower/MyGigs";
-import NewGig from "../views/Grower/NewGig";
-import Orders from "../views/Grower/Orders";
-import Support from "../views/Grower/Support";
+import Earnings from "../views/Grower/menuScreens/earnings/Earnings";
+import FindConsumer from "../views/Grower/menuScreens/findConsumer/FindConsumer";
+import MyGigs from "../views/Grower/menuScreens/myGigs/MyGigs";
+import NewGig from "../views/Grower/menuScreens/newGig/NewGig";
+import Orders from "../views/Grower/menuScreens/orders/Orders";
+import Support from "../views/Grower/menuScreens/support/Support";
 
 
 

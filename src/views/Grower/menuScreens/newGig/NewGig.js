@@ -1,23 +1,24 @@
 // src/views/Grower/NewGig.js
 
-import React, { Component } from 'react';
+import React, { Component  } from 'react';
 import { StyleSheet, View, Text,StatusBar, TouchableOpacity,ToastAndroid  } from 'react-native';
 
 import t from 'tcomb-form-native'
 
-import * as Colors from '../../styles/abstracts/colors';
-import  AppHeader  from '../Common/AppHeader';
+import * as Colors from '../../../../styles/abstracts/colors';
+import  AppHeader  from '../../../Common/AppHeader';
 
 let Form = t.form.Form;
-class MyGigs extends Component {
+class NewGig extends Component {
   constructor(props) {
     super(props);
     this.state = {
       value: {
-        name: 'First',
-        surname: 'Last',
-        age: 25,
-        rememberMe: true,
+        name: '',
+        surname: '',
+        age: 0,
+        rememberMe: false,
+       
       },
     };
 
@@ -25,7 +26,7 @@ class MyGigs extends Component {
   }
 
   submitForm() {
-    var value = this.refs.personForm.getValue();
+    var value = this.refs.gigForm.getValue();
     if (value) {
       // if validation fails, value will be null
       // console.log(value);
@@ -36,27 +37,17 @@ class MyGigs extends Component {
   }
 
   render() {
-    let PersonModel = t.struct({
-      name: t.String, // a required string
-      surname: t.maybe(t.String), // an optional string
-      age: t.Number, // a required number
-      rememberMe: t.Boolean, // a boolean
+    let gigForm = t.struct({
+    
+      category: t.enums({M: 'Organic', F: 'Female'}, 'gender'),
       gender: t.enums({M: 'Male', F: 'Female'}, 'gender'),
     });
 
     let options = {
       fields: {
-        name: {
-          label: 'First Name',
-          help: 'Must be less than 20 characters',
-        },
-        age: {
-          editable: true,
-        },
-        rememberMe: {
-          disabled: false,
-        },
-        gender: {
+        
+        category: {
+          label: 'Select Category',
           disabled: false,
         },
       },
@@ -67,8 +58,8 @@ class MyGigs extends Component {
        <StatusBar backgroundColor={Colors.primary.color} />
        <AppHeader navigation={this.props.navigation} title="Add new Gig" />
         <Form
-          ref='personForm'
-          type={PersonModel}
+          ref='gigForm'
+          type={gigForm}
           options={options}
           value={this.state.value}
           //   onChange={{}}
@@ -104,4 +95,4 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-export default MyGigs;
+export default NewGig;

@@ -5,20 +5,19 @@ import { StyleSheet, View, Text,StatusBar, TouchableOpacity,ToastAndroid  } from
 
 import t from 'tcomb-form-native'
 
-import * as Colors from '../../styles/abstracts/colors';
-import  AppHeader  from '../Common/AppHeader';
+import * as Colors from '../../../../styles/abstracts/colors';
+import  AppHeader  from '../../../Common/AppHeader';
 
 let Form = t.form.Form;
-class NewGig extends Component {
+class MyGigs extends Component {
   constructor(props) {
     super(props);
     this.state = {
       value: {
-        name: '',
-        surname: '',
-        age: 0,
-        rememberMe: false,
-        gender:'Select'
+        name: 'First',
+        surname: 'Last',
+        age: 25,
+        rememberMe: true,
       },
     };
 
@@ -26,7 +25,7 @@ class NewGig extends Component {
   }
 
   submitForm() {
-    var value = this.refs.gigForm.getValue();
+    var value = this.refs.personForm.getValue();
     if (value) {
       // if validation fails, value will be null
       // console.log(value);
@@ -37,7 +36,7 @@ class NewGig extends Component {
   }
 
   render() {
-    let gigForm = t.struct({
+    let PersonModel = t.struct({
       name: t.String, // a required string
       surname: t.maybe(t.String), // an optional string
       age: t.Number, // a required number
@@ -68,8 +67,8 @@ class NewGig extends Component {
        <StatusBar backgroundColor={Colors.primary.color} />
        <AppHeader navigation={this.props.navigation} title="Add new Gig" />
         <Form
-          ref='gigForm'
-          type={gigForm}
+          ref='personForm'
+          type={PersonModel}
           options={options}
           value={this.state.value}
           //   onChange={{}}
@@ -105,4 +104,4 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-export default NewGig;
+export default MyGigs;
