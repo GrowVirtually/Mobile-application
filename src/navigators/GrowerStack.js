@@ -6,12 +6,15 @@ import {GrowerHomeScreen} from "../views/Grower/homeScreen/GrowerHomeScreen";
 
 
 // Grower's Menu Screens
-import Earnings from "../views/Grower/menuScreens/earnings/Earnings";
-import FindConsumer from "../views/Grower/menuScreens/findConsumer/FindConsumer";
-import MyGigs from "../views/Grower/menuScreens/myGigs/MyGigs";
-import NewGig from "../views/Grower/menuScreens/newGig/NewGig";
-import Orders from "../views/Grower/menuScreens/orders/Orders";
-import Support from "../views/Grower/menuScreens/support/Support";
+import Earnings from "../views/Grower/menuScreens/earnings/EarningsScreen";
+import FindConsumer from "../views/Grower/menuScreens/findConsumer/FindConsumerScreen";
+import MyGigs from "../views/Grower/menuScreens/myGigs/MyGigsScreen";
+
+
+import NewGig from "../views/Grower/menuScreens/newGig/NewGigScreen01";
+import GigScreen2 from "../views/Grower/menuScreens/newGig/GigScreen2";
+import Orders from "../views/Grower/menuScreens/orders/OrdersScreen";
+import Support from "../views/Grower/menuScreens/support/SupportScreen";
 
 
 
@@ -26,6 +29,7 @@ const GrowerStack = () => {
       <Stack.Screen name={"FindConsumer"} component={FindConsumer} />
       <Stack.Screen name={"MyGigs"} component={MyGigs} />
       <Stack.Screen name={"NewGig"} component={NewGig} />
+      <Stack.Screen name={"GigScreen2"} component={GigScreen2} />
       <Stack.Screen name={"Orders"} component={Orders} />
       <Stack.Screen name={"Support"} component={Support} />
     </Stack.Navigator>
