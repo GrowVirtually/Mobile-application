@@ -17,70 +17,89 @@ function NewGigScreen01 ({navigation}) {
         field_name: 'headerImage',
         meta: {
           label: 'alt text for header image',
-          source: 'https://image.flaticon.com/icons/png/512/4944/4944728.png'
+          source: 'https://image.flaticon.com/icons/png/512/2689/2689417.png'
         },
         style: {
           width: 200,
           height: 200
         }
       },
-      {
-        component: 'input-text',
-        field_name: 'name',
-        is_mandatory: 'true',
-        meta: {
-          label: 'Name',
-          placeholder: 'Enter name..'
-        }
-      },
-      {
-        component: 'input-date',
-        field_name: 'birthDate',
-        is_mandatory: 'true',
-        meta: {
-          title: 'Birth Date'
-        }
-      },
-      {
-        component: 'input-radio',
-        field_name: 'gender',
-        is_mandatory: 'true',
-        meta: {
-          text: 'Your Gender',
-          data: [
-            {
-              label: 'Male',
-              value: 'male'
-            },
-            {
-              label: 'Female',
-              value: 'female'
-            }
-          ]
-        }
-      },
+     
       {
         component: 'input-dropdown',
-        field_name: 'favJsFramework',
+        field_name: 'category',
         is_mandatory: 'true',
         meta: {
-          text: 'Select your favorite programming language',
+          text: 'Select Category',
           items: [
             {
-              label: 'Javascript',
-              value: 'js'
+              label: 'Vegetables',
+              value: 'vegetables'
             },
             {
-              label: 'Golang',
-              value: 'golang'
+              label: 'Fruits',
+              value: 'fruits'
             },
             {
-              label: 'Python',
-              value: 'python'
+              label: 'Other',
+              value: 'other'
             },
+           
           ]
         },
-      }
+      },
+
+      {
+        component: 'input-dropdown',
+        field_name: 'type',
+        is_mandatory: 'true',
+        meta: {
+          text: 'Select Type',
+          items: [
+            {
+              label: 'Organic',
+              value: 'organic'
+            },
+            {
+              label: 'Inorganic',
+              value: 'inorganic'
+            },
+            {
+              label: 'Other',
+              value: 'other'
+            },
+           
+          ]
+        },
+      },
+
+      {
+        component: 'input-dropdown',
+        field_name: 'commodity',
+        is_mandatory: 'true',
+        meta: {
+          text: 'Name of the Commodity',
+          items: [
+            {
+              label: 'Pumpkin',
+              value: 'pumpkin'
+            },
+            {
+              label: 'Bitter Guard',
+              value: 'bitterGuard'
+            },
+            {
+              label: 'Brinjal',
+              value: 'brinjal'
+            },
+
+            
+           
+          ]
+        },
+      },
+
+      
     ]
   }
  
