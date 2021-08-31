@@ -8,27 +8,65 @@ import AuthContext from "../../../context/auth-context";
 import * as Colors from "../../../styles/abstracts/colors";
 import AppHeader from "../../Common/AppHeader";
 import {ConsumerGigs} from "./components/ConsumerGigs";
+import {HOST_PORT} from "@env";
 
 export const ConsumerHomeScreen = ({navigation}) => {
   const [gigs, setGigs] = useState([]);
+  const [vegetableGigs, setVegetableGigs] = useState([]);
+  const [fruitGigs, setFruitGigs] = useState([]);
   const {loginState} = useContext(AuthContext);
+
   const jwt = loginState.userToken;
 
+  // Get gigs
   useEffect(() => {
-    async function getData() {
+    async function getGigs() {
       try {
         const response = await axios({
           method: "get",
-          url: "https://grovi-backend.herokuapp.com/api/v1/gigs/5.977553814423967,80.34890374890934?limit=100&distance=60000",
+          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=100&distance=60000`,
           headers: {},
         });
         setGigs(response.data.data.gigs);
-        console.log("obj", response.data.data.gigs.length);
       } catch (error) {
         console.error(error);
       }
     }
-    getData();
+    getGigs();
+  }, []);
+
+  // get vege gigs
+  useEffect(() => {
+    async function getGigs() {
+      try {
+        const response = await axios({
+          method: "get",
+          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=100&distance=60000&gigCategory=vegetable`,
+          headers: {},
+        });
+        setVegetableGigs(response.data.data.gigs);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getGigs();
+  }, []);
+
+  // get vege gigs
+  useEffect(() => {
+    async function getGigs() {
+      try {
+        const response = await axios({
+          method: "get",
+          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=100&distance=60000&gigCategory=fruit`,
+          headers: {},
+        });
+        setFruitGigs(response.data.data.gigs);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getGigs();
   }, []);
 
   return (
@@ -42,13 +80,8 @@ export const ConsumerHomeScreen = ({navigation}) => {
       </View>
       <ScrollView>
         <View style={styles.container}>
-          <ConsumerGigs gigs={gigs} />
+          <ConsumerGigs {...{gigs, vegetableGigs, fruitGigs}} />
         </View>
-        {/* {gigs.map(gig => (
-          <Text>
-            {gig.id} / {gig.gigCategory}{" "}
-          </Text>
-        ))} */}
       </ScrollView>
     </SafeAreaView>
   );
