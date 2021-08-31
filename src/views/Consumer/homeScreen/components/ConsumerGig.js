@@ -7,23 +7,28 @@ import {useNavigation} from "@react-navigation/core";
 import {Dimensions} from "react-native";
 const {width} = Dimensions.get("screen");
 
-export const ConsumerGig = ({
-  gigTitle,
-  priceTag,
-  expireDate,
-  growerName,
-  imgUrl,
-  id,
-  direction,
-}) => {
+export const ConsumerGig = ({gigTitle, unitPrice, expireDate, id, user, unit, direction}) => {
+  const growerName = `${user.fname} ${user.lname}`;
+
+  const imgUrl = "https://picsum.photos/200/300?random=1";
+
   const navigation = useNavigation();
+
+  const getDays = dateStr => {
+    const today = new Date();
+    const date = new Date(dateStr);
+    const diffInTime = date.getTime() - today.getTime();
+    const days = diffInTime / (1000 * 3600 * 24);
+    return Math.round(days);
+  };
+
   return (
     <Card
       style={direction === "row" ? ConsumerGigStyle.rowItem : ConsumerGigStyle.gridItem}
       onPress={() =>
         navigation.navigate("GigScreen", {
           gigTitle,
-          priceTag,
+          unitPrice,
           expireDate,
           growerName,
           imgUrl,
@@ -33,10 +38,12 @@ export const ConsumerGig = ({
       <Card.Cover style={ConsumerGigStyle.img} source={{uri: imgUrl}} />
       <View style={ConsumerGigStyle.cardContent}>
         <View style={ConsumerGigStyle.cardLeft}>
-          <Text style={ConsumerGigStyle.gigTitle}>{gigTitle}</Text>
-          <Text style={ConsumerGigStyle.gigSubTitle}>Rs.{priceTag} /Kg</Text>
+          <Text style={ConsumerGigStyle.gigTitle}>
+            {gigTitle.length > 10 ? gigTitle.slice(0, 17) + ".." : gigTitle}
+          </Text>
+          <Text style={ConsumerGigStyle.gigSubTitle}>Rs.{unitPrice} /Kg</Text>
           <Text style={ConsumerGigStyle.expireTxt}>
-            Expires in {expireDate + " " + (expireDate > 1 ? "days" : "day")}
+            Expires in {getDays(expireDate) + " " + (getDays(expireDate) > 1 ? "days" : "day")}
           </Text>
         </View>
         <View style={ConsumerGigStyle.cardRight}>
