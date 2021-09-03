@@ -39,30 +39,28 @@ const MobileNumberVerifyScreen = ({navigation, route}) => {
         // otp verified
         // check user found or not
         if (otpVerification.data.userFound) {
-          console.log(otpVerification.data);
+          console.log("OTP data", otpVerification.data.dataValues);
           const {token} = otpVerification.data;
           const {signIn} = authContext;
           // 1) set the token to async storage
           await signIn(token);
-
-          const {fname, lname, email} = otpVerification.data.user;
+          const {fname, lname, email} = otpVerification.data.dataValues;
           globalDispatch({type: "SET_USER", firstname: fname, lastname: lname, userEmail: email});
           const globalStateStr = JSON.stringify({
-            usertype: "grower",
+            usertype: globalState.usertype,
             firstname: fname,
             lastname: lname,
             userEmail: email,
-            userLocation: null,
           });
 
           try {
             await AsyncStorage.setItem("globalState", globalStateStr);
-            console.log("Login-otp: ", globalStateStr);
+            console.log("Login otp: ", globalStateStr);
           } catch (e) {
             console.log(e);
           }
 
-          navigation.navigate("MainStackNavigator");
+          navigation.navigate("LocationSetter");
         } else if (!otpVerification.data.userFound) {
           navigation.navigate("SignupScreen1", {
             phone: otpVerification.data.phone,

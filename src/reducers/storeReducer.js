@@ -1,5 +1,5 @@
 export const storeState = {
-  usertype: "grower",
+  usertype: null,
   firstname: "ammo",
   lastname: "bbbo",
   userEmail: "sam@g.com",

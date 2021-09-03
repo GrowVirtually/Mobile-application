@@ -61,7 +61,7 @@ const ProfileScreen = () => {
   };
 
   const handleUpdateLoc = () => {
-    navigation.navigate("LocationUpdater", {prevLoc: globalState.userLocation});
+    navigation.navigate("LocationUpdater", {prevLoc: myLocation});
   };
 
   return (
