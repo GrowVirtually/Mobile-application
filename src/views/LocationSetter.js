@@ -6,6 +6,7 @@ import * as Colors from "../styles/abstracts/colors";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import MapView from "react-native-maps";
 import {Marker} from "react-native-maps";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LocationSetter = () => {
   const navigation = useNavigation();
@@ -20,6 +21,18 @@ const LocationSetter = () => {
   const getLocation = () => {
     alert("Your location has been set");
     globalDispatch({type: "SET_USER_LOCATION", userLocation: location});
+    navigation.navigate("MainStackNavigator");
+    saveData();
+  };
+
+  const saveData = async () => {
+    try {
+      const jsonValue = JSON.stringify(location);
+      await AsyncStorage.setItem("mylocation", jsonValue);
+    } catch (e) {
+      console.error(e);
+    }
+    console.log("Done saved.");
     navigation.navigate("MainStackNavigator");
   };
 

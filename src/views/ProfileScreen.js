@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-raw-text */
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {View, SafeAreaView, StyleSheet} from "react-native";
 import {ScrollView} from "react-native-gesture-handler";
 import {Avatar, Title, Caption, Text, TouchableRipple, Button} from "react-native-paper";
@@ -13,8 +13,27 @@ import AppHeader from "./Common/AppHeader";
 
 const ProfileScreen = () => {
   const {authContext, loginState} = useContext(AuthContext);
+  const [myLocation, setMyLocation] = useState(null);
   const {globalState, globalDispatch} = useStore();
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const getMyLocation = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("mylocation");
+        if (jsonValue != null) {
+          console.log("profile location not null", jsonValue);
+          const obj = JSON.parse(jsonValue);
+          setMyLocation(obj);
+        } else {
+          console.log("profile loction null");
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getMyLocation();
+  }, []);
 
   const handleToggleRole = () => {
     globalDispatch({type: "TOGGLE_USER_TYPE"});
@@ -28,7 +47,7 @@ const ProfileScreen = () => {
     const {signOut} = authContext;
     await signOut();
     try {
-      await AsyncStorage.removeItem("globalState");
+      await AsyncStorage.clear();
     } catch (e) {
       // remove error
     }
@@ -93,11 +112,9 @@ const ProfileScreen = () => {
             <View style={styles.row}>
               <Icon name="map-marker-radius" color="#777777" size={20} />
               <Text style={{marginLeft: 20}}>
-                {globalState.userLocation === null
+                {myLocation === null
                   ? `empty`
-                  : `${globalState.userLocation.latitude.toFixed(
-                      4,
-                    )}, ${globalState.userLocation.longitude.toFixed(4)}`}
+                  : `${myLocation.latitude.toFixed(4)}, ${myLocation.longitude.toFixed(4)}`}
               </Text>
               <Button mode="outlined" onPress={() => handleUpdateLoc()}>
                 Update loc

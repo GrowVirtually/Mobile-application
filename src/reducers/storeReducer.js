@@ -3,7 +3,6 @@ export const storeState = {
   firstname: "ammo",
   lastname: "bbbo",
   userEmail: "sam@g.com",
-  userLocation: null,
 };
 export const storeReducer = (prevState, action) => {
   switch (action.type) {
@@ -20,6 +19,7 @@ export const storeReducer = (prevState, action) => {
     case "SET_USER":
       return {
         ...prevState,
+        usertype: action.usertype,
         firstname: action.firstname,
         lastname: action.lastname,
         userEmail: action.userEmail,

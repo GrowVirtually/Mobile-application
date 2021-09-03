@@ -44,11 +44,10 @@ const PasswordLoginScreen = ({navigation}) => {
         const {fname, lname, email} = logUser.data.user;
         globalDispatch({type: "SET_USER", firstname: fname, lastname: lname, userEmail: email});
         const globalStateStr = JSON.stringify({
-          usertype: "grower",
+          usertype: globalState.usertype,
           firstname: fname,
           lastname: lname,
           userEmail: email,
-          userLocation: null,
         });
 
         try {
@@ -58,7 +57,7 @@ const PasswordLoginScreen = ({navigation}) => {
           console.log(e);
         }
 
-        navigation.navigate("MainStackNavigator");
+        navigation.navigate("LocationSetter");
 
         // if (globalState.userLocation === null) {
         //   alert("nulll");
