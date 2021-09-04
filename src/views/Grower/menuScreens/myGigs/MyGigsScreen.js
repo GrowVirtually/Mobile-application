@@ -1,46 +1,26 @@
-/* eslint-disable arrow-body-style */
-import React from "react";
-import {ScrollView, TouchableOpacity, StyleSheet, View, SafeAreaView} from "react-native";
-import {Searchbar} from "react-native-paper";
-import {GrowerContent} from "./components/GrowerContent";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+// src/views/Grower/NewGig.js
 
-import * as Colors from "../../../../styles/abstracts/colors";
-import AppHeader from "../../../Common/AppHeader";
+import React from 'react';
+import { StyleSheet, View, Text,StatusBar, TouchableOpacity  } from 'react-native';
 
-export const MyGigsScreen = ({navigation}) => {
+import * as Colors from '../../../../styles/abstracts/colors';
+import  AppHeader  from '../../../Common/AppHeader';
 
-
+function MyGigsScreen ({navigation}) {
   return (
-    <SafeAreaView>
-      <AppHeader navigation={navigation} title="Gigs" />
-      <View style={styles.searchbarContainer}>
-        <Searchbar style={styles.searchbarLeft} placeholder="Search" />
-        <TouchableOpacity style={styles.searchbarRight}>
-          <MaterialCommunityIcons name="tune" color="#fff" size={30} />
-        </TouchableOpacity>
-      </View>
-      <ScrollView>
-        <GrowerContent />
-      </ScrollView>
-    </SafeAreaView>
+    <View style={styles.container}>
+       <StatusBar backgroundColor={Colors.primary.color} />
+       <AppHeader navigation={navigation} title="My Support" />
+      <Text style={styles.text}>My Gig</Text>
+     
+   
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  searchbarContainer: {
-    padding: 5,
-    flexDirection: "row",
-    backgroundColor: Colors.primary.color,
-  },
-  searchbarLeft: {
-    width: "80%",
-  },
-  searchbarRight: {
-    padding: 10,
-    alignSelf: "center",
-    alignItems: "center",
-    backgroundColor: Colors.primary.color,
-    width: "20%",
-  },
+  
+
 });
+
+export default MyGigsScreen;
