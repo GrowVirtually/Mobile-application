@@ -40,7 +40,7 @@ const SignupScreen2 = ({navigation, route}) => {
         const {signIn} = authContext;
         await signIn(token);
         console.log(addUser);
-        navigation.navigate("MainStackNavigator");
+        navigation.navigate("LocationSetter");
       } else {
         // properly handle errors [TODO]
         alert("Cannot create user");
