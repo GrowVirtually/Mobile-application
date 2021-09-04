@@ -92,6 +92,14 @@ function NewGigScreen01 ({navigation}) {
               label: 'Brinjal',
               value: 'brinjal'
             },
+            {
+              label: 'Tomatoes',
+              value: 'tomatoes'
+            },
+            {
+              label: 'Potatoes',
+              value: 'Potatoes'
+            },
 
             
            

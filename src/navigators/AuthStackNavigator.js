@@ -27,7 +27,7 @@ const AuthStackNavigator = ({navigation}) => (
     <AuthStack.Screen name="SignupScreen1" component={SignupScreen1} />
     <AuthStack.Screen name="SignupScreen2" component={SignupScreen2} />
     <AuthStack.Screen name="MainStackNavigator" component={MainStackNavigator} />
-    {/* <AuthStack.Screen name="LocationSetter" component={LocationSetter} /> */}
+    <AuthStack.Screen name="LocationSetter" component={LocationSetter} />
   </AuthStack.Navigator>
 );
 
