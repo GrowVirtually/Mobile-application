@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer} from "react";
+import React, {useEffect, useReducer, useState} from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import AuthStackNavigator from "./navigators/AuthStackNavigator";
 import MainStackNavigator from "./navigators/StackNavigator";
@@ -10,12 +10,13 @@ import {StoreProvider, useStore} from "./context/StoreProvider";
 import {storeReducer, storeState} from "./reducers/storeReducer";
 import {loginReducer, initialLoginState} from "./reducers/loginReducer";
 import theme from "./styles/abstracts/theme";
+import LocationSetter from "./views/LocationSetter";
 
 const RootStack = createStackNavigator();
 
 const App = () => {
   const [loginState, loginDispatch] = useReducer(loginReducer, initialLoginState);
-
+  const [myLocation, setMyLocation] = useState(null);
   const authContext = React.useMemo(
     () => ({
       signIn: async token => {
@@ -62,6 +63,24 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const getMyLocation = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("mylocation");
+        if (jsonValue != null) {
+          console.log("app location not null", jsonValue);
+          const obj = JSON.parse(jsonValue);
+          setMyLocation(obj);
+        } else {
+          console.log("app loction null");
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getMyLocation();
+  }, []);
+
   return (
     <PaperProvider theme={theme}>
       <AuthContext.Provider value={{authContext, loginState}}>
@@ -71,6 +90,9 @@ const App = () => {
           <NavigationContainer>
             {loginState.userToken ? (
               <RootStack.Navigator headerMode="none">
+                {myLocation === null && (
+                  <RootStack.Screen name="LocationSetter" component={LocationSetter} />
+                )}
                 <RootStack.Screen name="MainStackNavigator" component={MainStackNavigator} />
               </RootStack.Navigator>
             ) : (

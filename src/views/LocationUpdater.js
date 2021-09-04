@@ -6,6 +6,7 @@ import * as Colors from "../styles/abstracts/colors";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import MapView from "react-native-maps";
 import {Marker} from "react-native-maps";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LocationUpdater = ({route, navigation}) => {
   const {globalDispatch} = useStore();
@@ -16,10 +17,20 @@ const LocationUpdater = ({route, navigation}) => {
     ...delta,
   });
 
-  const getLocation = () => {
-    alert("Your location has been updated");
-    globalDispatch({type: "SET_USER_LOCATION", userLocation: location});
-    navigation.goBack();
+  const saveLocation = () => {
+    const saveData = async () => {
+      try {
+        const jsonValue = JSON.stringify(location);
+        await AsyncStorage.setItem("mylocation", jsonValue);
+      } catch (e) {
+        console.error(e);
+      }
+      console.log("Done saved.");
+      alert("Your location has been updated");
+      // globalDispatch({type: "SET_USER_LOCATION", userLocation: location});
+      navigation.goBack();
+    };
+    saveData();
   };
 
   const handleOnPress = e => {
@@ -28,7 +39,7 @@ const LocationUpdater = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => getLocation()} style={styles.backBtn}>
+      <TouchableOpacity onPress={() => saveLocation()} style={styles.backBtn}>
         <MaterialIcon style={styles.icon} name="map-marker-check" color="#fff" size={28} />
       </TouchableOpacity>
       <View style={styles.label}>

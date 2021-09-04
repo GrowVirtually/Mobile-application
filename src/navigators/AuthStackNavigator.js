@@ -17,7 +17,7 @@ const AuthStack = createStackNavigator();
 
 const AuthStackNavigator = ({navigation}) => (
   <AuthStack.Navigator headerMode="none">
-    {/* <AuthStack.Screen name="SignUpPathDeciderScreen" component={SignUpPathDeciderScreen} />
+    <AuthStack.Screen name="SignUpPathDeciderScreen" component={SignUpPathDeciderScreen} />
     <AuthStack.Screen name="EnterMobileNumberScreen" component={EnterMobileNumberScreen} />
     <AuthStack.Screen name="MobileNumberVerifyScreen" component={MobileNumberVerifyScreen} />
     <AuthStack.Screen name="PasswordLoginScreen" component={PasswordLoginScreen} />
@@ -25,7 +25,7 @@ const AuthStackNavigator = ({navigation}) => (
     <AuthStack.Screen name="PasswordResetScreen" component={PasswordResetScreen} />
     <AuthStack.Screen name="PasswordResetVerifyScreen" component={PasswordResetVerifyScreen} />
     <AuthStack.Screen name="SignupScreen1" component={SignupScreen1} />
-    <AuthStack.Screen name="SignupScreen2" component={SignupScreen2} />  */}
+    <AuthStack.Screen name="SignupScreen2" component={SignupScreen2} />
     <AuthStack.Screen name="MainStackNavigator" component={MainStackNavigator} />
     <AuthStack.Screen name="LocationSetter" component={LocationSetter} />
   </AuthStack.Navigator>
