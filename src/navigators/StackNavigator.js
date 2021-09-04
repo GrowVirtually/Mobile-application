@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {createStackNavigator} from "@react-navigation/stack";
 import HomeScreen from "../views/HomeScreen";
@@ -13,15 +13,24 @@ const MainStackNavigator = () => {
   // This stack should contain only the starter stack for other nested navigators
   // No screens should be direct child of this stack
   const {globalState, globalDispatch} = useStore();
+  const [myLocation, setMyLocation] = useState(null);
 
   let globalStateObj;
+  let locationObj;
   useEffect(async () => {
     try {
       const globalStateStr = await AsyncStorage.getItem("globalState");
+      // const locationStr = await AsyncStorage.getItem("mylocation");
       globalStateObj = JSON.parse(globalStateStr);
-      console.log("stack: ", globalStateStr);
+      // locationObj = JSON.parse(locationStr);
+      // console.log("stack: ", globalStateStr);
+      // console.log("mylocation ", locationObj);
+      // if (locationObj != null || globalState.location != null) {
+      //   setMyLocation(locationObj);
+      // }
       globalDispatch({
         type: "SET_USER",
+        usertype: globalStateObj.usertype,
         firstname: globalStateObj.firstname,
         lastname: globalStateObj.lastname,
         userEmail: globalStateObj.userEmail,
@@ -33,9 +42,9 @@ const MainStackNavigator = () => {
 
   return (
     <Stack.Navigator headerMode="none">
-      {globalState.userLocation === null && (
+      {/* {myLocation === null && globalState.location === null && (
         <Stack.Screen name="LocationSetter" component={LocationSetter} />
-      )}
+      )} */}
       {globalState.usertype === "grower" ? (
         <Stack.Screen name="GrowerHome" component={GrowerDrawerNavigator} />
       ) : (
