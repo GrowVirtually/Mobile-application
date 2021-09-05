@@ -3,19 +3,24 @@ import {Text, View, StyleSheet, ScrollView, TouchableOpacity} from "react-native
 import * as Colors from "../../../../styles/abstracts/colors";
 import {ConsumerGig} from "./ConsumerGig";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import {ActivityIndicator} from "react-native-paper";
 
 const GigRow = ({gigs, title}) => {
   return (
     <View>
       <Text style={styles.gigRowTitle}>{title}</Text>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.row}>
-        {gigs.map((gig, index) => (
-          <ConsumerGig direction="row" {...gig} key={index} />
-        ))}
-        <TouchableOpacity style={styles.loadMoreCard}>
-          <Text style={styles.loadMoreTxt}>Load More</Text>
-          <MaterialIcon name="autorenew" size={30} color={Colors.secondary.color} />
-        </TouchableOpacity>
+        {gigs.length === 0 ? (
+          <ActivityIndicator animating={true} />
+        ) : (
+          gigs.map((gig, index) => <ConsumerGig direction="row" {...gig} key={index} />)
+        )}
+        {gigs.length !== 0 && (
+          <TouchableOpacity style={styles.loadMoreCard}>
+            <Text style={styles.loadMoreTxt}>Load More</Text>
+            <MaterialIcon name="autorenew" size={30} color={Colors.secondary.color} />
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </View>
   );

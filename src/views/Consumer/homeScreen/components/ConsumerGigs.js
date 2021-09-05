@@ -3,7 +3,7 @@ import React from "react";
 import GigRow from "./GigRow";
 import GigGrid from "./GigGrid";
 
-export const ConsumerGigs = ({gigs, vegetableGigs, fruitGigs}) => {
+export const ConsumerGigs = ({gigs, vegetableGigs, fruitGigs, }) => {
   return (
     <>
       {/* Gigs Grid */}
@@ -13,7 +13,7 @@ export const ConsumerGigs = ({gigs, vegetableGigs, fruitGigs}) => {
       <GigRow gigs={vegetableGigs} title="Vegetables" />
 
       {/* Gigs Row  */}
-      <GigGrid gigs={gigs} title="Vegetables" />
+      <GigGrid gigs={gigs} title="Mixed" />
     </>
   );
 };

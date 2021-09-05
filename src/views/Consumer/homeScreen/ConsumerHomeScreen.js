@@ -9,23 +9,47 @@ import * as Colors from "../../../styles/abstracts/colors";
 import AppHeader from "../../Common/AppHeader";
 import {ConsumerGigs} from "./components/ConsumerGigs";
 import {HOST_PORT} from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const ConsumerHomeScreen = ({navigation}) => {
   const [gigs, setGigs] = useState([]);
   const [vegetableGigs, setVegetableGigs] = useState([]);
   const [fruitGigs, setFruitGigs] = useState([]);
-  const {loginState} = useContext(AuthContext);
+  const [mylocation, setMyLocation] = useState(null);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
 
+  const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
 
-  // Get gigs
+  useEffect(() => {
+    const getMyLocation = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("mylocation");
+        if (jsonValue != null) {
+          const obj = JSON.parse(jsonValue);
+          console.log("gigs location not null", obj);
+          setMyLocation(obj);
+        } else {
+          console.log("app loction null");
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getMyLocation();
+  }, []);
+
+  // Get mixed gigs
   useEffect(() => {
     async function getGigs() {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=100&distance=60000`,
-          headers: {},
+          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}`,
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
         });
         setGigs(response.data.data.gigs);
       } catch (error) {
@@ -41,8 +65,10 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=100&distance=60000&gigCategory=vegetable`,
-          headers: {},
+          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000`,
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
         });
         setVegetableGigs(response.data.data.gigs);
       } catch (error) {
@@ -52,14 +78,16 @@ export const ConsumerHomeScreen = ({navigation}) => {
     getGigs();
   }, []);
 
-  // get vege gigs
+  // get fruit gigs
   useEffect(() => {
     async function getGigs() {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=100&distance=60000&gigCategory=fruit`,
-          headers: {},
+          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000`,
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
         });
         setFruitGigs(response.data.data.gigs);
       } catch (error) {
@@ -78,7 +106,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
           <MaterialCommunityIcons name="tune" color="#fff" size={30} />
         </TouchableOpacity>
       </View>
-      <ScrollView>
+      <ScrollView style={styles.scroll}>
         <View style={styles.container}>
           <ConsumerGigs {...{gigs, vegetableGigs, fruitGigs}} />
         </View>
@@ -105,5 +133,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  scroll: {
+    // marginBottom: 140,
   },
 });
