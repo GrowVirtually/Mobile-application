@@ -3,9 +3,9 @@ import React from "react";
 import {Text, View, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
 import * as Colors from "../../../../styles/abstracts/colors";
 import {ConsumerGig} from "./ConsumerGig";
-import {ActivityIndicator} from "react-native-paper";
+import {ActivityIndicator, Button} from "react-native-paper";
 
-const GigGrid = ({gigs, title}) => {
+const GigGrid = ({gigs, title, nextPage, prevPage}) => {
   return (
     <View style={gigs.length === 0 && {paddingBottom: 150}}>
       <Text style={styles.gigRowTitle}>{title}</Text>
@@ -18,6 +18,10 @@ const GigGrid = ({gigs, title}) => {
           {gigs.map((gig, index) => (
             <ConsumerGig direction="grid" {...gig} key={index} />
           ))}
+          <View style={styles.btns}>
+            <Button onPress={() => prevPage()}>Back</Button>
+            <Button onPress={() => nextPage()}>Next</Button>
+          </View>
         </View>
       )}
     </View>
@@ -48,5 +52,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexWrap: "wrap",
     backgroundColor: "red",
+  },
+  btns: {
+    marginTop: 10,
+    flexDirection: "row",
   },
 });
