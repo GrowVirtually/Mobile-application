@@ -12,6 +12,7 @@ import {HOST_PORT} from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GigRow from "./components/GigRow";
 import GigGrid from "./components/GigGrid";
+import Filters from "./components/Filters";
 
 export const ConsumerHomeScreen = ({navigation}) => {
   const [gigs, setGigs] = useState([]);
@@ -21,12 +22,17 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [showFilters, setshowFilters] = useState(false);
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
 
   const nextPage = () => {
     setPage(page + 1);
+  };
+
+  const toggleSetshowFilters = () => {
+    setshowFilters(!showFilters);
   };
 
   const prevPage = () => {
@@ -123,11 +129,12 @@ export const ConsumerHomeScreen = ({navigation}) => {
       <AppHeader navigation={navigation} title="Gigs" />
       <View style={styles.searchbarContainer}>
         <Searchbar style={styles.searchbarLeft} placeholder="Search" />
-        <TouchableOpacity style={styles.searchbarRight}>
+        <TouchableOpacity style={styles.searchbarRight} onPress={() => toggleSetshowFilters()}>
           <MaterialCommunityIcons name="tune" color="#fff" size={30} />
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.scroll}>
+        <Filters showFilters={showFilters} toggleModal={toggleSetshowFilters} />
         <View style={styles.container}>
           {/* <ConsumerGigs
             {...{gigs, vegetableGigs, fruitGigs}}
