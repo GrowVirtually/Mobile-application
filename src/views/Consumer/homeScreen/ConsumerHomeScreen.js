@@ -7,7 +7,6 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AuthContext from "../../../context/auth-context";
 import * as Colors from "../../../styles/abstracts/colors";
 import AppHeader from "../../Common/AppHeader";
-import {ConsumerGigs} from "./components/ConsumerGigs";
 import {HOST_PORT} from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GigRow from "./components/GigRow";
@@ -24,9 +23,15 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [showFilters, setshowFilters] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [category, setCategory] = useState("vegetable");
+  const [refresh, setRefresh] = useState(1);
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
+
+  const handleCategory = value => {
+    setCategory(value);
+  };
 
   const nextPage = () => {
     setPage(page + 1);
@@ -36,9 +41,16 @@ export const ConsumerHomeScreen = ({navigation}) => {
     setshowFilters(!showFilters);
   };
 
-  const toggleSetShowResult = () => {
+  const applyFilters = () => {
     setshowFilters(false);
-    setShowResult(!showResult);
+    setRefresh(refresh + 1);
+    setShowResult(true);
+  };
+
+  const clearFilters = () => {
+    setshowFilters(false);
+    setShowResult(false);
+    setRefresh(1);
   };
 
   const prevPage = () => {
@@ -75,7 +87,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         if (showResult) {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}&gigCategory=fruit`,
+            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}&gigCategory=${category}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -97,7 +109,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       }
     }
     getGigs();
-  }, [limit, page, showResult]);
+  }, [limit, page, showResult, refresh]);
 
   // get vege gigs
   useEffect(() => {
@@ -152,7 +164,10 @@ export const ConsumerHomeScreen = ({navigation}) => {
           showFilters={showFilters}
           toggleModal={toggleSetshowFilters}
           showResult={showResult}
-          toggleSetShowResult={toggleSetShowResult}
+          applyFilters={applyFilters}
+          handleCategory={handleCategory}
+          clearFilters={clearFilters}
+          category={category}
         />
         <View style={styles.container}>
           {!showResult && <GigRow gigs={fruitGigs} title="Fruits" />}
