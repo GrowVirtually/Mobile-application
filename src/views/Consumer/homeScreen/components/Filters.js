@@ -1,5 +1,8 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react-native/no-raw-text */
 import React, {useState} from "react";
-import {Button, Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet} from "react-native";
+import {Button} from "react-native-paper";
 import Modal from "react-native-modal";
 import * as Colors from "../../../../styles/abstracts/colors";
 
@@ -13,7 +16,14 @@ function Filters(props) {
         <View style={styles.container}>
           <Text style={styles.title}>Hello!</Text>
 
-          <Button title="Hide modal" onPress={props.toggleModal} />
+          <View style={{flexDirection: "row"}}>
+            <Button mode="outlined" onPress={props.toggleModal}>
+              Cancel
+            </Button>
+            <Button mode="outlined" onPress={props.toggleSetShowResult}>
+              {props.showResult ? "Clear" : "Apply"}
+            </Button>
+          </View>
         </View>
       </Modal>
     </View>

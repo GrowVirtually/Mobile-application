@@ -23,6 +23,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [showFilters, setshowFilters] = useState(false);
+  const [showResult, setShowResult] = useState(false);
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
@@ -35,6 +36,11 @@ export const ConsumerHomeScreen = ({navigation}) => {
     setshowFilters(!showFilters);
   };
 
+  const toggleSetShowResult = () => {
+    setshowFilters(false);
+    setShowResult(!showResult);
+  };
+
   const prevPage = () => {
     if (page > 1) {
       setPage(page - 1);
@@ -42,7 +48,6 @@ export const ConsumerHomeScreen = ({navigation}) => {
       alert("You are already on first page");
     }
   };
-
   // get location
   useEffect(() => {
     const getMyLocation = async () => {
@@ -50,10 +55,9 @@ export const ConsumerHomeScreen = ({navigation}) => {
         const jsonValue = await AsyncStorage.getItem("mylocation");
         if (jsonValue != null) {
           const obj = JSON.parse(jsonValue);
-          // console.log("gigs location not null", obj);
           setMyLocation(obj);
         } else {
-          // console.log("app loction null");
+          console.log("app loction null");
         }
       } catch (e) {
         console.error(e);
@@ -68,13 +72,23 @@ export const ConsumerHomeScreen = ({navigation}) => {
       setLoading(true);
       let response;
       try {
-        response = await axios({
-          method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}`,
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
+        if (showResult) {
+          response = await axios({
+            method: "get",
+            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}&gigCategory=fruit`,
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          });
+        } else {
+          response = await axios({
+            method: "get",
+            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}`,
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          });
+        }
         setGigs(response.data.data.gigs);
         setLoading(false);
       } catch (error) {
@@ -83,7 +97,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       }
     }
     getGigs();
-  }, [limit, page]);
+  }, [limit, page, showResult]);
 
   // get vege gigs
   useEffect(() => {
@@ -91,7 +105,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000`,
+          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&gigCategory=vegetable`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -110,7 +124,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000`,
+          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&gigCategory=fruit`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -134,17 +148,16 @@ export const ConsumerHomeScreen = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.scroll}>
-        <Filters showFilters={showFilters} toggleModal={toggleSetshowFilters} />
+        <Filters
+          showFilters={showFilters}
+          toggleModal={toggleSetshowFilters}
+          showResult={showResult}
+          toggleSetShowResult={toggleSetShowResult}
+        />
         <View style={styles.container}>
-          {/* <ConsumerGigs
-            {...{gigs, vegetableGigs, fruitGigs}}
-            nextPage={nextPage}
-            prevPage={prevPage}
-          /> */}
-          <GigRow gigs={fruitGigs} title="Fruits" />
+          {!showResult && <GigRow gigs={fruitGigs} title="Fruits" />}
 
-          {/* Gigs Row  */}
-          <GigRow gigs={vegetableGigs} title="Vegetables" />
+          {!showResult && <GigRow gigs={vegetableGigs} title="Vegetables" />}
 
           {/* Gigs Row  */}
           {loading ? (
@@ -152,7 +165,12 @@ export const ConsumerHomeScreen = ({navigation}) => {
               <ActivityIndicator animating={true} />
             </View>
           ) : (
-            <GigGrid gigs={gigs} title="Mixed" nextPage={nextPage} prevPage={prevPage} />
+            <GigGrid
+              gigs={gigs}
+              title={showResult ? "Result" : "You may like"}
+              nextPage={nextPage}
+              prevPage={prevPage}
+            />
           )}
         </View>
       </ScrollView>
