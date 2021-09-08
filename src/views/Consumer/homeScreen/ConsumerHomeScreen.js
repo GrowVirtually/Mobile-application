@@ -25,9 +25,14 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [showResult, setShowResult] = useState(false);
   const [category, setCategory] = useState("vegetable");
   const [refresh, setRefresh] = useState(1);
+  const [gigType, setGigType] = useState("post");
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
+
+  const handleGigType = value => {
+    setGigType(value);
+  };
 
   const handleCategory = value => {
     setCategory(value);
@@ -87,7 +92,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         if (showResult) {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}&gigCategory=${category}`,
+            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}&gigCategory=${category}&gigType=${gigType}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -168,6 +173,8 @@ export const ConsumerHomeScreen = ({navigation}) => {
           handleCategory={handleCategory}
           clearFilters={clearFilters}
           category={category}
+          handleGigType={handleGigType}
+          gigType={gigType}
         />
         <View style={styles.container}>
           {!showResult && <GigRow gigs={fruitGigs} title="Fruits" />}
