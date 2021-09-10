@@ -2,7 +2,7 @@
 /* eslint-disable react-native/no-raw-text */
 import React, {useState} from "react";
 import {Text, View, StyleSheet} from "react-native";
-import {Button, IconButton, RadioButton} from "react-native-paper";
+import {Button, IconButton, RadioButton, TextInput} from "react-native-paper";
 import Modal from "react-native-modal";
 import * as Colors from "../../../../styles/abstracts/colors";
 import RNPickerSelect from "react-native-picker-select";
@@ -24,10 +24,35 @@ function Filters(props) {
               onPress={props.toggleModal}
             />
           </View>
-
+          <Button onPress={() => console.log(props.unitPrice.lt)}>press</Button>
+          {/* Price */}
+          <Text style={styles.label}> Price range: </Text>
+          <View style={styles.textInputGroup}>
+            <TextInput
+              mode="outlined"
+              dense
+              label="Min"
+              keyboardType="numeric"
+              value={props.gt}
+              style={styles.textInput}
+              onChangeText={text => props.handleGt(text)}
+              outlineColor={Colors.primary.color}
+            />
+            <Text style={{fontSize: 20}}> - </Text>
+            <TextInput
+              mode="outlined"
+              keyboardType="numeric"
+              dense
+              label="Max"
+              value={props.lt}
+              onChangeText={text => props.handleLt(text)}
+              style={styles.textInput}
+              outlineColor={Colors.primary.color}
+            />
+          </View>
           {/* Distance */}
           <View style={{marginTop: 10}}>
-            <Text style={styles.label}>Gig category</Text>
+            <Text style={styles.label}>Distance:</Text>
             <View style={{flexDirection: "row", marginLeft: 10, marginTop: 5}}>
               <View style={styles.radioGroup}>
                 <RadioButton
@@ -59,7 +84,7 @@ function Filters(props) {
           {/* Category */}
 
           <View style={{marginTop: 10}}>
-            <Text style={styles.label}>Gig category</Text>
+            <Text style={styles.label}>Gig category:</Text>
             <View style={{flexDirection: "row", marginLeft: 10, marginTop: 5}}>
               <View style={styles.radioGroup}>
                 <RadioButton
@@ -89,7 +114,7 @@ function Filters(props) {
           </View>
 
           <View style={styles.pickerGroup}>
-            <Text style={styles.label}>Category: </Text>
+            <Text style={styles.label}>Type: </Text>
             <RNPickerSelect
               onValueChange={e => props.handleCategory(e)}
               placeholder={{}}
@@ -97,7 +122,7 @@ function Filters(props) {
               items={[
                 {label: "Vegetable", value: "vegetable"},
                 {label: "Fruit", value: "fruit"},
-                {label: "Both", value: ""},
+                {label: "All items", value: ""},
               ]}
             />
           </View>
@@ -168,5 +193,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginRight: 20,
+  },
+  textInput: {
+    width: "40%",
+    backgroundColor: "#fff",
+    marginTop: 5,
+  },
+  textInputGroup: {
+    flexDirection: "row",
+    marginLeft: 20,
+    marginRight: 20,
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 5,
   },
 });

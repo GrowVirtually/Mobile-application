@@ -28,9 +28,9 @@ export const ConsumerHomeScreen = ({navigation}) => {
   // Prams states
   const [category, setCategory] = useState("vegetable");
   const [gigType, setGigType] = useState("post");
-  const [unitPrice, setUnitPrice] = useState([0, 1000]);
   const [distance, setDistance] = useState("60000");
-
+  const [lt, setLt] = useState("1000");
+  const [gt, setGt] = useState("100");
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
 
@@ -38,8 +38,12 @@ export const ConsumerHomeScreen = ({navigation}) => {
     setDistance(value);
   };
 
-  const handleUnitPrice = values => {
-    setUnitPrice(values);
+  const handleLt = val => {
+    setLt(val);
+  };
+
+  const handleGt = val => {
+    setGt(val);
   };
 
   const handleGigType = value => {
@@ -104,7 +108,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         if (showResult) {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${unitPrice[0]}&unitPrice[lte]=${unitPrice[1]}`,
+            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -123,7 +127,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       } catch (error) {
         setLoading(false);
         console.error(error);
-        console.log(`unitPrice[gte]=${unitPrice[0]}&unitPrice[lte]=${unitPrice[1]}`);
+       
       }
     }
     getGigs();
@@ -188,8 +192,10 @@ export const ConsumerHomeScreen = ({navigation}) => {
           category={category}
           handleGigType={handleGigType}
           gigType={gigType}
-          handleUnitPrice={handleUnitPrice}
-          unitPrice={unitPrice}
+          handleGt={handleGt}
+          handleLt={handleLt}
+          gt={gt}
+          lt={lt}
           distance={distance}
           handleDistance={handleDistance}
         />
