@@ -31,8 +31,14 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [distance, setDistance] = useState("60000");
   const [lt, setLt] = useState("1000");
   const [gt, setGt] = useState("100");
+  const [unit, setUnit] = useState("");
+
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
+
+  const handleUnit = val => {
+    setUnit(val);
+  };
 
   const handleDistance = value => {
     setDistance(value);
@@ -108,7 +114,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         if (showResult) {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}`,
+            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -127,7 +133,6 @@ export const ConsumerHomeScreen = ({navigation}) => {
       } catch (error) {
         setLoading(false);
         console.error(error);
-       
       }
     }
     getGigs();
@@ -187,17 +192,19 @@ export const ConsumerHomeScreen = ({navigation}) => {
           toggleModal={toggleSetshowFilters}
           showResult={showResult}
           applyFilters={applyFilters}
-          handleCategory={handleCategory}
           clearFilters={clearFilters}
           category={category}
-          handleGigType={handleGigType}
+          handleCategory={handleCategory}
           gigType={gigType}
-          handleGt={handleGt}
-          handleLt={handleLt}
+          handleGigType={handleGigType}
           gt={gt}
+          handleGt={handleGt}
           lt={lt}
+          handleLt={handleLt}
           distance={distance}
           handleDistance={handleDistance}
+          unit={unit}
+          handleUnit={handleUnit}
         />
         <View style={styles.container}>
           {!showResult && <GigRow gigs={fruitGigs} title="Fruits" />}

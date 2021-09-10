@@ -24,9 +24,24 @@ function Filters(props) {
               onPress={props.toggleModal}
             />
           </View>
-          <Button onPress={() => console.log(props.unitPrice.lt)}>press</Button>
+
+          {/* Unit */}
+          <View style={styles.pickerGroup}>
+            <Text style={styles.label}>Unit: </Text>
+            <RNPickerSelect
+              onValueChange={e => props.handleUnit(e)}
+              placeholder={{}}
+              value={props.unit}
+              items={[
+                {label: "Kilograms", value: "kg"},
+                {label: "Pieces", value: "pcs"},
+                {label: "All units", value: ""},
+              ]}
+            />
+          </View>
+
           {/* Price */}
-          <Text style={styles.label}> Price range: </Text>
+          <Text style={styles.label}> Unit price: </Text>
           <View style={styles.textInputGroup}>
             <TextInput
               mode="outlined"
