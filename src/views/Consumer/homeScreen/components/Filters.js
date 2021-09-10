@@ -6,10 +6,11 @@ import {Button, IconButton, RadioButton, TextInput} from "react-native-paper";
 import Modal from "react-native-modal";
 import * as Colors from "../../../../styles/abstracts/colors";
 import RNPickerSelect from "react-native-picker-select";
+import {ScrollView} from "react-native-gesture-handler";
 
 function Filters(props) {
   return (
-    <View style={{flex: 1}}>
+    <ScrollView style={{flex: 1}}>
       <Modal
         style={{justifyContent: "flex-end", margin: 0}}
         isVisible={props.showFilters}
@@ -23,6 +24,37 @@ function Filters(props) {
               size={20}
               onPress={props.toggleModal}
             />
+          </View>
+
+          {/* Deliverability */}
+          <View style={{marginTop: 10}}>
+            <Text style={styles.label}>Does seller provide delivery?</Text>
+            <View style={{flexDirection: "row", marginLeft: 10, marginTop: 5}}>
+              <View style={styles.radioGroup}>
+                <RadioButton
+                  value="true"
+                  status={props.deliverability === "true" ? "checked" : "unchecked"}
+                  onPress={() => props.handleDeliveryAbility("true")}
+                />
+                <Text>Yes</Text>
+              </View>
+              <View style={styles.radioGroup}>
+                <RadioButton
+                  value="false"
+                  status={props.deliverability === "false" ? "checked" : "unchecked"}
+                  onPress={() => props.handleDeliveryAbility("false")}
+                />
+                <Text>No</Text>
+              </View>
+              <View style={{flexDirection: "row", alignItems: "center"}}>
+                <RadioButton
+                  value="both"
+                  status={props.deliverability === "" ? "checked" : "unchecked"}
+                  onPress={() => props.handleDeliveryAbility("")}
+                />
+                <Text>Show both</Text>
+              </View>
+            </View>
           </View>
 
           {/* Unit */}
@@ -160,7 +192,7 @@ function Filters(props) {
           </View>
         </View>
       </Modal>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -198,11 +230,16 @@ const styles = StyleSheet.create({
   label: {
     color: Colors.fontColor.color,
     marginLeft: 10,
+    marginRight: 10,
     fontWeight: "bold",
+    // marginTop: 5,
+    paddingTop: 5,
+    borderTopColor: "#eee",
+    borderTopWidth: 1,
   },
   pickerGroup: {
-    marginBottom: 10,
-    marginTop: 10,
+    // marginBottom: 5,
+    // marginTop: 5,
   },
   radioGroup: {
     flexDirection: "row",
@@ -220,6 +257,6 @@ const styles = StyleSheet.create({
     marginRight: 20,
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 5,
+    // marginBottom: 5,
   },
 });

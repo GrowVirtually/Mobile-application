@@ -32,9 +32,14 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [lt, setLt] = useState("1000");
   const [gt, setGt] = useState("100");
   const [unit, setUnit] = useState("");
+  const [deliverability, setDeliverability] = useState("");
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
+
+  const handleDeliveryAbility = value => {
+    setDeliverability(value);
+  };
 
   const handleUnit = val => {
     setUnit(val);
@@ -114,7 +119,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         if (showResult) {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}`,
+            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -205,6 +210,8 @@ export const ConsumerHomeScreen = ({navigation}) => {
           handleDistance={handleDistance}
           unit={unit}
           handleUnit={handleUnit}
+          deliverability={deliverability}
+          handleDeliveryAbility={handleDeliveryAbility}
         />
         <View style={styles.container}>
           {!showResult && <GigRow gigs={fruitGigs} title="Fruits" />}
