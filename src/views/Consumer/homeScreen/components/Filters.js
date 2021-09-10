@@ -8,8 +8,6 @@ import * as Colors from "../../../../styles/abstracts/colors";
 import RNPickerSelect from "react-native-picker-select";
 
 function Filters(props) {
-  const [checked, setChecked] = useState("first");
-
   return (
     <View style={{flex: 1}}>
       <Modal
@@ -26,6 +24,39 @@ function Filters(props) {
               onPress={props.toggleModal}
             />
           </View>
+
+          {/* Distance */}
+          <View style={{marginTop: 10}}>
+            <Text style={styles.label}>Gig category</Text>
+            <View style={{flexDirection: "row", marginLeft: 10, marginTop: 5}}>
+              <View style={styles.radioGroup}>
+                <RadioButton
+                  value="60000"
+                  status={props.distance === "60000" ? "checked" : "unchecked"}
+                  onPress={() => props.handleDistance("60000")}
+                />
+                <Text>{`> 5km`}</Text>
+              </View>
+              <View style={styles.radioGroup}>
+                <RadioButton
+                  value="5000"
+                  status={props.distance === "5000" ? "checked" : "unchecked"}
+                  onPress={() => props.handleDistance("5000")}
+                />
+                <Text>{`< 5km`}</Text>
+              </View>
+              <View style={{flexDirection: "row", alignItems: "center"}}>
+                <RadioButton
+                  value="1000"
+                  status={props.distance === "1000" ? "checked" : "unchecked"}
+                  onPress={() => props.handleDistance("1000")}
+                />
+                <Text>{`< 1km`}</Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Category */}
 
           <View style={{marginTop: 10}}>
             <Text style={styles.label}>Gig category</Text>
@@ -49,8 +80,8 @@ function Filters(props) {
               <View style={{flexDirection: "row", alignItems: "center"}}>
                 <RadioButton
                   value="post"
-                  status={props.gigType === " " ? "checked" : "unchecked"}
-                  onPress={() => props.handleGigType(" ")}
+                  status={props.gigType === "" ? "checked" : "unchecked"}
+                  onPress={() => props.handleGigType("")}
                 />
                 <Text>All</Text>
               </View>
@@ -66,7 +97,7 @@ function Filters(props) {
               items={[
                 {label: "Vegetable", value: "vegetable"},
                 {label: "Fruit", value: "fruit"},
-                {label: "Both", value: " "},
+                {label: "Both", value: ""},
               ]}
             />
           </View>

@@ -23,6 +23,7 @@
   "dependencies": {
     "@coffeebeanslabs/react-native-form-builder": "^1.0.3",
     "@fontsource/roboto": "^4.4.5",
+    "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-picker/picker": "^2.0.0",

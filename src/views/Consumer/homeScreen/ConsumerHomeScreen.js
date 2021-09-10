@@ -14,21 +14,33 @@ import GigGrid from "./components/GigGrid";
 import Filters from "./components/Filters";
 
 export const ConsumerHomeScreen = ({navigation}) => {
+  const [loading, setLoading] = useState(false);
+  const [refresh, setRefresh] = useState(1);
   const [gigs, setGigs] = useState([]);
   const [vegetableGigs, setVegetableGigs] = useState([]);
   const [fruitGigs, setFruitGigs] = useState([]);
   const [mylocation, setMyLocation] = useState(null);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
   const [showFilters, setshowFilters] = useState(false);
   const [showResult, setShowResult] = useState(false);
+
+  // Prams states
   const [category, setCategory] = useState("vegetable");
-  const [refresh, setRefresh] = useState(1);
   const [gigType, setGigType] = useState("post");
+  const [unitPrice, setUnitPrice] = useState([0, 1000]);
+  const [distance, setDistance] = useState("60000");
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
+
+  const handleDistance = value => {
+    setDistance(value);
+  };
+
+  const handleUnitPrice = values => {
+    setUnitPrice(values);
+  };
 
   const handleGigType = value => {
     setGigType(value);
@@ -92,7 +104,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         if (showResult) {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}&gigCategory=${category}&gigType=${gigType}`,
+            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${unitPrice[0]}&unitPrice[lte]=${unitPrice[1]}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -111,6 +123,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       } catch (error) {
         setLoading(false);
         console.error(error);
+        console.log(`unitPrice[gte]=${unitPrice[0]}&unitPrice[lte]=${unitPrice[1]}`);
       }
     }
     getGigs();
@@ -175,6 +188,10 @@ export const ConsumerHomeScreen = ({navigation}) => {
           category={category}
           handleGigType={handleGigType}
           gigType={gigType}
+          handleUnitPrice={handleUnitPrice}
+          unitPrice={unitPrice}
+          distance={distance}
+          handleDistance={handleDistance}
         />
         <View style={styles.container}>
           {!showResult && <GigRow gigs={fruitGigs} title="Fruits" />}
