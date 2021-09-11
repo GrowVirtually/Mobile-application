@@ -24,6 +24,15 @@ export const ConsumerMap = () => {
         <MaterialIcon style={styles.icon} name="arrow-left" color="#fff" size={20} />
       </TouchableOpacity>
 
+      <View style={styles.info}>
+        <View style={styles.youPin}>
+          <Text>You</Text>
+        </View>
+        <View style={styles.sellerPin}>
+          <Text>Seller</Text>
+        </View>
+      </View>
+
       <MapView style={styles.map} initialRegion={{...marker, ...delta}}>
         <MapViewDirections
           origin={myLocation}
@@ -72,5 +81,26 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: "relative",
+  },
+  info: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    zIndex: 6,
+  },
+  youPin: {
+    backgroundColor: "tomato",
+    padding: 5,
+    borderRadius: 5,
+    elevation: 2,
+    alignItems: "center",
+  },
+  sellerPin: {
+    backgroundColor: "gold",
+    padding: 5,
+    marginTop: 5,
+    borderRadius: 5,
+    elevation: 2,
+    alignItems: "center",
   },
 });
