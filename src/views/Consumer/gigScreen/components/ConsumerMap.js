@@ -3,13 +3,15 @@
 /* eslint-disable arrow-body-style */
 import React, {useState, useEffect} from "react";
 import {useNavigation, useRoute} from "@react-navigation/native";
-import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
+import {Text, Image, View, StyleSheet, TouchableOpacity} from "react-native";
 import MapView from "react-native-maps";
 import {Marker} from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
 
 export const ConsumerMap = () => {
+  const GOOGLE_MAPS_APIKEY = "AIzaSyB-pBePstD2POGVXI-TJG-pzh64OIvJo9w";
   const delta = {latitudeDelta: 0.01, longitudeDelta: 0.01};
   const navigation = useNavigation();
   const route = useRoute();
@@ -23,8 +25,15 @@ export const ConsumerMap = () => {
       </TouchableOpacity>
 
       <MapView style={styles.map} initialRegion={{...marker, ...delta}}>
-        <Marker coordinate={marker} />
-        <Marker coordinate={myLocation} />
+        <MapViewDirections
+          origin={myLocation}
+          destination={marker}
+          apikey={GOOGLE_MAPS_APIKEY} // insert your API Key here
+          strokeWidth={4}
+          strokeColor={Colors.primary.color}
+        />
+        <Marker pinColor="tomato" coordinate={marker} />
+        <Marker pinColor="gold" coordinate={myLocation} />
       </MapView>
     </View>
   );
