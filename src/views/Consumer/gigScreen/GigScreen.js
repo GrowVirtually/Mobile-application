@@ -41,8 +41,6 @@ export const GigScreen = ({route, navigation}) => {
     geoData: {
       latitude: 6.911650087805625,
       longitude: 79.8589850944203,
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.01,
     },
     willSellerDeliver: true,
     sellerInfo: "For sale by N. Sumanas",
@@ -83,8 +81,6 @@ export const GigScreen = ({route, navigation}) => {
             geoData={{
               latitude: 6.911650087805625,
               longitude: 79.8589850944203,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
             }}
           />
 

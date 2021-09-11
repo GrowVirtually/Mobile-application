@@ -11,6 +11,9 @@
   PROTOCOL=https
 
   HOST_PORT=https://grovi-backend.herokuapp.com
+
+  GOOGLE_API_KEY=MY_API_KEY_HERE
+
 ```
 
 4. Create the following file.
