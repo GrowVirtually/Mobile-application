@@ -9,9 +9,9 @@ import {Marker} from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
+import {GOOGLE_API_KEY} from "@env";
 
 export const ConsumerMap = () => {
-  const GOOGLE_MAPS_APIKEY = "AIzaSyB-pBePstD2POGVXI-TJG-pzh64OIvJo9w";
   const delta = {latitudeDelta: 0.01, longitudeDelta: 0.01};
   const navigation = useNavigation();
   const route = useRoute();
@@ -42,7 +42,7 @@ export const ConsumerMap = () => {
         <MapViewDirections
           origin={myLocation}
           destination={marker}
-          apikey={GOOGLE_MAPS_APIKEY} // insert your API Key here
+          apikey={GOOGLE_API_KEY} // insert your API Key here
           strokeWidth={4}
           strokeColor={Colors.primary.color}
         />

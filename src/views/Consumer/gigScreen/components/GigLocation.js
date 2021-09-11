@@ -5,10 +5,10 @@ import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import {GOOGLE_API_KEY} from "@env";
 
 const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
   const navigation = useNavigation();
-  const GOOGLE_MAPS_APIKEY = "AIzaSyB-pBePstD2POGVXI-TJG-pzh64OIvJo9w";
   const [myLocation, setMyLocation] = useState(null);
   const [routeData, setRouteData] = useState(null);
   const delta = {latitudeDelta: 0.01, longitudeDelta: 0.01};
@@ -24,7 +24,7 @@ const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
           try {
             const config = {
               method: "get",
-              url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${obj.latitude},${obj.longitude}&destinations=${geoData.latitude},${geoData.longitude}&key=${GOOGLE_MAPS_APIKEY}`,
+              url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${obj.latitude},${obj.longitude}&destinations=${geoData.latitude},${geoData.longitude}&key=${GOOGLE_API_KEY}`,
               headers: {},
             };
             axios(config)
