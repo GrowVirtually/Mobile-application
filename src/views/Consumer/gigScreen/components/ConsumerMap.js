@@ -16,7 +16,7 @@ export const ConsumerMap = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const {marker, myLocation} = route.params;
+  const {marker, myLocation, routeData} = route.params;
 
   return (
     <View style={styles.container}>
@@ -24,12 +24,17 @@ export const ConsumerMap = () => {
         <MaterialIcon style={styles.icon} name="arrow-left" color="#fff" size={20} />
       </TouchableOpacity>
 
+      <View style={styles.routeInfo}>
+        <Text style={styles.distance}>{routeData.distance.text} </Text>
+        <Text style={styles.duration}>{routeData.duration.text} </Text>
+      </View>
+
       <View style={styles.info}>
         <View style={styles.youPin}>
-          <Text>You</Text>
+          <Text>Seller</Text>
         </View>
         <View style={styles.sellerPin}>
-          <Text>Seller</Text>
+          <Text>You</Text>
         </View>
       </View>
 
@@ -102,5 +107,25 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     elevation: 2,
     alignItems: "center",
+  },
+  routeInfo: {
+    bottom: 20,
+    left: 100,
+    zIndex: 8,
+    position: "absolute",
+    backgroundColor: "#fff",
+    padding: 10,
+    elevation: 2,
+    borderRadius: 5,
+  },
+  distance: {
+    color: Colors.primary.color,
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  duration: {
+    color: Colors.secondary.color,
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });

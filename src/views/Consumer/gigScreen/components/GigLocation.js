@@ -4,11 +4,13 @@ import {StyleSheet, TouchableOpacity, Text, View} from "react-native";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
   const navigation = useNavigation();
-
+  const GOOGLE_MAPS_APIKEY = "AIzaSyB-pBePstD2POGVXI-TJG-pzh64OIvJo9w";
   const [myLocation, setMyLocation] = useState(null);
+  const [routeData, setRouteData] = useState(null);
   const delta = {latitudeDelta: 0.01, longitudeDelta: 0.01};
 
   useEffect(() => {
@@ -19,6 +21,24 @@ const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
           const obj = JSON.parse(jsonValue);
           setMyLocation(obj);
           console.log("consumer location not null", obj);
+          try {
+            const config = {
+              method: "get",
+              url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${obj.latitude},${obj.longitude}&destinations=${geoData.latitude},${geoData.longitude}&key=${GOOGLE_MAPS_APIKEY}`,
+              headers: {},
+            };
+            axios(config)
+              .then(response => {
+                // console.log(JSON.stringify(response.data));
+                console.log(response.data.rows[0].elements[0]);
+                setRouteData(response.data.rows[0].elements[0]);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          } catch (error) {
+            console.error(error);
+          }
         } else {
           console.log("location null");
         }
@@ -28,6 +48,10 @@ const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
     };
     getMyLocation();
   }, []);
+
+  // useEffect(() => {
+
+  // }, []);
 
   return (
     <View>
@@ -43,6 +67,7 @@ const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
                   navigation.navigate("ConsumerMap", {
                     marker: geoData,
                     myLocation,
+                    routeData,
                   })
                 }>
                 View on map
