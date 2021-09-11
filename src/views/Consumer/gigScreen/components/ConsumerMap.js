@@ -1,8 +1,8 @@
 /* eslint-disable react-native/no-unused-styles */
 /* eslint-disable prettier/prettier */
 /* eslint-disable arrow-body-style */
+import React, {useState, useEffect} from "react";
 import {useNavigation, useRoute} from "@react-navigation/native";
-import React, {useState} from "react";
 import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
 import MapView from "react-native-maps";
 import {Marker} from "react-native-maps";
@@ -10,10 +10,11 @@ import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
 
 export const ConsumerMap = () => {
+  const delta = {latitudeDelta: 0.01, longitudeDelta: 0.01};
   const navigation = useNavigation();
   const route = useRoute();
 
-  const {region} = route.params;
+  const {marker, myLocation} = route.params;
 
   return (
     <View style={styles.container}>
@@ -21,8 +22,9 @@ export const ConsumerMap = () => {
         <MaterialIcon style={styles.icon} name="arrow-left" color="#fff" size={20} />
       </TouchableOpacity>
 
-      <MapView style={styles.map} initialRegion={region}>
-        <Marker coordinate={region} title="Colombo" description="ddd" />
+      <MapView style={styles.map} initialRegion={{...marker, ...delta}}>
+        <Marker coordinate={marker} />
+        <Marker coordinate={myLocation} />
       </MapView>
     </View>
   );

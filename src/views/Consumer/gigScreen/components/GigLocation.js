@@ -1,11 +1,33 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigation} from "@react-navigation/core";
 import {StyleSheet, TouchableOpacity, Text, View} from "react-native";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
   const navigation = useNavigation();
+
+  const [myLocation, setMyLocation] = useState(null);
+  const delta = {latitudeDelta: 0.01, longitudeDelta: 0.01};
+
+  useEffect(() => {
+    const getMyLocation = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("mylocation");
+        if (jsonValue != null) {
+          const obj = JSON.parse(jsonValue);
+          setMyLocation(obj);
+          console.log("consumer location not null", obj);
+        } else {
+          console.log("location null");
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getMyLocation();
+  }, []);
 
   return (
     <View>
@@ -19,7 +41,8 @@ const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
                 style={styles.viewOnMap}
                 onPress={() =>
                   navigation.navigate("ConsumerMap", {
-                    region: geoData,
+                    marker: geoData,
+                    myLocation,
                   })
                 }>
                 View on map
