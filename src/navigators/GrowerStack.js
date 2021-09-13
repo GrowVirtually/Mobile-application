@@ -13,6 +13,8 @@ import MyGigs from "../views/Grower/menuScreens/myGigs/MyGigsScreen";
 
 import NewGig from "../views/Grower/menuScreens/newGig/NewGigScreen01";
 import GigScreen2 from "../views/Grower/menuScreens/newGig/GigScreen2";
+import GigScreenImage from "../views/Grower/menuScreens/newGig/GigScreenImage";
+
 import Orders from "../views/Grower/menuScreens/orders/OrdersScreen";
 import Support from "../views/Grower/menuScreens/support/SupportScreen";
 
@@ -30,6 +32,7 @@ const GrowerStack = () => {
       <Stack.Screen name={"MyGigs"} component={MyGigs} />
       <Stack.Screen name={"NewGig"} component={NewGig} />
       <Stack.Screen name={"GigScreen2"} component={GigScreen2} />
+      <Stack.Screen name={"GigScreenImage"} component={GigScreenImage} />
       <Stack.Screen name={"Orders"} component={Orders} />
       <Stack.Screen name={"Support"} component={Support} />
     </Stack.Navigator>
