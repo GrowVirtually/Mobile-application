@@ -19,12 +19,25 @@ const ProfileScreen = () => {
   const {authContext, loginState} = useContext(AuthContext);
   const [myLocation, setMyLocation] = useState(null);
   const {globalState, globalDispatch} = useStore();
-  const [geoInfo, setGeoInfo] = useState([]);
-  const [profile, setProfile] = useState(null);
+  const [geoInfo, setGeoInfo] = useState(null);
+  const [profile, setProfile] = useState({});
 
   const jwt = loginState.userToken;
 
   useEffect(() => {
+    const getProfile = async () => {
+      try {
+        const response = await axios.get(`${HOST_PORT}/api/v1/users/me`, {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+        console.log(response.data.data.profile);
+        setProfile(response.data.data.profile);
+      } catch (error) {
+        console.error(error);
+      }
+    };
     getProfile();
   }, []);
 
@@ -90,20 +103,6 @@ const ProfileScreen = () => {
     }
   };
 
-  const getProfile = async () => {
-    try {
-      const response = await axios.get(`${HOST_PORT}/api/v1/users/me`, {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
-      console.log(response.data.data.profile);
-      setProfile(response.data.data.profile);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <>
       <AppHeader navigation={navigation} title="My Profile" />
@@ -111,7 +110,7 @@ const ProfileScreen = () => {
         <SafeAreaView style={styles.container}>
           <View style={styles.userInfoSection}>
             <View style={{flexDirection: "row", marginTop: 15}}>
-              {profile.imgLink === "" ? (
+              {profile && profile.imgLink === "" ? (
                 <Avatar.Text
                   size={80}
                   label={userinfo.username
