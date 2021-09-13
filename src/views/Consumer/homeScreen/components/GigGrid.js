@@ -3,16 +3,27 @@ import React from "react";
 import {Text, View, StyleSheet, ScrollView, TouchableOpacity} from "react-native";
 import * as Colors from "../../../../styles/abstracts/colors";
 import {ConsumerGig} from "./ConsumerGig";
+import {ActivityIndicator, Button} from "react-native-paper";
 
-const GigGrid = ({gigs, title}) => {
+const GigGrid = ({gigs, title, nextPage, prevPage}) => {
   return (
-    <View>
+    <View style={gigs.length === 0 && {paddingBottom: 150}}>
       <Text style={styles.gigRowTitle}>{title}</Text>
-      <View style={styles.grid}>
-        {gigs.map((gig, index) => (
-          <ConsumerGig direction="grid" {...gig} key={index} />
-        ))}
-      </View>
+      {gigs.length === 0 ? (
+        <View styles={styles.loading}>
+          <ActivityIndicator animating={true} />
+        </View>
+      ) : (
+        <View style={styles.grid}>
+          {gigs.map((gig, index) => (
+            <ConsumerGig direction="grid" {...gig} key={index} />
+          ))}
+          <View style={styles.btns}>
+            <Button onPress={() => prevPage()}>Back</Button>
+            <Button onPress={() => nextPage()}>Next</Button>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -35,5 +46,15 @@ const styles = StyleSheet.create({
     color: Colors.primary.color,
     fontWeight: "bold",
     backgroundColor: "#eee",
+  },
+  loading: {
+    height: 133,
+    flex: 1,
+    flexWrap: "wrap",
+    backgroundColor: "red",
+  },
+  btns: {
+    marginTop: 10,
+    flexDirection: "row",
   },
 });

@@ -1,19 +1,22 @@
 /* eslint-disable react-native/no-unused-styles */
 /* eslint-disable prettier/prettier */
 /* eslint-disable arrow-body-style */
+import React, {useState, useEffect} from "react";
 import {useNavigation, useRoute} from "@react-navigation/native";
-import React, {useState} from "react";
-import {Text, View, StyleSheet, TouchableOpacity} from "react-native";
+import {Text, Image, View, StyleSheet, TouchableOpacity} from "react-native";
 import MapView from "react-native-maps";
 import {Marker} from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
+import {GOOGLE_API_KEY} from "@env";
 
 export const ConsumerMap = () => {
+  const delta = {latitudeDelta: 0.01, longitudeDelta: 0.01};
   const navigation = useNavigation();
   const route = useRoute();
 
-  const {region} = route.params;
+  const {marker, myLocation, routeData} = route.params;
 
   return (
     <View style={styles.container}>
@@ -21,8 +24,30 @@ export const ConsumerMap = () => {
         <MaterialIcon style={styles.icon} name="arrow-left" color="#fff" size={20} />
       </TouchableOpacity>
 
-      <MapView style={styles.map} initialRegion={region}>
-        <Marker coordinate={region} title="Colombo" description="ddd" />
+      <View style={styles.routeInfo}>
+        <Text style={styles.distance}>{routeData.distance.text} </Text>
+        <Text style={styles.duration}>{routeData.duration.text} </Text>
+      </View>
+
+      <View style={styles.info}>
+        <View style={styles.youPin}>
+          <Text>Seller</Text>
+        </View>
+        <View style={styles.sellerPin}>
+          <Text>You</Text>
+        </View>
+      </View>
+
+      <MapView style={styles.map} initialRegion={{...marker, ...delta}}>
+        <MapViewDirections
+          origin={myLocation}
+          destination={marker}
+          apikey={GOOGLE_API_KEY} // insert your API Key here
+          strokeWidth={4}
+          strokeColor={Colors.primary.color}
+        />
+        <Marker pinColor="tomato" coordinate={marker} />
+        <Marker pinColor="gold" coordinate={myLocation} />
       </MapView>
     </View>
   );
@@ -61,5 +86,46 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: "relative",
+  },
+  info: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    zIndex: 6,
+  },
+  youPin: {
+    backgroundColor: "tomato",
+    padding: 5,
+    borderRadius: 5,
+    elevation: 2,
+    alignItems: "center",
+  },
+  sellerPin: {
+    backgroundColor: "gold",
+    padding: 5,
+    marginTop: 5,
+    borderRadius: 5,
+    elevation: 2,
+    alignItems: "center",
+  },
+  routeInfo: {
+    bottom: 20,
+    left: 100,
+    zIndex: 8,
+    position: "absolute",
+    backgroundColor: "#fff",
+    padding: 10,
+    elevation: 2,
+    borderRadius: 5,
+  },
+  distance: {
+    color: Colors.primary.color,
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  duration: {
+    color: Colors.secondary.color,
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });

@@ -10,12 +10,36 @@ import AuthContext from "../context/auth-context";
 import {useStore} from "../context/StoreProvider";
 import * as Colors from "../styles/abstracts/colors";
 import AppHeader from "./Common/AppHeader";
+import axios from "axios";
+import {HOST_PORT} from "@env";
+import {GOOGLE_API_KEY} from "@env";
 
 const ProfileScreen = () => {
+  const navigation = useNavigation();
   const {authContext, loginState} = useContext(AuthContext);
   const [myLocation, setMyLocation] = useState(null);
   const {globalState, globalDispatch} = useStore();
-  const navigation = useNavigation();
+  const [geoInfo, setGeoInfo] = useState("");
+  const [profile, setProfile] = useState({});
+
+  const jwt = loginState.userToken;
+
+  useEffect(() => {
+    const getProfile = async () => {
+      try {
+        const response = await axios.get(`${HOST_PORT}/api/v1/users/me`, {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+        console.log(response.data.data.profile);
+        setProfile(response.data.data.profile);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getProfile();
+  }, []);
 
   useEffect(() => {
     const getMyLocation = async () => {
@@ -35,6 +59,10 @@ const ProfileScreen = () => {
     getMyLocation();
   }, []);
 
+  useEffect(() => {
+    if (myLocation !== null) getGoogleInfo();
+  }, [myLocation]);
+
   const handleToggleRole = () => {
     globalDispatch({type: "TOGGLE_USER_TYPE"});
 
@@ -49,9 +77,8 @@ const ProfileScreen = () => {
     try {
       await AsyncStorage.clear();
     } catch (e) {
-      // remove error
+      console.error(e);
     }
-
     navigation.navigate("AuthStackNavigator");
   };
 
@@ -64,6 +91,18 @@ const ProfileScreen = () => {
     navigation.navigate("LocationUpdater", {prevLoc: myLocation});
   };
 
+  const getGoogleInfo = async () => {
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${myLocation.latitude},${myLocation.longitude}&result_type=street_address&key=${GOOGLE_API_KEY}`,
+      );
+      console.log(response.status);
+      setGeoInfo(response.data.results[0].formatted_address);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <AppHeader navigation={navigation} title="My Profile" />
@@ -71,20 +110,24 @@ const ProfileScreen = () => {
         <SafeAreaView style={styles.container}>
           <View style={styles.userInfoSection}>
             <View style={{flexDirection: "row", marginTop: 15}}>
-              {/* <Avatar.Image
-              source={{
-                uri: "https://api.adorable.io/avatars/80/abott@adorable.png",
-              }}
-              size={80}
-            /> */}
-              <Avatar.Text
-                size={80}
-                label={userinfo.username
-                  .split(" ")
-                  .map(name => name.charAt(0))
-                  .join("")}
-                color="#fff"
-              />
+              {profile && profile.imgLink === "" ? (
+                <Avatar.Text
+                  size={80}
+                  label={userinfo.username
+                    .split(" ")
+                    .map(name => name.charAt(0))
+                    .join("")}
+                  color="#fff"
+                />
+              ) : (
+                <Avatar.Image
+                  source={{
+                    uri: profile.imgLink,
+                  }}
+                  size={80}
+                />
+              )}
+
               <View style={{marginLeft: 20}}>
                 <Title
                   style={[
@@ -97,7 +140,7 @@ const ProfileScreen = () => {
                   {userinfo.username}
                 </Title>
 
-                <Caption style={styles.caption}>{userinfo.email}</Caption>
+                {/* <Caption style={styles.caption}>{userinfo.email}</Caption> */}
               </View>
             </View>
             <Button
@@ -112,21 +155,34 @@ const ProfileScreen = () => {
             <View style={styles.row}>
               <Icon name="map-marker-radius" color="#777777" size={20} />
               <Text style={{marginLeft: 20}}>
-                {myLocation === null
+                {/* {myLocation === null
                   ? `empty`
-                  : `${myLocation.latitude.toFixed(4)}, ${myLocation.longitude.toFixed(4)}`}
+                  : `${myLocation.latitude.toFixed(4)}, ${myLocation.longitude.toFixed(4)}`} */}
+                <Text>{geoInfo}</Text>
               </Text>
+            </View>
+            <View style={styles.row}>
               <Button mode="outlined" onPress={() => handleUpdateLoc()}>
-                Update loc
+                Update my location
               </Button>
             </View>
             <View style={styles.row}>
               <Icon name="phone" color="#777777" size={20} />
-              <Text style={{marginLeft: 20}}>+94-712345792</Text>
+              <Text style={{marginLeft: 20}}>{profile && profile.phone}</Text>
             </View>
             <View style={styles.row}>
               <Icon name="email" color="#777777" size={20} />
-              <Text style={{marginLeft: 20}}>john_doe@email.com</Text>
+              <Text style={{marginLeft: 20}}>{profile && profile.email}</Text>
+            </View>
+            <View style={styles.row}>
+              <Icon name="card-account-details" color="#777777" size={20} />
+              <Text style={{marginLeft: 20}}>NIC: {profile.nic ? profile.nic : "none"}</Text>
+            </View>
+            <View style={styles.row}>
+              <Icon name="account" color="#777777" size={20} />
+              <Text style={{marginLeft: 20}}>
+                Gender: {profile.gender ? profile.gender : "none"}
+              </Text>
             </View>
           </View>
 
@@ -173,7 +229,10 @@ const ProfileScreen = () => {
                 <Text style={styles.menuItemText}>Gig Orders</Text>
               </View>
             </TouchableRipple>
-            <TouchableRipple onPress={() => {}}>
+            <TouchableRipple
+              onPress={() => {
+                navigation.navigate("UpdateProfile", {profile});
+              }}>
               <View style={styles.menuItem}>
                 <Icon name="account-edit-outline" color={Colors.secondary.color} size={25} />
                 <Text style={styles.menuItemText}>Edit Profile</Text>
@@ -206,7 +265,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
   },
   caption: {

@@ -1,11 +1,57 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigation} from "@react-navigation/core";
 import {StyleSheet, TouchableOpacity, Text, View} from "react-native";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import {GOOGLE_API_KEY} from "@env";
 
 const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
   const navigation = useNavigation();
+  const [myLocation, setMyLocation] = useState(null);
+  const [routeData, setRouteData] = useState(null);
+  const delta = {latitudeDelta: 0.01, longitudeDelta: 0.01};
+
+  useEffect(() => {
+    const getMyLocation = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("mylocation");
+        if (jsonValue != null) {
+          const obj = JSON.parse(jsonValue);
+          setMyLocation(obj);
+          console.log("consumer location not null", obj);
+          try {
+            const config = {
+              method: "get",
+              url: `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${obj.latitude},${obj.longitude}&destinations=${geoData.latitude},${geoData.longitude}&key=${GOOGLE_API_KEY}`,
+              headers: {},
+            };
+            axios(config)
+              .then(response => {
+                // console.log(JSON.stringify(response.data));
+                console.log(response.data.rows[0].elements[0]);
+                setRouteData(response.data.rows[0].elements[0]);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          console.log("location null");
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getMyLocation();
+  }, []);
+
+  // useEffect(() => {
+
+  // }, []);
 
   return (
     <View>
@@ -19,7 +65,9 @@ const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
                 style={styles.viewOnMap}
                 onPress={() =>
                   navigation.navigate("ConsumerMap", {
-                    region: geoData,
+                    marker: geoData,
+                    myLocation,
+                    routeData,
                   })
                 }>
                 View on map

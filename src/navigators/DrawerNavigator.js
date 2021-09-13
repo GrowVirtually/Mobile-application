@@ -14,6 +14,7 @@ import GrowerStack from "./GrowerStack";
 import ProfileScreen from "../views/ProfileScreen";
 import LocationUpdater from "../views/LocationUpdater";
 import * as Colors from "../styles/abstracts/colors";
+import UpdateProfileScreen from "../views/UpdateProfileScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +32,7 @@ function ConsumerDrawerNavigator() {
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
       <Drawer.Screen name={"Notifications"} component={Notifications} />
       <Drawer.Screen name={"LocationUpdater"} component={LocationUpdater} />
+      <Drawer.Screen name={"UpdateProfile"} component={UpdateProfileScreen} />
     </Drawer.Navigator>
   );
 }
@@ -42,12 +44,12 @@ function GrowerDrawerNavigator() {
     <Drawer.Navigator
       drawerContent={GrowerDrawer}
       navigation={navigation}
-      drawerStyle={{backgroundColor: "red"}}>
+      drawerStyle={{backgroundColor: Colors.primary.color}}>
       <Drawer.Screen name={"GrowerStack"} component={GrowerStack} />
-
       <Drawer.Screen name={"Notifications"} component={Notifications} />
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
       <Drawer.Screen name={"LocationUpdater"} component={LocationUpdater} />
+      <Drawer.Screen name={"UpdateProfile"} component={UpdateProfileScreen} />
     </Drawer.Navigator>
   );
 }
