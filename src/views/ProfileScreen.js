@@ -19,7 +19,7 @@ const ProfileScreen = () => {
   const {authContext, loginState} = useContext(AuthContext);
   const [myLocation, setMyLocation] = useState(null);
   const {globalState, globalDispatch} = useStore();
-  const [geoInfo, setGeoInfo] = useState(null);
+  const [geoInfo, setGeoInfo] = useState("");
   const [profile, setProfile] = useState({});
 
   const jwt = loginState.userToken;
@@ -60,7 +60,7 @@ const ProfileScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (myLocation != null) getGoogleInfo();
+    if (myLocation !== null) getGoogleInfo();
   }, [myLocation]);
 
   const handleToggleRole = () => {
@@ -96,8 +96,8 @@ const ProfileScreen = () => {
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${myLocation.latitude},${myLocation.longitude}&result_type=street_address&key=${GOOGLE_API_KEY}`,
       );
-      setGeoInfo(response.data.results[1].formatted_address);
-      console.log("set geo info");
+      console.log(response.status);
+      setGeoInfo(response.data.results[0].formatted_address);
     } catch (error) {
       console.error(error);
     }
