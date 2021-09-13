@@ -28,7 +28,7 @@ const LocationUpdater = ({route, navigation}) => {
       console.log("Done saved.");
       alert("Your location has been updated");
       // globalDispatch({type: "SET_USER_LOCATION", userLocation: location});
-      navigation.goBack();
+      navigation.navigate("ProfileScreen");
     };
     saveData();
   };
