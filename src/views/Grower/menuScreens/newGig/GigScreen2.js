@@ -9,7 +9,9 @@ import  AppHeader  from '../../../Common/AppHeader';
 
 import DynamicForm from '@coffeebeanslabs/react-native-form-builder';
 
-function GigScreen2 ({navigation}) {
+function GigScreen2 ({navigation, route}) {
+
+  const {prevFields} = route.params;
 
   const formTemplate = {
     data: [
@@ -72,13 +74,15 @@ function GigScreen2 ({navigation}) {
     // Actions on submit button click.
     navigation.navigate('GigScreenImage');
     console.log('Form submitted with fields: ', formFields);
+    console.log('from prev page: ', prevFields)
     
   }
 
   return (
     <View style={styles.container}>
        <StatusBar backgroundColor={Colors.primary.color} />
-       <AppHeader navigation={navigation} title="My Support" />
+      
+       <AppHeader navigation={navigation} title="Add a New Gig"  showBackButton={true} />
       <Text style={styles.text}>Add Gig Details</Text>
 
       <ScrollView>

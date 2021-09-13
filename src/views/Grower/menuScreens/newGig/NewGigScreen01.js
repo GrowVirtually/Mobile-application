@@ -1,14 +1,17 @@
 // src/views/Grower/NewGig.js
 
-import React from 'react';
+import React, {useContext, useState} from "react";
 import { StyleSheet, View, Text,StatusBar, TouchableOpacity, Button, ScrollView  } from 'react-native';
-
 import * as Colors from '../../../../styles/abstracts/colors';
 import  AppHeader  from '../../../Common/AppHeader';
-
 import DynamicForm from '@coffeebeanslabs/react-native-form-builder';
+import axios from "axios";
+import AuthContext from "../../../../context/auth-context";
 
 function NewGigScreen01 ({navigation}) {
+
+  const {loginState} = useContext(AuthContext);
+  const jwt = loginState.userToken;
 
   const formTemplate = {
     data: [
@@ -111,17 +114,62 @@ function NewGigScreen01 ({navigation}) {
     ]
   }
  
-  const onSubmit = formFields => {
-    // Actions on submit button click.
-    navigation.navigate('GigScreen2');
-    console.log('Form submitted with fields: ', formFields);
-    
+
+
+  async function postGig() {
+    const data = {
+      gigType: "pre",
+  gigTitle: "XXCarrot xxxxxx",
+  gigCategory: "vegetable",
+  gigDescription: "For immediate sale",
+  minOrderAmount: "45.22",
+  unit: "kg",
+  unitPrice: "100.00",
+  stock: "30.22",
+  sold: "38.22",
+  gigDuration: "20",
+  userid: 2,
+  location: {
+    "lat": 6.933906500876093,
+    "lng": 79.8502538395318
+  }
+    };
+
+    try {
+      const config = {
+        method: 'post',
+        url: 'https://grovi-backend.herokuapp.com/api/v1/gigs',
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : data,
+        headers: { 
+          'Authorization': `Bearer ${jwt}`, 
+          'Content-Type': 'application/json'
+        },
+      };
+
+      const response = await axios(config);
+      console.log(response.status);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
+  const onSubmit = formFields => {
+    // Actions on submit button click.
+    navigation.navigate('GigScreen2', {prevFields: formFields});
+    console.log('Form submitted with fields: ', formFields);
+
+    
+    // postGig();
+
+    
+  }
   return (
     <View style={styles.container}>
        <StatusBar backgroundColor={Colors.primary.color} />
-       <AppHeader navigation={navigation} title="Add a New Gig" />
+       <AppHeader navigation={navigation} title="Add a New Gig"  showBackButton={true} />
       <ScrollView>
         <DynamicForm formTemplate={formTemplate} onSubmit={onSubmit} />
         
