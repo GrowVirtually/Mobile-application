@@ -158,7 +158,6 @@ const ProfileScreen = () => {
                 {/* {myLocation === null
                   ? `empty`
                   : `${myLocation.latitude.toFixed(4)}, ${myLocation.longitude.toFixed(4)}`} */}
-                {/* {geoInfo[0]} */}
                 <Text>{geoInfo}</Text>
               </Text>
             </View>
@@ -230,7 +229,10 @@ const ProfileScreen = () => {
                 <Text style={styles.menuItemText}>Gig Orders</Text>
               </View>
             </TouchableRipple>
-            <TouchableRipple onPress={() => {}}>
+            <TouchableRipple
+              onPress={() => {
+                navigation.navigate("UpdateProfile", {profile});
+              }}>
               <View style={styles.menuItem}>
                 <Icon name="account-edit-outline" color={Colors.secondary.color} size={25} />
                 <Text style={styles.menuItemText}>Edit Profile</Text>
