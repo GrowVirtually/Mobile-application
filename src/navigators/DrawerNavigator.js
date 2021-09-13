@@ -42,7 +42,7 @@ function GrowerDrawerNavigator() {
     <Drawer.Navigator
       drawerContent={GrowerDrawer}
       navigation={navigation}
-      drawerStyle={{backgroundColor: "red"}}>
+      drawerStyle={{backgroundColor: Colors.primary.color}}>
       <Drawer.Screen name={"GrowerStack"} component={GrowerStack} />
 
       <Drawer.Screen name={"Notifications"} component={Notifications} />
