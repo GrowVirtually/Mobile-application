@@ -70,7 +70,7 @@ function GigScreen2 ({navigation}) {
  
   const onSubmit = formFields => {
     // Actions on submit button click.
-    navigation.navigate('GigScreen2');
+    navigation.navigate('GigScreenImage');
     console.log('Form submitted with fields: ', formFields);
     
   }
