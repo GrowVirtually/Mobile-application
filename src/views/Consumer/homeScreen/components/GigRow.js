@@ -15,12 +15,12 @@ const GigRow = ({gigs, title}) => {
         ) : (
           gigs.map((gig, index) => <ConsumerGig direction="row" {...gig} key={index} />)
         )}
-        {gigs.length !== 0 && (
+        {/* {gigs.length !== 0 && (
           <TouchableOpacity style={styles.loadMoreCard}>
             <Text style={styles.loadMoreTxt}>Load More</Text>
             <MaterialIcon name="autorenew" size={30} color={Colors.secondary.color} />
           </TouchableOpacity>
-        )}
+        )} */}
       </ScrollView>
     </View>
   );

@@ -15,6 +15,7 @@ import Filters from "./components/Filters";
 
 export const ConsumerHomeScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
+  const [emptyResult, setEmptyResult] = useState(false);
   const [refresh, setRefresh] = useState(1);
   const [gigs, setGigs] = useState([]);
   const [vegetableGigs, setVegetableGigs] = useState([]);
@@ -114,6 +115,8 @@ export const ConsumerHomeScreen = ({navigation}) => {
   useEffect(() => {
     async function getGigs() {
       setLoading(true);
+      setEmptyResult(false);
+
       let response;
       try {
         if (showResult) {
@@ -136,12 +139,18 @@ export const ConsumerHomeScreen = ({navigation}) => {
         setGigs(response.data.data.gigs);
         setLoading(false);
       } catch (error) {
-        setLoading(false);
-        console.error(error);
+        // const {message} = error.response.data;
+        if (error.response.data.status === "fail") {
+          setEmptyResult(true);
+          setLoading(false);
+          // setShowResult(false);
+          // console.error(error);
+          console.log(error.response.data);
+        }
       }
     }
     getGigs();
-  }, [limit, page, showResult, refresh]);
+  }, [limit, page, refresh]);
 
   // get vege gigs
   useEffect(() => {
@@ -175,7 +184,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         });
         setFruitGigs(response.data.data.gigs);
       } catch (error) {
-        prevPage();
+        // prevPage();
         console.error(error);
       }
     }
@@ -213,17 +222,19 @@ export const ConsumerHomeScreen = ({navigation}) => {
           deliverability={deliverability}
           handleDeliveryAbility={handleDeliveryAbility}
         />
+
         <View style={styles.container}>
           {!showResult && <GigRow gigs={fruitGigs} title="Fruits" />}
 
           {!showResult && <GigRow gigs={vegetableGigs} title="Vegetables" />}
 
-          {/* Gigs Row  */}
-          {loading ? (
+          {loading && (
             <View style={styles.loading}>
               <ActivityIndicator animating={true} />
             </View>
-          ) : (
+          )}
+
+          {!loading && !emptyResult && (
             <GigGrid
               gigs={gigs}
               title={showResult ? "Result" : "You may like"}
@@ -231,6 +242,8 @@ export const ConsumerHomeScreen = ({navigation}) => {
               prevPage={prevPage}
             />
           )}
+
+          {!loading && emptyResult && <Text>no</Text>}
         </View>
       </ScrollView>
     </SafeAreaView>
