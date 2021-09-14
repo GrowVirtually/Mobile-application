@@ -2,7 +2,7 @@
 import axios from "axios";
 import React, {useEffect, useContext, useState} from "react";
 import {ScrollView, TouchableOpacity, StyleSheet, View, Text, SafeAreaView} from "react-native";
-import {Searchbar, ActivityIndicator} from "react-native-paper";
+import {Searchbar, ActivityIndicator, Button} from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AuthContext from "../../../context/auth-context";
 import * as Colors from "../../../styles/abstracts/colors";
@@ -78,12 +78,14 @@ export const ConsumerHomeScreen = ({navigation}) => {
     setshowFilters(false);
     setRefresh(refresh + 1);
     setShowResult(true);
+    setPage(1);
   };
 
   const clearFilters = () => {
     setshowFilters(false);
     setShowResult(false);
     setRefresh(1);
+    setPage(1);
   };
 
   const prevPage = () => {
@@ -240,10 +242,27 @@ export const ConsumerHomeScreen = ({navigation}) => {
               title={showResult ? "Result" : "You may like"}
               nextPage={nextPage}
               prevPage={prevPage}
+              page={page}
+              emptyResult={emptyResult}
             />
           )}
 
-          {!loading && emptyResult && <Text>no</Text>}
+          {!loading && emptyResult && (
+            <View>
+              {page === 1 && <Text>no results found</Text>}
+              {page !== 1 && <Text>You are on last page, no more results</Text>}
+              {page !== 1 && (
+                <View>
+                  <Button disabled={page === 1} onPress={() => prevPage()}>
+                    Prev
+                  </Button>
+                  <Button disabled={emptyResult} onPress={() => nextPage()}>
+                    Nex
+                  </Button>
+                </View>
+              )}
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
