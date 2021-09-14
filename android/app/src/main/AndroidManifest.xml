@@ -24,5 +24,10 @@
        <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="@string/google_api_key"/>
+
+<!-- You will also only need to add this uses-library tag -->
+      <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
+
     </application>
 </manifest>
