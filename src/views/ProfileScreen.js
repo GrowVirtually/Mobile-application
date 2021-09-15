@@ -17,45 +17,69 @@ import {GOOGLE_API_KEY} from "@env";
 const ProfileScreen = () => {
   const navigation = useNavigation();
   const {authContext, loginState} = useContext(AuthContext);
-  const [myLocation, setMyLocation] = useState(null);
+  const [myLocation, setMyLocation] = useState({
+    longitude: null,
+    latitude: null,
+  });
   const {globalState, globalDispatch} = useStore();
   const [geoInfo, setGeoInfo] = useState("");
-  const [profile, setProfile] = useState({});
+  const [profile, setProfile] = useState({
+    id: "",
+    fname: "",
+    lname: "",
+    phone: "",
+    dob: "",
+    nic: "",
+    email: "",
+    gender: "",
+    imgLink: "",
+  });
 
   const jwt = loginState.userToken;
 
-  useEffect(() => {
-    const getProfile = async () => {
-      try {
-        const response = await axios.get(`${HOST_PORT}/api/v1/users/me`, {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
-        console.log(response.data.data.profile);
-        setProfile(response.data.data.profile);
-      } catch (error) {
-        console.error(error);
+  const getProfile = async () => {
+    try {
+      const response = await axios.get(`${HOST_PORT}/api/v1/users/me`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+      console.log(response.data.data.profile);
+      setProfile(response.data.data.profile);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getMyLocation = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("mylocation");
+      if (jsonValue != null) {
+        console.log("profile location not null", jsonValue);
+        const obj = JSON.parse(jsonValue);
+        setMyLocation(obj);
+      } else {
+        console.log("profile loction null");
       }
-    };
-    getProfile();
-  }, []);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
-    const getMyLocation = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem("mylocation");
-        if (jsonValue != null) {
-          console.log("profile location not null", jsonValue);
-          const obj = JSON.parse(jsonValue);
-          setMyLocation(obj);
-        } else {
-          console.log("profile loction null");
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
+    const unsubscribe = navigation.addListener("focus", () => {
+      getProfile();
+      getMyLocation();
+      if (myLocation !== null) getGoogleInfo();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  // useEffect(() => {
+  //   getProfile();
+  // }, []);
+
+  useEffect(() => {
     getMyLocation();
   }, []);
 
@@ -82,9 +106,14 @@ const ProfileScreen = () => {
     navigation.navigate("AuthStackNavigator");
   };
 
+  // const userinfo = {
+  //   username: `${globalState.firstname} ${globalState.lastname}`,
+  //   email: globalState.userEmail,
+  // };
+
   const userinfo = {
-    username: `${globalState.firstname} ${globalState.lastname}`,
-    email: globalState.userEmail,
+    username: `${profile.fname} ${profile.lname}`,
+    email: profile.email,
   };
 
   const handleUpdateLoc = () => {

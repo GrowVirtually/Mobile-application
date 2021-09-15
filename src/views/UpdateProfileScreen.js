@@ -1,14 +1,45 @@
-import React, {useState} from "react";
+import axios from "axios";
+import React, {useState, useEffect, useContext} from "react";
 import {StyleSheet, Text, View} from "react-native";
-import {TextInput} from "react-native-paper";
+import {Button, TextInput} from "react-native-paper";
+import AuthContext from "../context/auth-context";
 import * as Colors from "../styles/abstracts/colors";
 import AppHeader from "./Common/AppHeader";
+import {HOST_PORT} from "@env";
 
 const UpdateProfileScreen = ({navigation, route}) => {
   const {profile} = route.params;
   const [fname, setFname] = useState(profile.fname);
   const [lname, setLname] = useState(profile.lname);
   const [phone, setPhone] = useState(profile.phone);
+
+  const {loginState} = useContext(AuthContext);
+  const jwt = loginState.userToken;
+
+  const sendUpdateReq = async () => {
+    try {
+      const config = {
+        method: "patch",
+        url: `${HOST_PORT}/api/v1/users/me`,
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+        data: {fname, lname},
+      };
+      const response = await axios(config);
+      console.log(response.data.status);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleProfileUpdate = () => {
+    if (fname !== "" && lname !== "" && phone !== "") {
+      sendUpdateReq();
+      navigation.goBack();
+    }
+  };
+
   return (
     <>
       <AppHeader navigation={navigation} title="Edit Profile" />
@@ -62,6 +93,9 @@ const UpdateProfileScreen = ({navigation, route}) => {
             },
           }}
         />
+        <Button mode="contained" onPress={() => handleProfileUpdate()}>
+          Update
+        </Button>
       </View>
     </>
   );
