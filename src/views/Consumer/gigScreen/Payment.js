@@ -1,13 +1,38 @@
 import {useNavigation} from "@react-navigation/native";
-import React from "react";
+import React, {useEffect, useState, useContext} from "react";
 import {SafeAreaView, StyleSheet, Text, View} from "react-native";
 import AppHeader from "../../Common/AppHeader";
 import {WebView} from "react-native-webview";
 import StripeCheckout from "react-native-stripe-checkout-webview";
+import {HOST_PORT} from "@env";
+import axios from "axios";
+import AuthContext from "../../../context/auth-context";
 
 const Payment = () => {
   const navigation = useNavigation();
-  //  <AppHeader navigation={navigation} title="Payment" showBackButton={true} />
+  const [session, setSession] = useState({});
+  const {loginState} = useContext(AuthContext);
+  const jwt = loginState.userToken;
+
+  useEffect(() => {
+    const getSessionObj = async () => {
+      try {
+        const config = {
+          method: "get",
+          url: `${HOST_PORT}/api/v1/bookings/checkout-session/1/4`,
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        };
+        const response = await axios(config);
+        console.log("log", response.data.session.id);
+        setSession(response.data.session);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getSessionObj();
+  }, []);
 
   return (
     <>
@@ -17,10 +42,10 @@ const Payment = () => {
       <StripeCheckout
         stripePublicKey="pk_test_51JMm8aC6jbszMiH2kyfC7NkvZZdF18vmFExsw4vtOBrS5xBVWKbEcFYuggt7bmIsHROzechpHypuBjuqlio3Foka00kokLDcDC"
         checkoutSessionInput={{
-          sessionId: "cs_test_mK66sMhXoyNiST3rRdlDSNLH64esLttAjyhKe4VvdRAXGFuA5sYprmKj",
+          sessionId: session.id,
         }}
         onSuccess={({checkoutSessionId}) => {
-          console.log(`Stripe checkout session succeeded. session id: ${checkoutSessionId}.`);
+          console.log(`Stripe checkout session succeeded. session id:`);
         }}
         onCancel={() => {
           console.log(`Stripe checkout session cancelled.`);

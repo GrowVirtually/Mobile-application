@@ -5,7 +5,7 @@ import * as Colors from "../../../../styles/abstracts/colors";
 import {ConsumerGig} from "./ConsumerGig";
 import {ActivityIndicator, Button} from "react-native-paper";
 
-const GigGrid = ({gigs, title, nextPage, prevPage}) => {
+const GigGrid = ({gigs, title, nextPage, prevPage, page, emptyResult}) => {
   return (
     <View style={gigs.length === 0 && {paddingBottom: 150}}>
       <Text style={styles.gigRowTitle}>{title}</Text>
@@ -19,8 +19,12 @@ const GigGrid = ({gigs, title, nextPage, prevPage}) => {
             <ConsumerGig direction="grid" {...gig} key={index} />
           ))}
           <View style={styles.btns}>
-            <Button onPress={() => prevPage()}>Back</Button>
-            <Button onPress={() => nextPage()}>Next</Button>
+            <Button disabled={page === 1} onPress={() => prevPage()}>
+              Back
+            </Button>
+            <Button disabled={emptyResult} onPress={() => nextPage()}>
+              Next
+            </Button>
           </View>
         </View>
       )}

@@ -7,7 +7,16 @@ import {useNavigation} from "@react-navigation/core";
 import {Dimensions} from "react-native";
 const {width} = Dimensions.get("screen");
 
-export const ConsumerGig = ({gigTitle, unitPrice, expireDate, id, user, unit, direction}) => {
+export const ConsumerGig = ({
+  gigTitle,
+  unitPrice,
+  expireDate,
+  id,
+  user,
+  unit,
+  direction,
+  coordinates,
+}) => {
   const growerName = `${user.fname} ${user.lname}`;
 
   const imgUrl = "https://picsum.photos/200/300?random=1";

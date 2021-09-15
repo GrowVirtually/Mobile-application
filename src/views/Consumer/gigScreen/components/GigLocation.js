@@ -7,10 +7,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import {GOOGLE_API_KEY} from "@env";
 
-const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
+const GigLocation = ({address, willSellerDeliver, geoData}) => {
   const navigation = useNavigation();
   const [myLocation, setMyLocation] = useState(null);
-  const [routeData, setRouteData] = useState(null);
+  const [routeData, setRouteData] = useState({});
+  const [distance, setDistane] = useState("");
   const delta = {latitudeDelta: 0.01, longitudeDelta: 0.01};
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
                 // console.log(JSON.stringify(response.data));
                 console.log(response.data.rows[0].elements[0]);
                 setRouteData(response.data.rows[0].elements[0]);
+                setDistane(response.data.rows[0].elements[0].distance.text);
               })
               .catch(error => {
                 console.log(error);
