@@ -16,11 +16,16 @@ const CategoryInfo = ({category, type}) => {
         </View>
         <View style={{flexDirection: "row"}}>
           <Text style={styles.detailTitle}>Type: </Text>
-          <Text style={styles.descripton}>{type}</Text>
+          <Text style={styles.descripton}>{type === "pre" ? "Pre-Harvest" : "Post-Harvest"}</Text>
         </View>
       </View>
     </View>
   );
+};
+
+CategoryInfo.defaultProps = {
+  category: "",
+  type: "",
 };
 
 export default CategoryInfo;

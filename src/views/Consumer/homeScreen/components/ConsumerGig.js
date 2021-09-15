@@ -7,16 +7,7 @@ import {useNavigation} from "@react-navigation/core";
 import {Dimensions} from "react-native";
 const {width} = Dimensions.get("screen");
 
-export const ConsumerGig = ({
-  gigTitle,
-  unitPrice,
-  expireDate,
-  id,
-  user,
-  unit,
-  direction,
-  coordinates,
-}) => {
+export const ConsumerGig = ({gigTitle, unitPrice, expireDate, id, user, unit, direction}) => {
   const growerName = `${user.fname} ${user.lname}`;
 
   const imgUrl = "https://picsum.photos/200/300?random=1";
@@ -50,7 +41,9 @@ export const ConsumerGig = ({
           <Text style={ConsumerGigStyle.gigTitle}>
             {gigTitle.length > 10 ? gigTitle.slice(0, 17) + ".." : gigTitle}
           </Text>
-          <Text style={ConsumerGigStyle.gigSubTitle}>Rs.{unitPrice} /Kg</Text>
+          <Text style={ConsumerGigStyle.gigSubTitle}>
+            Rs {unitPrice} /{unit}
+          </Text>
           <Text style={ConsumerGigStyle.expireTxt}>
             Expires in {getDays(expireDate) + " " + (getDays(expireDate) > 1 ? "days" : "day")}
           </Text>

@@ -8,18 +8,21 @@ import {HOST_PORT} from "@env";
 import axios from "axios";
 import AuthContext from "../../../context/auth-context";
 
-const Payment = () => {
+const Payment = ({route}) => {
   const navigation = useNavigation();
   const [session, setSession] = useState({});
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
+  const [loading, setLoading] = useState(false);
+  const {unitPrice, qty} = route.params;
 
   useEffect(() => {
+    // console.log("prev", unitPrice, qty);
     const getSessionObj = async () => {
       try {
         const config = {
           method: "get",
-          url: `${HOST_PORT}/api/v1/bookings/checkout-session/1/4`,
+          url: `${HOST_PORT}/api/v1/bookings/checkout-session/${qty}/${unitPrice}`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
