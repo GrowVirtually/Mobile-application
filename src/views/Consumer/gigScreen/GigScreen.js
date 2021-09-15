@@ -124,17 +124,16 @@ export const GigScreen = ({route, navigation}) => {
           />
 
           <GigLocation
-            // distance={"1.3 Km"}
             address="No. 33/2, Siebel Avnue, Kirulapone"
-            willSellerDeliver={true}
-            geoData={{
-              latitude: 6.911650087805625,
-              longitude: 79.8589850944203,
-            }}
+            deliveryAbility={gigData.deliveryAbility}
             // geoData={{
-            //   latitude: coordinates.coordinates[0],
-            //   longitude: coordinates.coordinates[0],
+            //   latitude: 6.911650087805625,
+            //   longitude: 79.8589850944203,
             // }}
+            geoData={{
+              latitude: gigData.coordinates.coordinates[0],
+              longitude: gigData.coordinates.coordinates[1],
+            }}
           />
 
           <QtyPrice priceTag={priceTag} qty={qty} handleQty={handleQty} />
