@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-raw-text */
 import axios from "axios";
 import React, {useState, useEffect, useContext} from "react";
 import {StyleSheet, Text, View} from "react-native";
@@ -6,15 +7,23 @@ import AuthContext from "../context/auth-context";
 import * as Colors from "../styles/abstracts/colors";
 import AppHeader from "./Common/AppHeader";
 import {HOST_PORT} from "@env";
+import DatePickerComp from "./Common/DatePickerComp";
 
 const UpdateProfileScreen = ({navigation, route}) => {
   const {profile} = route.params;
   const [fname, setFname] = useState(profile.fname);
   const [lname, setLname] = useState(profile.lname);
-  const [phone, setPhone] = useState(profile.phone);
+  const [dob, setDob] = useState(new Date(1598051730000));
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
+
+  useEffect(() => {
+    if (profile.dob !== null) {
+      // console.log(profile.dob);
+      setDob(new Date(profile.dob + "T00:00:00"));
+    }
+  }, []);
 
   const sendUpdateReq = async () => {
     try {
@@ -24,7 +33,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
-        data: {fname, lname},
+        data: {fname, lname, dob},
       };
       const response = await axios(config);
       console.log(response.data.status);
@@ -34,10 +43,21 @@ const UpdateProfileScreen = ({navigation, route}) => {
   };
 
   const handleProfileUpdate = () => {
-    if (fname !== "" && lname !== "" && phone !== "") {
+    if (fname !== "" && lname !== "") {
       sendUpdateReq();
       navigation.goBack();
     }
+  };
+
+  const cancelUpdate = () => {
+    // setFname("");
+    // setLname("");
+    // setPhone("");
+    navigation.goBack();
+  };
+
+  const handleDate = val => {
+    setDob(val);
   };
 
   return (
@@ -77,24 +97,12 @@ const UpdateProfileScreen = ({navigation, route}) => {
             },
           }}
         />
-        <TextInput
-          label="Phone"
-          onChangeText={txt => setPhone(txt)}
-          style={styles.textInput}
-          mode="outlined"
-          value={phone}
-          selectionColor={Colors.secondary.color}
-          keyboardType="numeric"
-          theme={{
-            colors: {
-              primary: Colors.primary.color,
-              underlineColor: "transparent",
-              background: "#fff",
-            },
-          }}
-        />
+        <DatePickerComp handleDate={handleDate} date={dob} title="Set DOB" />
         <Button mode="contained" onPress={() => handleProfileUpdate()}>
           Update
+        </Button>
+        <Button mode="outlined" onPress={() => cancelUpdate()}>
+          Cancel
         </Button>
       </View>
     </>

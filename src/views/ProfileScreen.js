@@ -17,10 +17,7 @@ import {GOOGLE_API_KEY} from "@env";
 const ProfileScreen = () => {
   const navigation = useNavigation();
   const {authContext, loginState} = useContext(AuthContext);
-  const [myLocation, setMyLocation] = useState({
-    longitude: null,
-    latitude: null,
-  });
+  const [myLocation, setMyLocation] = useState(null);
   const {globalState, globalDispatch} = useStore();
   const [geoInfo, setGeoInfo] = useState("");
   const [profile, setProfile] = useState({
@@ -212,6 +209,10 @@ const ProfileScreen = () => {
               <Text style={{marginLeft: 20}}>
                 Gender: {profile.gender ? profile.gender : "none"}
               </Text>
+            </View>
+            <View style={styles.row}>
+              <Icon name="calendar" color="#777777" size={20} />
+              <Text style={{marginLeft: 20}}>DOB: {profile.dob ? profile.dob : "none"}</Text>
             </View>
           </View>
 
