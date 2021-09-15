@@ -45,7 +45,7 @@ export const GigScreen = ({route, navigation}) => {
       lname: "",
     },
     userid: "",
-  });
+  }, );
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
@@ -171,7 +171,7 @@ export const GigScreen = ({route, navigation}) => {
           <Button
             icon="shopping-outline"
             onPress={() =>
-              navigation.navigate("Payment", {qty, unitPrice: Math.round(gigData.unitPrice)})
+              navigation.navigate("Payment", {qty, gigID: gigData.id})
             }
             mode="contained">
             Place Order

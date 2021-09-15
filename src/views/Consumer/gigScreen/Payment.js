@@ -14,7 +14,7 @@ const Payment = ({route}) => {
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
   const [loading, setLoading] = useState(false);
-  const {unitPrice, qty} = route.params;
+  const {gigID, qty} = route.params;
 
   useEffect(() => {
     // console.log("prev", unitPrice, qty);
@@ -22,7 +22,7 @@ const Payment = ({route}) => {
       try {
         const config = {
           method: "get",
-          url: `${HOST_PORT}/api/v1/bookings/checkout-session/${qty}/${unitPrice}`,
+          url: `${HOST_PORT}/api/v1/bookings/checkout-session/${gigID}/${qty}`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
