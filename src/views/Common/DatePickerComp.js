@@ -31,7 +31,7 @@ const DatePickerComp = props => {
   return (
     <View>
       <View>
-        <Button mode="outlined" style={{marginTop: 15}} onPress={showDatepicker}>
+        <Button uppercase={false} mode="outlined" style={{marginTop: 20}} onPress={showDatepicker}>
           {props.title}
         </Button>
       </View>

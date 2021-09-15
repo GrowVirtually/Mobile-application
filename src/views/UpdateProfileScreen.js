@@ -1,8 +1,8 @@
 /* eslint-disable react-native/no-raw-text */
 import axios from "axios";
 import React, {useState, useEffect, useContext} from "react";
-import {StyleSheet, Text, View} from "react-native";
-import {Button, TextInput} from "react-native-paper";
+import {StyleSheet, Text, View, ScrollView} from "react-native";
+import {Button, TextInput, RadioButton} from "react-native-paper";
 import AuthContext from "../context/auth-context";
 import * as Colors from "../styles/abstracts/colors";
 import AppHeader from "./Common/AppHeader";
@@ -14,6 +14,8 @@ const UpdateProfileScreen = ({navigation, route}) => {
   const [fname, setFname] = useState(profile.fname);
   const [lname, setLname] = useState(profile.lname);
   const [dob, setDob] = useState(new Date(1598051730000));
+  const [nic, setNic] = useState(profile.nic);
+  const [gender, setGender] = useState("male");
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
@@ -22,6 +24,9 @@ const UpdateProfileScreen = ({navigation, route}) => {
     if (profile.dob !== null) {
       // console.log(profile.dob);
       setDob(new Date(profile.dob + "T00:00:00"));
+    }
+    if (profile.gender !== null || profile.gender !== "none") {
+      setGender(profile.gender);
     }
   }, []);
 
@@ -33,7 +38,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
-        data: {fname, lname, dob},
+        data: {fname, lname, dob, nic, gender},
       };
       const response = await axios(config);
       console.log(response.data.status);
@@ -43,7 +48,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
   };
 
   const handleProfileUpdate = () => {
-    if (fname !== "" && lname !== "") {
+    if (fname !== "" && lname !== "" && nic !== "") {
       sendUpdateReq();
       navigation.goBack();
     }
@@ -61,7 +66,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
   };
 
   return (
-    <>
+    <ScrollView>
       <AppHeader navigation={navigation} title="Edit Profile" />
 
       <Text>{JSON.stringify(profile)}</Text>
@@ -70,6 +75,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
         <TextInput
           label="First name"
           onChangeText={txt => setFname(txt)}
+          dense
           style={styles.textInput}
           mode="outlined"
           value={fname}
@@ -83,6 +89,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
           }}
         />
         <TextInput
+          dense
           label="Last name"
           onChangeText={txt => setLname(txt)}
           style={styles.textInput}
@@ -97,15 +104,54 @@ const UpdateProfileScreen = ({navigation, route}) => {
             },
           }}
         />
-        <DatePickerComp handleDate={handleDate} date={dob} title="Set DOB" />
-        <Button mode="contained" onPress={() => handleProfileUpdate()}>
-          Update
-        </Button>
-        <Button mode="outlined" onPress={() => cancelUpdate()}>
-          Cancel
-        </Button>
+        <DatePickerComp handleDate={handleDate} date={dob} title="Update DOB" />
+        <TextInput
+          label="NIC"
+          onChangeText={txt => setNic(txt)}
+          dense
+          style={styles.textInput}
+          mode="outlined"
+          value={nic}
+          selectionColor={Colors.secondary.color}
+          theme={{
+            colors: {
+              primary: Colors.primary.color,
+              underlineColor: "transparent",
+              background: "#fff",
+            },
+          }}
+        />
+        <View style={styles.radioGroup}>
+          <View style={{flexDirection: "row", alignItems: "center"}}>
+            <Text style={{marginRight: 20}}>Gender: </Text>
+            <View style={styles.raidoRow}>
+              <RadioButton
+                value="male"
+                status={gender === "male" ? "checked" : "unchecked"}
+                onPress={() => setGender("male")}
+              />
+              <Text>Male</Text>
+            </View>
+            <View style={styles.raidoRow}>
+              <RadioButton
+                value="female"
+                status={gender === "female" ? "checked" : "unchecked"}
+                onPress={() => setGender("female")}
+              />
+              <Text>Female</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.btnGroup}>
+          <Button mode="contained" onPress={() => handleProfileUpdate()}>
+            Update
+          </Button>
+          <Button style={{marginTop: 5}} onPress={() => cancelUpdate()}>
+            Cancel
+          </Button>
+        </View>
       </View>
-    </>
+    </ScrollView>
   );
 };
 
@@ -120,5 +166,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 20,
     flex: 1,
+  },
+  raidoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 10,
+  },
+  radioGroup: {
+    marginTop: 10,
+  },
+  btnGroup: {
+    marginTop: 10,
   },
 });
