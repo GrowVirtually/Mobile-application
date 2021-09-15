@@ -1,8 +1,10 @@
+/* eslint-disable react-native/no-raw-text */
 /* eslint-disable import/no-useless-path-segments */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-boolean-value */
 import React, {useState, useEffect, useContext} from "react";
 import {Image, Text, View, StyleSheet, SafeAreaView, ScrollView} from "react-native";
+import {Button} from "react-native-paper";
 import AddToCartDialog from "../gigScreen/components/AddToCartDialog";
 import AppHeader from "../../Common/AppHeader";
 import BigButton from "../../Common/BigButton";
@@ -33,7 +35,15 @@ export const GigScreen = ({route, navigation}) => {
     stock: "",
     unit: "",
     unitPrice: "",
-    user: {customer: {}, fname: "", lname: ""},
+    user: {
+      customer: {
+        grower: {
+          growerType: "",
+        },
+      },
+      fname: "",
+      lname: "",
+    },
     userid: "",
   });
 
@@ -136,27 +146,36 @@ export const GigScreen = ({route, navigation}) => {
             }}
           />
 
-          <QtyPrice priceTag={priceTag} qty={qty} handleQty={handleQty} />
+          <QtyPrice priceTag={gigData.unitPrice} qty={qty} handleQty={handleQty} />
 
           <HorizontalRule />
 
-          <SellerInfo sellerInfo={sellerInfo} isVerified={true} ratingVal={4} />
-
-          <CategoryInfo category="Organic" type="Vegetable" />
-
-          <GigDesc
-            descripton="Fresh yellow pumpkin harvested and available for sale. Can buy total lot or 5KG lot.
-            Price can be slightly negotiable after confirmation. Call for more details."
+          <SellerInfo
+            sellerInfo={`${gigData.user.fname} ${gigData.user.lname}`}
+            isVerified={gigData.user.customer.grower.growerType === "premium"}
+            ratingVal={4}
           />
+
+          <CategoryInfo category={gigData.gigCategory} type={gigData.gigType} />
+
+          <GigDesc descripton={gigData.gigDescription} />
 
           <HorizontalRule />
 
           {/* <BigButton text="Add to cart" icon="cart-plus" type="secondary" onPress={showDialog} /> */}
-          <BigButton
+          {/* <BigButton
             text="Place Order"
             icon="shopping-outline"
             onPress={() => navigation.navigate("Payment")}
-          />
+          /> */}
+          <Button
+            icon="shopping-outline"
+            onPress={() =>
+              navigation.navigate("Payment", {qty, unitPrice: Math.round(gigData.unitPrice)})
+            }
+            mode="contained">
+            Place Order
+          </Button>
 
           {/* <AddToCartDialog
             gig={{gigTitle, priceTag, expireDate, growerName, imgUrl, id}}
