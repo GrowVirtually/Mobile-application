@@ -1,13 +1,15 @@
 /* eslint-disable react-native/no-raw-text */
 import axios from "axios";
 import React, {useState, useEffect, useContext} from "react";
-import {StyleSheet, Text, View, ScrollView} from "react-native";
-import {Button, TextInput, RadioButton} from "react-native-paper";
+import {StyleSheet, Text, View, ScrollView, Image, Platform, Alert} from "react-native";
+import {Button, TextInput, RadioButton, IconButton, ActivityIndicator} from "react-native-paper";
 import AuthContext from "../context/auth-context";
 import * as Colors from "../styles/abstracts/colors";
 import AppHeader from "./Common/AppHeader";
 import {HOST_PORT} from "@env";
 import DatePickerComp from "./Common/DatePickerComp";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import {launchImageLibrary} from "react-native-image-picker";
 
 const UpdateProfileScreen = ({navigation, route}) => {
   const {profile} = route.params;
@@ -16,6 +18,9 @@ const UpdateProfileScreen = ({navigation, route}) => {
   const [dob, setDob] = useState(new Date(1598051730000));
   const [nic, setNic] = useState(profile.nic);
   const [gender, setGender] = useState("male");
+  const [imgLink, setImgLink] = useState(null);
+  const [photo, setPhoto] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
@@ -42,6 +47,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
       };
       const response = await axios(config);
       console.log(response.data.status);
+      setPhoto(null);
     } catch (error) {
       console.error(error);
     }
@@ -55,9 +61,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
   };
 
   const cancelUpdate = () => {
-    // setFname("");
-    // setLname("");
-    // setPhone("");
+    setPhoto(null);
     navigation.goBack();
   };
 
@@ -65,13 +69,106 @@ const UpdateProfileScreen = ({navigation, route}) => {
     setDob(val);
   };
 
+  const handleChoosePhoto = () => {
+    launchImageLibrary({noData: true}, response => {
+      // console.log(response);
+      if (response.didCancel) {
+        console.log("User canceled");
+      } else if (response.error) {
+        console.error(response.error);
+      } else if (response) {
+        setPhoto(response);
+      }
+    });
+  };
+
+  const createFormData = (photoImg, body) => {
+    const data = new FormData();
+    data.append("img", {
+      name: photoImg.assets[0].fileName,
+      type: photoImg.assets[0].type,
+      uri:
+        Platform.OS === "android"
+          ? photoImg.assets[0].uri
+          : photoImg.assets[0].uri.replace("file://", ""),
+    });
+    // Object.keys(body).forEach(key => {
+    //   data.append(key, body[key]);
+    // });
+    return data;
+  };
+
+  const handleUploadPhoto = async () => {
+    try {
+      if (photo !== null) {
+        setLoading(true);
+        const response = await axios.patch(
+          `${HOST_PORT}/api/v1/users/me/picture`,
+          createFormData(photo, {userId: nic}),
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "multipart/form-data",
+              authorization: `Bearer ${jwt}`,
+            },
+          },
+        );
+        console.log("upload", response.data.status);
+        setLoading(false);
+        if (response.data.status === "success") {
+          Alert.alert(
+            "Successfully uploaded",
+            "Your profile picture has been successfully uploaded",
+            [{text: "OK", onPress: () => null}],
+          );
+        }
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
+
   return (
-    <ScrollView>
+    <>
       <AppHeader navigation={navigation} title="Edit Profile" />
 
-      <Text>{JSON.stringify(profile)}</Text>
+      <ScrollView style={styles.container}>
+        <View style={styles.imgContainer}>
+          {profile.imgLink !== "" || photo !== null ? (
+            <Image
+              style={styles.img}
+              source={{
+                uri: photo !== null ? photo.assets[0].uri : profile.imgLink,
+              }}
+            />
+          ) : (
+            <Icon name="account-circle-outline" color={Colors.tertiary.color} size={100} />
+          )}
+        </View>
 
-      <View style={styles.container}>
+        <View style={styles.imgBtns}>
+          {loading ? (
+            <ActivityIndicator color={Colors.secondary.color} animating={true} />
+          ) : (
+            <>
+              <IconButton
+                icon="image-plus"
+                color={Colors.secondary.color}
+                size={27}
+                onPress={handleChoosePhoto}
+              />
+              <IconButton
+                icon="upload"
+                color={Colors.secondary.color}
+                size={27}
+                disabled={photo === null}
+                onPress={handleUploadPhoto}
+              />
+            </>
+          )}
+        </View>
+
         <TextInput
           label="First name"
           onChangeText={txt => setFname(txt)}
@@ -150,8 +247,8 @@ const UpdateProfileScreen = ({navigation, route}) => {
             Cancel
           </Button>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 };
 
@@ -177,5 +274,20 @@ const styles = StyleSheet.create({
   },
   btnGroup: {
     marginTop: 10,
+    marginBottom: 50,
+  },
+  img: {
+    padding: 10,
+    width: 120,
+    height: 120,
+    borderRadius: 10,
+  },
+  imgContainer: {
+    alignSelf: "center",
+  },
+  imgBtns: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 5,
   },
 });
