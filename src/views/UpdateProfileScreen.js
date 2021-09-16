@@ -9,7 +9,7 @@ import AppHeader from "./Common/AppHeader";
 import {HOST_PORT} from "@env";
 import DatePickerComp from "./Common/DatePickerComp";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import {launchImageLibrary} from "react-native-image-picker";
+import {launchImageLibrary, launchCamera} from "react-native-image-picker";
 
 const UpdateProfileScreen = ({navigation, route}) => {
   const {profile} = route.params;
@@ -71,6 +71,19 @@ const UpdateProfileScreen = ({navigation, route}) => {
 
   const handleChoosePhoto = () => {
     launchImageLibrary({noData: true}, response => {
+      // console.log(response);
+      if (response.didCancel) {
+        console.log("User canceled");
+      } else if (response.error) {
+        console.error(response.error);
+      } else if (response) {
+        setPhoto(response);
+      }
+    });
+  };
+
+  const handleCamera = () => {
+    launchCamera({noData: true}, response => {
       // console.log(response);
       if (response.didCancel) {
         console.log("User canceled");
@@ -157,6 +170,13 @@ const UpdateProfileScreen = ({navigation, route}) => {
                 color={Colors.secondary.color}
                 size={27}
                 onPress={handleChoosePhoto}
+              />
+
+              <IconButton
+                icon="camera"
+                color={Colors.secondary.color}
+                size={27}
+                onPress={handleCamera}
               />
               <IconButton
                 icon="upload"
