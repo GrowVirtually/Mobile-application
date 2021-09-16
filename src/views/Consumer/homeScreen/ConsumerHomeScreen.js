@@ -2,7 +2,7 @@
 import axios from "axios";
 import React, {useEffect, useContext, useState} from "react";
 import {ScrollView, TouchableOpacity, StyleSheet, View, Text, SafeAreaView} from "react-native";
-import {Searchbar, ActivityIndicator} from "react-native-paper";
+import {Searchbar, ActivityIndicator, Button} from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AuthContext from "../../../context/auth-context";
 import * as Colors from "../../../styles/abstracts/colors";
@@ -15,6 +15,7 @@ import Filters from "./components/Filters";
 
 export const ConsumerHomeScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
+  const [emptyResult, setEmptyResult] = useState(false);
   const [refresh, setRefresh] = useState(1);
   const [gigs, setGigs] = useState([]);
   const [vegetableGigs, setVegetableGigs] = useState([]);
@@ -77,12 +78,14 @@ export const ConsumerHomeScreen = ({navigation}) => {
     setshowFilters(false);
     setRefresh(refresh + 1);
     setShowResult(true);
+    setPage(1);
   };
 
   const clearFilters = () => {
     setshowFilters(false);
     setShowResult(false);
     setRefresh(1);
+    setPage(1);
   };
 
   const prevPage = () => {
@@ -114,12 +117,14 @@ export const ConsumerHomeScreen = ({navigation}) => {
   useEffect(() => {
     async function getGigs() {
       setLoading(true);
+      setEmptyResult(false);
+
       let response;
       try {
         if (showResult) {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}`,
+            url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -127,7 +132,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         } else {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}`,
+            url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -136,12 +141,18 @@ export const ConsumerHomeScreen = ({navigation}) => {
         setGigs(response.data.data.gigs);
         setLoading(false);
       } catch (error) {
-        setLoading(false);
-        console.error(error);
+        // const {message} = error.response.data;
+        if (error.response.data.status === "fail") {
+          setEmptyResult(true);
+          setLoading(false);
+          // setShowResult(false);
+          // console.error(error);
+          console.log(error.response.data);
+        }
       }
     }
     getGigs();
-  }, [limit, page, showResult, refresh]);
+  }, [limit, page, refresh]);
 
   // get vege gigs
   useEffect(() => {
@@ -149,7 +160,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&gigCategory=vegetable`,
+          url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&gigCategory=vegetable`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -168,14 +179,14 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&gigCategory=fruit`,
+          url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&gigCategory=fruit`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
         });
         setFruitGigs(response.data.data.gigs);
       } catch (error) {
-        prevPage();
+        // prevPage();
         console.error(error);
       }
     }
@@ -213,23 +224,44 @@ export const ConsumerHomeScreen = ({navigation}) => {
           deliverability={deliverability}
           handleDeliveryAbility={handleDeliveryAbility}
         />
+
         <View style={styles.container}>
           {!showResult && <GigRow gigs={fruitGigs} title="Fruits" />}
 
           {!showResult && <GigRow gigs={vegetableGigs} title="Vegetables" />}
 
-          {/* Gigs Row  */}
-          {loading ? (
+          {loading && (
             <View style={styles.loading}>
               <ActivityIndicator animating={true} />
             </View>
-          ) : (
+          )}
+
+          {!loading && !emptyResult && (
             <GigGrid
               gigs={gigs}
               title={showResult ? "Result" : "You may like"}
               nextPage={nextPage}
               prevPage={prevPage}
+              page={page}
+              emptyResult={emptyResult}
             />
+          )}
+
+          {!loading && emptyResult && (
+            <View>
+              {page === 1 && <Text>no results found</Text>}
+              {page !== 1 && <Text>You are on last page, no more results</Text>}
+              {page !== 1 && (
+                <View>
+                  <Button disabled={page === 1} onPress={() => prevPage()}>
+                    Prev
+                  </Button>
+                  <Button disabled={emptyResult} onPress={() => nextPage()}>
+                    Nex
+                  </Button>
+                </View>
+              )}
+            </View>
           )}
         </View>
       </ScrollView>

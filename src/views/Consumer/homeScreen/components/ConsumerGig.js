@@ -41,7 +41,9 @@ export const ConsumerGig = ({gigTitle, unitPrice, expireDate, id, user, unit, di
           <Text style={ConsumerGigStyle.gigTitle}>
             {gigTitle.length > 10 ? gigTitle.slice(0, 17) + ".." : gigTitle}
           </Text>
-          <Text style={ConsumerGigStyle.gigSubTitle}>Rs.{unitPrice} /Kg</Text>
+          <Text style={ConsumerGigStyle.gigSubTitle}>
+            Rs {unitPrice} /{unit}
+          </Text>
           <Text style={ConsumerGigStyle.expireTxt}>
             Expires in {getDays(expireDate) + " " + (getDays(expireDate) > 1 ? "days" : "day")}
           </Text>

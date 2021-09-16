@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-raw-text */
 import React, {useEffect, useState} from "react";
 import {useNavigation} from "@react-navigation/core";
 import {StyleSheet, TouchableOpacity, Text, View} from "react-native";
@@ -6,11 +7,13 @@ import * as Colors from "../../../../styles/abstracts/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import {GOOGLE_API_KEY} from "@env";
+import {Button} from "react-native-paper";
 
-const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
+const GigLocation = ({address, deliveryAbility, geoData}) => {
   const navigation = useNavigation();
   const [myLocation, setMyLocation] = useState(null);
-  const [routeData, setRouteData] = useState(null);
+  const [routeData, setRouteData] = useState({});
+  const [distance, setDistane] = useState("");
   const delta = {latitudeDelta: 0.01, longitudeDelta: 0.01};
 
   useEffect(() => {
@@ -32,6 +35,7 @@ const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
                 // console.log(JSON.stringify(response.data));
                 console.log(response.data.rows[0].elements[0]);
                 setRouteData(response.data.rows[0].elements[0]);
+                setDistane(response.data.rows[0].elements[0].distance.text);
               })
               .catch(error => {
                 console.log(error);
@@ -47,7 +51,7 @@ const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
       }
     };
     getMyLocation();
-  }, []);
+  }, [geoData]);
 
   // useEffect(() => {
 
@@ -56,12 +60,12 @@ const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
   return (
     <View>
       <View style={styles.addressRow}>
-        <MaterialIcon color={Colors.fontColor.color} size={25} name="map-marker" />
+        <MaterialIcon color={Colors.fontColor.color} size={25} name="map-marker-radius" />
         <View style={styles.addresRight}>
           <View style={styles.locationRow}>
-            <Text style={{fontWeight: "bold"}}>{distance}</Text>
+            <Text style={{fontWeight: "bold"}}>{distance} to seller</Text>
             <TouchableOpacity>
-              <Text
+              {/* <Text
                 style={styles.viewOnMap}
                 onPress={() =>
                   navigation.navigate("ConsumerMap", {
@@ -71,13 +75,28 @@ const GigLocation = ({distance, address, willSellerDeliver, geoData}) => {
                   })
                 }>
                 View on map
-              </Text>
+              </Text> */}
             </TouchableOpacity>
           </View>
           <View>
-            <Text style={styles.address}>{address}</Text>
+            <Button
+              style={{marginVertical: 5}}
+              onPress={() =>
+                navigation.navigate("ConsumerMap", {
+                  marker: geoData,
+                  myLocation,
+                  routeData,
+                })
+              }
+              mode="outlined"
+              uppercase={false}
+              icon="map-search-outline">
+              View on map
+            </Button>
+            {/* <Text>{geoData.longitude}</Text> */}
+            {/* <Text style={styles.address}>{address}</Text> */}
             <Text style={styles.deliverMethod}>
-              {willSellerDeliver === true
+              {deliveryAbility === true
                 ? `Seller will deliver to you`
                 : `You will get the order at seller`}
             </Text>
