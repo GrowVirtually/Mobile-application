@@ -142,6 +142,28 @@ const UpdateProfileScreen = ({navigation, route}) => {
     }
   };
 
+  const removePhoto = async () => {
+    const empty = new FormData();
+    empty.append("img", "");
+    try {
+      const response = await axios.patch(`${HOST_PORT}/api/v1/users/me/picture`, empty, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+          authorization: `Bearer ${jwt}`,
+        },
+      });
+      console.log("delete", response.data.status);
+      if (response.data.status === "success") {
+        Alert.alert("Successfully removed", "Your profile picture has been successfully removed", [
+          {text: "OK", onPress: () => null},
+        ]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <AppHeader navigation={navigation} title="Edit Profile" />
@@ -184,6 +206,13 @@ const UpdateProfileScreen = ({navigation, route}) => {
                 size={27}
                 disabled={photo === null}
                 onPress={handleUploadPhoto}
+              />
+              <IconButton
+                icon="delete-forever"
+                color={Colors.secondary.color}
+                size={27}
+                disabled={profile.imgLink === ""}
+                onPress={removePhoto}
               />
             </>
           )}
