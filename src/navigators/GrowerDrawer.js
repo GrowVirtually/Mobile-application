@@ -7,10 +7,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 function GrowerDrawer(props) {
   return (
     <DrawerContentScrollView {...props}>
-      <SafeAreaView style={cusomDrawerStyle.header}>
+      {/* <SafeAreaView style={cusomDrawerStyle.header}>
         <Avatar.Text size={64} label="DD" style={{backgroundColor: "white", color: "green"}} />
         <Text style={cusomDrawerStyle.txt}>Anjana </Text>
-      </SafeAreaView>
+      </SafeAreaView> */}
 
       {/* Default items */}
       {/* <DrawerItemList {...props} /> */}
