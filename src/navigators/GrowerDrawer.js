@@ -7,10 +7,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 function GrowerDrawer(props) {
   return (
     <DrawerContentScrollView {...props}>
-      <SafeAreaView style={cusomDrawerStyle.header}>
+      {/* <SafeAreaView style={cusomDrawerStyle.header}>
         <Avatar.Text size={64} label="DD" style={{backgroundColor: "white", color: "green"}} />
         <Text style={cusomDrawerStyle.txt}>Anjana </Text>
-      </SafeAreaView>
+      </SafeAreaView> */}
 
       {/* Default items */}
       {/* <DrawerItemList {...props} /> */}
@@ -30,12 +30,12 @@ function GrowerDrawer(props) {
         label={() => <Text style={cusomDrawerStyle.menuTxt}>Profile</Text>}
         onPress={() => props.navigation.navigate("ProfileScreen")}
       />
-      <View style={cusomDrawerStyle.divider} />
-
       <DrawerItem
-        icon={({color, size}) => <MaterialCommunityIcons name="logout" color="white" size={24} />}
-        label={() => <Text style={cusomDrawerStyle.menuTxt}>Log out</Text>}
-        onPress={() => props.navigation.navigate("SignInScreen")}
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="cart-arrow-down" color="white" size={24} />
+        )}
+        label={() => <Text style={cusomDrawerStyle.menuTxt}>My Orders</Text>}
+        onPress={() => props.navigation.navigate("MyOrders")}
       />
     </DrawerContentScrollView>
   );

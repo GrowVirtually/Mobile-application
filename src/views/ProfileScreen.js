@@ -247,12 +247,12 @@ const ProfileScreen = () => {
                 <Text style={styles.menuItemText}>Bank Details</Text>
               </View>
             </TouchableRipple>
-            <TouchableRipple onPress={() => {}}>
+            {/* <TouchableRipple onPress={() => {}}>
               <View style={styles.menuItem}>
                 <Icon name="cart-arrow-down" color={Colors.secondary.color} size={25} />
                 <Text style={styles.menuItemText}>My Orders</Text>
               </View>
-            </TouchableRipple>
+            </TouchableRipple> */}
             <TouchableRipple onPress={() => {}}>
               <View style={styles.menuItem}>
                 <Icon name="cart-arrow-up" color={Colors.secondary.color} size={25} />

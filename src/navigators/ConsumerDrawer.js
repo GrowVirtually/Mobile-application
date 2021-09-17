@@ -20,10 +20,10 @@ const ConsumerDrawer = props => {
 
   return (
     <DrawerContentScrollView {...props}>
-      <SafeAreaView style={styles.header}>
+      {/* <SafeAreaView style={styles.header}>
         <Avatar.Text size={64} label="DD" style={{backgroundColor: "white", color: "green"}} />
         <Text style={styles.txt}>Dimuthu Dhanushka</Text>
-      </SafeAreaView>
+      </SafeAreaView> */}
 
       {/* Default items */}
       {/* <DrawerItemList {...props} /> */}
@@ -44,6 +44,13 @@ const ConsumerDrawer = props => {
         )}
         label={() => <Text style={styles.menuTxt}>My Profile</Text>}
         onPress={() => props.navigation.navigate("ProfileScreen")}
+      />
+      <DrawerItem
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="cart-arrow-down" color="white" size={24} />
+        )}
+        label={() => <Text style={styles.menuTxt}>My Orders</Text>}
+        onPress={() => props.navigation.navigate("MyOrders")}
       />
     </DrawerContentScrollView>
   );

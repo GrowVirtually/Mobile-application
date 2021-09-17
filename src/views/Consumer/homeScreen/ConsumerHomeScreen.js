@@ -34,9 +34,14 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [gt, setGt] = useState("100");
   const [unit, setUnit] = useState("");
   const [deliverability, setDeliverability] = useState("");
+  const [sortby, setSortBy] = useState("");
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
+
+  const handleSortby = val => {
+    setSortBy(val);
+  };
 
   const handleDeliveryAbility = value => {
     setDeliverability(value);
@@ -86,6 +91,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
     setShowResult(false);
     setRefresh(1);
     setPage(1);
+    setSortBy("");
   };
 
   const prevPage = () => {
@@ -124,7 +130,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         if (showResult) {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}`,
+            url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}&sort=${sortby}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -223,6 +229,8 @@ export const ConsumerHomeScreen = ({navigation}) => {
           handleUnit={handleUnit}
           deliverability={deliverability}
           handleDeliveryAbility={handleDeliveryAbility}
+          sortby={sortby}
+          handleSortby={handleSortby}
         />
 
         <View style={styles.container}>
@@ -249,15 +257,25 @@ export const ConsumerHomeScreen = ({navigation}) => {
 
           {!loading && emptyResult && (
             <View>
-              {page === 1 && <Text>no results found</Text>}
-              {page !== 1 && <Text>You are on last page, no more results</Text>}
+              {page === 1 && (
+                <View style={{alignItems: "center", justifyContent: "center", marginTop: 50}}>
+                  <MaterialCommunityIcons name="magnify-remove-outline" size={50} color="#bbb" />
+                  <Text>No results found !</Text>
+                </View>
+              )}
+              {page !== 1 && (
+                <View style={{alignItems: "center", justifyContent: "center", marginVertical: 50}}>
+                  <MaterialCommunityIcons name="page-last" size={50} color="#bbb" />
+                  <Text>{`You are on last page.\nNo more results found`}</Text>
+                </View>
+              )}
               {page !== 1 && (
                 <View>
                   <Button disabled={page === 1} onPress={() => prevPage()}>
-                    Prev
+                    Back
                   </Button>
                   <Button disabled={emptyResult} onPress={() => nextPage()}>
-                    Nex
+                    Next
                   </Button>
                 </View>
               )}
