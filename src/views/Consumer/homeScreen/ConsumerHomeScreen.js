@@ -91,6 +91,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
     setShowResult(false);
     setRefresh(1);
     setPage(1);
+    setSortBy("");
   };
 
   const prevPage = () => {
@@ -256,15 +257,25 @@ export const ConsumerHomeScreen = ({navigation}) => {
 
           {!loading && emptyResult && (
             <View>
-              {page === 1 && <Text>no results found</Text>}
-              {page !== 1 && <Text>You are on last page, no more results</Text>}
+              {page === 1 && (
+                <View style={{alignItems: "center", justifyContent: "center", marginTop: 50}}>
+                  <MaterialCommunityIcons name="magnify-remove-outline" size={50} color="#bbb" />
+                  <Text>No results found !</Text>
+                </View>
+              )}
+              {page !== 1 && (
+                <View style={{alignItems: "center", justifyContent: "center", marginVertical: 50}}>
+                  <MaterialCommunityIcons name="page-last" size={50} color="#bbb" />
+                  <Text>{`You are on last page.\nNo more results found`}</Text>
+                </View>
+              )}
               {page !== 1 && (
                 <View>
                   <Button disabled={page === 1} onPress={() => prevPage()}>
-                    Prev
+                    Back
                   </Button>
                   <Button disabled={emptyResult} onPress={() => nextPage()}>
-                    Nex
+                    Next
                   </Button>
                 </View>
               )}

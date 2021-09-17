@@ -30,12 +30,12 @@ function GrowerDrawer(props) {
         label={() => <Text style={cusomDrawerStyle.menuTxt}>Profile</Text>}
         onPress={() => props.navigation.navigate("ProfileScreen")}
       />
-      <View style={cusomDrawerStyle.divider} />
-
       <DrawerItem
-        icon={({color, size}) => <MaterialCommunityIcons name="logout" color="white" size={24} />}
-        label={() => <Text style={cusomDrawerStyle.menuTxt}>Log out</Text>}
-        onPress={() => props.navigation.navigate("SignInScreen")}
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="cart-arrow-down" color="white" size={24} />
+        )}
+        label={() => <Text style={cusomDrawerStyle.menuTxt}>My Orders</Text>}
+        onPress={() => props.navigation.navigate("MyOrders")}
       />
     </DrawerContentScrollView>
   );
