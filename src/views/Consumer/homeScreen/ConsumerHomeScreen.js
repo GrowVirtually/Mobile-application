@@ -34,9 +34,14 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [gt, setGt] = useState("100");
   const [unit, setUnit] = useState("");
   const [deliverability, setDeliverability] = useState("");
+  const [sortby, setSortBy] = useState("");
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
+
+  const handleSortby = val => {
+    setSortBy(val);
+  };
 
   const handleDeliveryAbility = value => {
     setDeliverability(value);
@@ -124,7 +129,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         if (showResult) {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}`,
+            url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}&sort=${sortby}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -223,6 +228,8 @@ export const ConsumerHomeScreen = ({navigation}) => {
           handleUnit={handleUnit}
           deliverability={deliverability}
           handleDeliveryAbility={handleDeliveryAbility}
+          sortby={sortby}
+          handleSortby={handleSortby}
         />
 
         <View style={styles.container}>

@@ -47,7 +47,7 @@ const Payment = ({route}) => {
         checkoutSessionInput={{
           sessionId: session.id,
         }}
-        onSuccess={({checkoutSessionId}) => {
+        onSuccess={() => {
           console.log(`Stripe checkout session succeeded. session id:`);
         }}
         onCancel={() => {
