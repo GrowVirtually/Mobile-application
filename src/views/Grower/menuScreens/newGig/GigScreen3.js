@@ -45,21 +45,31 @@ function GigScreen3({navigation, route}) {
 
   const onSubmit = formFields => {
     // Actions on submit button click.
-
+    navigation.navigate("GigScreen4", {
+      gigType: gigType,
+      gigCategory: gigCategory,
+      gigTitle: gigTitle,
+      gigDescription: gigDescription,
+      deliveryOp: deliveryOp,
+      selectedUnit: selectedUnit.item,
+      quantity: quantity,
+      price: price,
+      minOrderAmount: minOrderAmount,
+    });
     console.log("Gig Type: ", gigType);
     console.log("Gig Category: ", gigCategory);
     console.log("Gig Type: ", gigTitle);
     console.log("Gig Category: ", gigDescription);
     console.log("Gig Category: ", deliveryOp);
 
-    console.log("Form submitted with fields: ", selectedUnit);
-    console.log("Form submitted with fields: ", unit);
-    console.log("Form submitted with fields: ", price);
-    console.log("Form submitted with fields: ", minOrderAmount);
+    console.log("unit: ", selectedUnit.item);
+    console.log("Quantity: ", quantity);
+    console.log("Price: ", price);
+    console.log("minAmount: ", minOrderAmount);
   };
 
   const [selectedUnit, setSelectedTeam] = useState({});
-  const [unit, setQuantity] = useState("");
+  const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [minOrderAmount, setMinOrder] = useState("");
   const [expdate, setGigExDate] = useState(new Date(1598051730000));
@@ -89,7 +99,7 @@ function GigScreen3({navigation, route}) {
       <TextInput
         style={styles.input}
         onChangeText={setQuantity}
-        value={unit}
+        value={quantity}
         placeholder="Enter Number of Units for selling"
         keyboardType="numeric"
       />

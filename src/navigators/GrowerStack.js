@@ -12,6 +12,9 @@ import MyGigs from "../views/Grower/menuScreens/myGigs/MyGigsScreen";
 import NewGig from "../views/Grower/menuScreens/newGig/NewGigScreen01";
 import GigScreen2 from "../views/Grower/menuScreens/newGig/GigScreen2";
 import GigScreen3 from "../views/Grower/menuScreens/newGig/GigScreen3";
+import GigScreen4 from "../views/Grower/menuScreens/newGig/GigScreen4";
+import GigScreen5 from "../views/Grower/menuScreens/newGig/GigScreen5";
+import SuccessGigScreen from "../views/Grower/menuScreens/newGig/SuccessGigScreen";
 import GigScreenImage from "../views/Grower/menuScreens/newGig/GigScreenImage";
 
 import Orders from "../views/Grower/menuScreens/orders/OrdersScreen";
@@ -30,6 +33,9 @@ const GrowerStack = () => {
       <Stack.Screen name={"NewGig"} component={NewGig} />
       <Stack.Screen name={"GigScreen2"} component={GigScreen2} />
       <Stack.Screen name={"GigScreen3"} component={GigScreen3} />
+      <Stack.Screen name={"GigScreen4"} component={GigScreen4} />
+      <Stack.Screen name={"GigScreen5"} component={GigScreen5} />
+      <Stack.Screen name={"SuccessGigScreen"} component={SuccessGigScreen} />
       <Stack.Screen name={"GigScreenImage"} component={GigScreenImage} />
       <Stack.Screen name={"Orders"} component={Orders} />
       <Stack.Screen name={"Support"} component={Support} />
