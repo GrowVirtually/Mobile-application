@@ -25,11 +25,13 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [page, setPage] = useState(1);
   const [showFilters, setshowFilters] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [searchResult, setSearchResult] = useState(false);
+  const [searchTxt, setSearchTxt] = useState("carrot");
 
   // Prams states
   const [category, setCategory] = useState("vegetable");
   const [gigType, setGigType] = useState("post");
-  const [distance, setDistance] = useState("60000");
+  const [distance, setDistance] = useState("200000");
   const [lt, setLt] = useState("1000");
   const [gt, setGt] = useState("100");
   const [unit, setUnit] = useState("");
@@ -80,6 +82,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
   };
 
   const applyFilters = () => {
+    setSearchResult(false);
     setshowFilters(false);
     setRefresh(refresh + 1);
     setShowResult(true);
@@ -87,11 +90,22 @@ export const ConsumerHomeScreen = ({navigation}) => {
   };
 
   const clearFilters = () => {
+    setSearchResult(false);
     setshowFilters(false);
     setShowResult(false);
     setRefresh(1);
     setPage(1);
     setSortBy("");
+  };
+
+  const closeSearch = () => {
+    setSearchResult(false);
+    setRefresh(1);
+  };
+
+  const onSearch = () => {
+    setSearchResult(true);
+    setRefresh(refresh + 1);
   };
 
   const prevPage = () => {
@@ -128,17 +142,27 @@ export const ConsumerHomeScreen = ({navigation}) => {
       let response;
       try {
         if (showResult) {
-          response = await axios({
-            method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}&sort=${sortby}`,
-            headers: {
-              Authorization: `Bearer ${jwt}`,
-            },
-          });
+          if (searchResult) {
+            response = await axios({
+              method: "get",
+              url: `${HOST_PORT}/api/v1/gigs/search/${searchTxt}`,
+              headers: {
+                Authorization: `Bearer ${jwt}`,
+              },
+            });
+          } else {
+            response = await axios({
+              method: "get",
+              url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}&sort=${sortby}`,
+              headers: {
+                Authorization: `Bearer ${jwt}`,
+              },
+            });
+          }
         } else {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&page=${page}`,
+            url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=200000&page=${page}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -166,7 +190,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&gigCategory=vegetable`,
+          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=200000&gigCategory=vegetable`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
