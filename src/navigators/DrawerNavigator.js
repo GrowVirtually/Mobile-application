@@ -15,7 +15,7 @@ import ProfileScreen from "../views/ProfileScreen";
 import LocationUpdater from "../views/LocationUpdater";
 import * as Colors from "../styles/abstracts/colors";
 import UpdateProfileScreen from "../views/UpdateProfileScreen";
-import MyOrdersScreen from "../views/MyOrdersScreen";
+import MyOrdersScreen from "../views/Consumer/MyOrdersScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -52,7 +52,6 @@ function GrowerDrawerNavigator() {
       <Drawer.Screen name={"ProfileScreen"} component={ProfileScreen} />
       <Drawer.Screen name={"LocationUpdater"} component={LocationUpdater} />
       <Drawer.Screen name={"UpdateProfile"} component={UpdateProfileScreen} />
-      <Drawer.Screen name={"MyOrders"} component={MyOrdersScreen} />
     </Drawer.Navigator>
   );
 }
