@@ -136,13 +136,14 @@ const ProfileScreen = () => {
         <SafeAreaView style={styles.container}>
           <View style={styles.userInfoSection}>
             <View style={{flexDirection: "row", marginTop: 15}}>
-              {profile && profile.imgLink === "" ? (
+              {profile && (profile.imgLink === "" || profile.imgLink === null) ? (
                 <Avatar.Text
                   size={80}
                   label={userinfo.username
                     .split(" ")
                     .map(name => name.charAt(0))
-                    .join("")}
+                    .join("")
+                    .toUpperCase()}
                   color="#fff"
                 />
               ) : (

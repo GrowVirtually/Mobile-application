@@ -105,8 +105,8 @@ function Filters(props) {
                 <View style={styles.radioGroup}>
                   <RadioButton
                     value="60000"
-                    status={props.distance === "60000" ? "checked" : "unchecked"}
-                    onPress={() => props.handleDistance("60000")}
+                    status={props.distance === "200000" ? "checked" : "unchecked"}
+                    onPress={() => props.handleDistance("200000")}
                   />
                   <Text>{`> 5km`}</Text>
                 </View>
