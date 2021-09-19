@@ -1,8 +1,17 @@
 /* eslint-disable arrow-body-style */
 import axios from "axios";
 import React, {useEffect, useContext, useState} from "react";
-import {ScrollView, TouchableOpacity, StyleSheet, View, Text, SafeAreaView} from "react-native";
-import {Searchbar, ActivityIndicator, Button} from "react-native-paper";
+import {
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Text,
+  SafeAreaView,
+  FlatList,
+  VirtualizedList,
+} from "react-native";
+import {Searchbar, ActivityIndicator, Button, List, FAB} from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import AuthContext from "../../../context/auth-context";
 import * as Colors from "../../../styles/abstracts/colors";
@@ -20,13 +29,17 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [gigs, setGigs] = useState([]);
   const [vegetableGigs, setVegetableGigs] = useState([]);
   const [fruitGigs, setFruitGigs] = useState([]);
-  const [mylocation, setMyLocation] = useState(null);
+  const [mylocation, setMyLocation] = useState({
+    longitude: null,
+    latitude: null,
+  });
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [showFilters, setshowFilters] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [searchResult, setSearchResult] = useState(false);
-  const [searchTxt, setSearchTxt] = useState("carrot");
+  const [searchTxt, setSearchTxt] = useState("rad");
+  const [data, setData] = useState([]);
 
   // Prams states
   const [category, setCategory] = useState("vegetable");
@@ -37,9 +50,55 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [unit, setUnit] = useState("");
   const [deliverability, setDeliverability] = useState("");
   const [sortby, setSortBy] = useState("");
+  const [home, setHome] = useState(false);
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
+
+  // fetch arr from backend
+
+  const arr = [
+    "vitae semper egestas, urna justo",
+    "Nam consequat dolor",
+    "Pellentesque ultricies dignissim",
+    "amet ante. Vivamus non",
+    "mollis vitae, posuere",
+    "et, rutrum non, hendrerit",
+    "ornare tortor at risus.",
+    "Sed dictum. Proin eget",
+    "Raddish",
+    "tincidunt nibh. Phasellus nulla.",
+    "magna. Nam ligula elit,",
+    "pede. Suspendisse dui.",
+    "sed leo. Cras vehicula aliquet",
+    "auctor odio a purus. Duis",
+  ];
+
+  const arrayHolder = arr;
+
+  const searchData = txt => {
+    let newData;
+    if (txt !== "") {
+      setHome(true);
+      newData = arrayHolder.filter(item => {
+        const itemdata = item.toUpperCase();
+        const textdata = searchTxt.toUpperCase();
+        return itemdata.indexOf(textdata) > -1;
+      });
+    }
+
+    if (txt === "") {
+      setHome(false);
+    }
+
+    setSearchTxt(txt);
+    setData(newData);
+  };
+
+  const handlePressItem = txt => {
+    console.log("pressed:", txt);
+    setSearchTxt(txt);
+  };
 
   const handleSortby = val => {
     setSortBy(val);
@@ -100,6 +159,8 @@ export const ConsumerHomeScreen = ({navigation}) => {
   };
 
   const closeSearch = () => {
+    // setSearchTxt("");
+    setHome(false);
     setSearchResult(false);
     setRefresh(1);
   };
@@ -196,7 +257,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=200000&gigCategory=vegetable`,
+          url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=200000&gigCategory=vegetable`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -235,14 +296,20 @@ export const ConsumerHomeScreen = ({navigation}) => {
       <View style={styles.searchbarContainer}>
         <Searchbar
           style={styles.searchbarLeft}
-          onChangeText={txt => setSearchTxt(txt)}
+          onChangeText={txt => searchData(txt)}
           onSubmitEditing={e => handleSearch(e.nativeEvent.text)}
           placeholder="Search"
           value={searchTxt}
         />
-        <TouchableOpacity style={styles.searchbarRight} onPress={() => toggleSetshowFilters()}>
-          <MaterialCommunityIcons name="tune" color="#fff" size={30} />
-        </TouchableOpacity>
+        {home ? (
+          <TouchableOpacity style={styles.searchbarRight} onPress={() => closeSearch()}>
+            <MaterialCommunityIcons name="home" color="#fff" size={30} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.searchbarRight} onPress={() => toggleSetshowFilters()}>
+            <MaterialCommunityIcons name="tune" color="#fff" size={30} />
+          </TouchableOpacity>
+        )}
       </View>
       <ScrollView style={styles.scroll}>
         <Filters
@@ -269,6 +336,26 @@ export const ConsumerHomeScreen = ({navigation}) => {
           handleSortby={handleSortby}
         />
 
+        {data &&
+          // <FlatList
+          //   data={data}
+          //   keyExtractor={(item, index) => index.toString()}
+          //   // ItemSeparatorComponent={itemSeparator}
+          //   renderItem={({item}) => (
+          //     <Text style={styles.row} onPress={() => console.log("selected", item)}>
+          //       {item}
+          //     </Text>
+          //   )}
+          //   style={{marginTop: 10}}
+          // />
+          data.map((item, index) => (
+            <List.Item
+              style={{zIndex: 0}}
+              title={item}
+              onPress={() => handlePressItem(item)}
+              key={index}
+            />
+          ))}
         <View style={styles.container}>
           {!showResult && <GigRow gigs={fruitGigs} title="Fruits" />}
 
@@ -348,5 +435,11 @@ const styles = StyleSheet.create({
   loading: {
     paddingBottom: 150,
     marginTop: 50,
+  },
+  fab: {
+    position: "absolute",
+    margin: 16,
+    right: 30,
+    top: 50,
   },
 });
