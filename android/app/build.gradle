@@ -137,6 +137,9 @@ android {
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
+
+        missingDimensionStrategy 'react-native-camera', 'general'
+
     }
     splits {
         abi {

@@ -52,6 +52,14 @@ const ConsumerDrawer = props => {
         label={() => <Text style={styles.menuTxt}>My Orders</Text>}
         onPress={() => props.navigation.navigate("MyOrders")}
       />
+
+      <DrawerItem
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="qrcode-scan" color="white" size={24} />
+        )}
+        label={() => <Text style={styles.menuTxt}>Scan buyer's QR</Text>}
+        onPress={() => props.navigation.navigate("QrScan")}
+      />
     </DrawerContentScrollView>
   );
 };
