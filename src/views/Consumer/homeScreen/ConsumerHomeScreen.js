@@ -93,6 +93,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
     setSearchResult(false);
     setshowFilters(false);
     setShowResult(false);
+    setSearchTxt(false);
     setRefresh(1);
     setPage(1);
     setSortBy("");
@@ -103,11 +104,6 @@ export const ConsumerHomeScreen = ({navigation}) => {
     setRefresh(1);
   };
 
-  const onSearch = () => {
-    setSearchResult(true);
-    setRefresh(refresh + 1);
-  };
-
   const prevPage = () => {
     if (page > 1) {
       setPage(page - 1);
@@ -115,6 +111,16 @@ export const ConsumerHomeScreen = ({navigation}) => {
       alert("You are already on first page");
     }
   };
+
+  // search
+  const handleSearch = txt => {
+    // setSearchTxt(txt);
+    setShowResult(true);
+    setSearchResult(true);
+    console.log("submit", txt);
+    setRefresh(refresh + 1);
+  };
+
   // get location
   useEffect(() => {
     const getMyLocation = async () => {
@@ -227,7 +233,13 @@ export const ConsumerHomeScreen = ({navigation}) => {
     <SafeAreaView>
       <AppHeader navigation={navigation} title="Gigs" />
       <View style={styles.searchbarContainer}>
-        <Searchbar style={styles.searchbarLeft} placeholder="Search" />
+        <Searchbar
+          style={styles.searchbarLeft}
+          onChangeText={txt => setSearchTxt(txt)}
+          onSubmitEditing={e => handleSearch(e.nativeEvent.text)}
+          placeholder="Search"
+          value={searchTxt}
+        />
         <TouchableOpacity style={styles.searchbarRight} onPress={() => toggleSetshowFilters()}>
           <MaterialCommunityIcons name="tune" color="#fff" size={30} />
         </TouchableOpacity>
