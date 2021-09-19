@@ -17,8 +17,7 @@ import SelectBox from "react-native-multi-selectbox";
 import * as Colors from "../../../../styles/abstracts/colors";
 import AppHeader from "../../../Common/AppHeader";
 
-import DynamicForm from "@coffeebeanslabs/react-native-form-builder";
-import RNPickerSelect from "react-native-picker-select";
+import DatePickerComp from "../../../Common/DatePickerComp";
 
 const K_OPTIONS = [
   {
@@ -36,17 +35,34 @@ const K_OPTIONS = [
 ];
 
 function GigScreen3({navigation, route}) {
+  const {gigType, gigCategory, gigTitle, gigDescription, deliveryOp} = route.params;
+
+  console.log("Gig Type: ", gigType);
+  console.log("Gig Category: ", gigCategory);
+  console.log("Gig Type: ", gigTitle);
+  console.log("Gig Category: ", gigDescription);
+  console.log("Gig Category: ", deliveryOp);
+
   const onSubmit = formFields => {
     // Actions on submit button click.
+
+    console.log("Gig Type: ", gigType);
+    console.log("Gig Category: ", gigCategory);
+    console.log("Gig Type: ", gigTitle);
+    console.log("Gig Category: ", gigDescription);
+    console.log("Gig Category: ", deliveryOp);
 
     console.log("Form submitted with fields: ", selectedUnit);
     console.log("Form submitted with fields: ", unit);
     console.log("Form submitted with fields: ", price);
+    console.log("Form submitted with fields: ", minOrderAmount);
   };
 
   const [selectedUnit, setSelectedTeam] = useState({});
   const [unit, setQuantity] = useState("");
   const [price, setPrice] = useState("");
+  const [minOrderAmount, setMinOrder] = useState("");
+  const [expdate, setGigExDate] = useState(new Date(1598051730000));
 
   function setUnit() {
     return val => setSelectedTeam(val);
@@ -86,12 +102,25 @@ function GigScreen3({navigation, route}) {
         keyboardType="numeric"
       />
 
-      <Button
-        accessibilityLabel="submit-button"
-        title="Submit"
-        buttonStyle={styles.button}
-        onPress={onSubmit}
+      <Text style={styles.labelText}>Minimum Order Amount Accepting (Rs.)</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={setMinOrder}
+        value={minOrderAmount}
+        placeholder="Enter minimum order amount accepting "
+        keyboardType="numeric"
       />
+
+      <View style={styles.buttonContainer}>
+        <Button
+          accessibilityLabel="submit-button"
+          title="Submit"
+          buttonStyle={styles.button}
+          onPress={onSubmit}
+        />
+      </View>
+
+      <DatePickerComp handleDate={setGigExDate} date={expdate} title="Add Gig Expiration Date" />
     </View>
   );
 }
@@ -102,6 +131,7 @@ const styles = StyleSheet.create({
   },
   selectBox: {
     margin: 20,
+    borderColor: "#000000",
   },
 
   labelText: {
@@ -115,6 +145,11 @@ const styles = StyleSheet.create({
     margin: 15,
     borderWidth: 1,
     padding: 10,
+  },
+  buttonContainer: {
+    width: "40%",
+    alignSelf: "center",
+    margin: 60,
   },
   button: {
     width: "40%",

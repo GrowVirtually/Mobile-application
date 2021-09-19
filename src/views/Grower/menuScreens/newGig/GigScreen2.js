@@ -17,7 +17,7 @@ import AppHeader from "../../../Common/AppHeader";
 import DynamicForm from "@coffeebeanslabs/react-native-form-builder";
 
 function GigScreen2({navigation, route}) {
-  const {prevFields} = route.params;
+  const {gigType, gigCategory} = route.params;
 
   const formTemplate = {
     data: [
@@ -77,9 +77,19 @@ function GigScreen2({navigation, route}) {
 
   const onSubmit = formFields => {
     // Actions on submit button click.
-    navigation.navigate("GigScreen3");
-    console.log("Form submitted with fields: ", formFields);
-    console.log("from prev page: ", prevFields);
+
+    navigation.navigate("GigScreen3", {
+      gigType: gigType,
+      gigCategory: gigCategory,
+      gigTitle: formFields.title.value,
+      gigDescription: formFields.description.value,
+      deliveryOp: formFields.deliveryOption.value,
+    });
+    console.log("Gig Type: ", gigType);
+    console.log("Gig Category: ", gigCategory);
+    console.log("Gig Title: ", formFields.title.value);
+    console.log("Gig Description: ", formFields.description.value);
+    console.log("Delivery Option: ", formFields.deliveryOption.value);
   };
 
   return (

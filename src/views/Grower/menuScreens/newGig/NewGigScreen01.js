@@ -37,7 +37,7 @@ function NewGigScreen01({navigation}) {
 
       {
         component: "input-dropdown",
-        field_name: "category",
+        field_name: "type",
         is_mandatory: "true",
         meta: {
           text: "Gig Type",
@@ -60,7 +60,7 @@ function NewGigScreen01({navigation}) {
 
       {
         component: "input-dropdown",
-        field_name: "commodity",
+        field_name: "category",
         is_mandatory: "true",
         meta: {
           text: "Gig Category",
@@ -131,10 +131,14 @@ function NewGigScreen01({navigation}) {
     }
   }
 
-  const onSubmit = formFields => {
+  const onSubmit = screen1formFields => {
     // Actions on submit button click.
-    navigation.navigate("GigScreen2", {prevFields: formFields});
-    console.log("Form submitted with fields: ", formFields);
+    navigation.navigate("GigScreen2", {
+      gigType: screen1formFields.type.value,
+      gigCategory: screen1formFields.category.value,
+    });
+    console.log("Form submitted Gig Type: ", screen1formFields.type.value);
+    console.log("Form submitted Gig Category: ", screen1formFields.category.value);
 
     // postGig();
   };
