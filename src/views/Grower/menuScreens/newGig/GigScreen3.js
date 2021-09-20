@@ -45,6 +45,7 @@ function GigScreen3({navigation, route}) {
 
   const onSubmit = formFields => {
     // Actions on submit button click.
+
     navigation.navigate("GigScreen4", {
       gigType: gigType,
       gigCategory: gigCategory,

@@ -138,7 +138,9 @@ export const GrowerMenu = ({navigation}) => {
             </View>
             <Text style={styles.menuItemText}>New Gig</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => navigation.navigate("MyGigsScreen")}>
             <Icon name="barley" color={Colors.secondary.color} size={40} />
             <Text style={styles.menuItemText}>My Gigs</Text>
           </TouchableOpacity>

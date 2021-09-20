@@ -43,16 +43,12 @@ function NewGigScreen01({navigation}) {
           text: "Gig Type",
           items: [
             {
-              label: "Vegetables",
-              value: "vegetables",
+              label: "pre",
+              value: "pre",
             },
             {
-              label: "Fruits",
-              value: "fruits",
-            },
-            {
-              label: "Other",
-              value: "other",
+              label: "post",
+              value: "post",
             },
           ],
         },
@@ -66,24 +62,12 @@ function NewGigScreen01({navigation}) {
           text: "Gig Category",
           items: [
             {
-              label: "Pumpkin",
-              value: "pumpkin",
+              label: "fruit",
+              value: "fruit",
             },
             {
-              label: "Bitter Guard",
-              value: "bitterGuard",
-            },
-            {
-              label: "Brinjal",
-              value: "brinjal",
-            },
-            {
-              label: "Tomatoes",
-              value: "tomatoes",
-            },
-            {
-              label: "Potatoes",
-              value: "Potatoes",
+              label: "vegetable",
+              value: "vegetable",
             },
           ],
         },

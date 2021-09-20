@@ -7,7 +7,7 @@ import {GrowerHomeScreen} from "../views/Grower/homeScreen/GrowerHomeScreen";
 // Grower's Menu Screens
 import Earnings from "../views/Grower/menuScreens/earnings/EarningsScreen";
 import FindConsumer from "../views/Grower/menuScreens/findConsumer/FindConsumerScreen";
-import MyGigs from "../views/Grower/menuScreens/myGigs/MyGigsScreen";
+import MyGigsScreen from "../views/Grower/menuScreens/myGigs/MyGigsScreen";
 
 import NewGig from "../views/Grower/menuScreens/newGig/NewGigScreen01";
 import GigScreen2 from "../views/Grower/menuScreens/newGig/GigScreen2";
@@ -29,7 +29,7 @@ const GrowerStack = () => {
       <Stack.Screen name={"GrowerHome"} component={GrowerHomeScreen} />
       <Stack.Screen name={"Earnings"} component={Earnings} />
       <Stack.Screen name={"FindConsumer"} component={FindConsumer} />
-      <Stack.Screen name={"MyGigs"} component={MyGigs} />
+      <Stack.Screen name={"MyGigsScreen"} component={MyGigsScreen} />
       <Stack.Screen name={"NewGig"} component={NewGig} />
       <Stack.Screen name={"GigScreen2"} component={GigScreen2} />
       <Stack.Screen name={"GigScreen3"} component={GigScreen3} />
