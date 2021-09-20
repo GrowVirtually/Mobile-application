@@ -24,7 +24,6 @@ function MyGigsScreen({navigation}) {
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
 
-  const [userId, setUserId] = useState("");
   const [myGigs, setMyGigs] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
@@ -45,7 +44,6 @@ function MyGigsScreen({navigation}) {
       } catch (error) {
         console.error(error);
       }
-      console.log("userid", userId);
 
       //To make API call to get gigs
       try {
@@ -57,7 +55,6 @@ function MyGigsScreen({navigation}) {
           },
         });
         setMyGigs(response.data.data.gigs);
-        console.log("Gig Data : ", myGigs);
       } catch (error) {
         console.error(error);
       }
@@ -66,7 +63,7 @@ function MyGigsScreen({navigation}) {
     setLoading(true);
     getGigs();
   }, []);
-
+  console.log("Gig Data : ", myGigs);
   return (
     <View style={styles.container}>
       <AppHeader navigation={navigation} title="My Gigs" showBackButton={true} />

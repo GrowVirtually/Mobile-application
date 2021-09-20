@@ -4,10 +4,29 @@ import {Avatar, Button, Card, Title, Paragraph} from "react-native-paper";
 import * as Colors from "../../../../../styles/abstracts/colors";
 import {useNavigation} from "@react-navigation/core";
 import {Dimensions} from "react-native";
+import {TouchableRipple} from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import {TouchableOpacity} from "react-native-gesture-handler";
+import axios from "axios";
+import AuthContext from "../../../../../context/auth-context";
+
+import {HOST_PORT} from "@env";
+
 const {width} = Dimensions.get("screen");
 
-export const GrowerGig = ({gigTitle, unitPrice, expireDate, id, user, unit, direction}) => {
-  const imgUrl = "https://picsum.photos/200/300?random=1";
+export const GrowerGig = ({
+  gigTitle,
+  unitPrice,
+  expireDate,
+  id,
+  user,
+  unit,
+  stock,
+  sold,
+  direction,
+  images,
+}) => {
+  const imgUrl = "https://cdn-icons-png.flaticon.com/512/3362/3362807.png";
 
   const navigation = useNavigation();
 
@@ -18,6 +37,7 @@ export const GrowerGig = ({gigTitle, unitPrice, expireDate, id, user, unit, dire
     const days = diffInTime / (1000 * 3600 * 24);
     return Math.round(days);
   };
+
   return (
     <Card
       style={direction === "row" ? styles.rowItem : styles.gridItem}
@@ -31,22 +51,36 @@ export const GrowerGig = ({gigTitle, unitPrice, expireDate, id, user, unit, dire
           id,
         })
       }>
-      <Card.Cover style={styles.img} source={{uri: imgUrl}} />
+      {images.length === 0 ? (
+        <Card.Cover style={styles.img} source={{uri: imgUrl}} />
+      ) : (
+        <Card.Cover style={styles.img} source={{uri: images[0].imgLink}} />
+      )}
+
       <View style={styles.cardContent}>
         <View style={styles.cardLeft}>
-          <Text style={styles.gigTitle}>
-            {gigTitle.length > 10 ? gigTitle.slice(0, 17) + ".." : gigTitle}
-          </Text>
+          <View style={styles.cardRight}>
+            <Text style={styles.gigTitle}>
+              {gigTitle.length > 10 ? gigTitle.slice(0, 17) + ".." : gigTitle}
+            </Text>
+          </View>
           <Text style={styles.gigSubTitle}>
             Rs {unitPrice} /{unit}
           </Text>
+
           <Text style={styles.expireTxt}>
             Expires in {getDays(expireDate) + " " + (getDays(expireDate) > 1 ? "days" : "day")}
           </Text>
+          <Text style={styles.gigSubTitle}>
+            Sold: {Math.round(sold)} /{Math.round(stock)}
+          </Text>
         </View>
-        <View style={styles.cardRight}>
-          <Text style={styles.avatarTxt}></Text>
-        </View>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("MyGigsScreen")}>
+          <Icon name="delete" color={Colors.secondary.color} size={30} />
+        </TouchableOpacity>
+        <Text style={styles.idTxt}>ID:{id}</Text>
       </View>
     </Card>
   );
@@ -71,8 +105,8 @@ const styles = StyleSheet.create({
   },
   cardLeft: {},
   cardRight: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "space-around",
+    alignItems: "flex-end",
   },
   gigTitle: {
     fontSize: 13,
@@ -88,8 +122,27 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: Colors.errorColor.color,
   },
-  avatarTxt: {
-    fontSize: 8,
+  idTxt: {
+    position: "absolute",
+    bottom: 5,
+    right: 5,
+    fontSize: 14,
     color: Colors.fontColor.color,
+  },
+  menuItem: {
+    elevation: 2,
+    padding: 0,
+    backgroundColor: "#fff",
+    marginTop: 8,
+    alignItems: "center",
+    paddingVertical: 0,
+    borderRadius: 5,
+    // minHeight: 100,
+  },
+  menuItemText: {
+    fontSize: 10,
+    marginTop: 0,
+    marginRight: 5,
+    color: "#555",
   },
 });
