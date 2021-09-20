@@ -28,9 +28,14 @@ const ConsumerDrawer = props => {
       {/* Default items */}
       {/* <DrawerItemList {...props} /> */}
       <DrawerItem
-        icon={({color, size}) => <MaterialCommunityIcons name="home" color="white" size={24} />}
-        label={() => <Text style={styles.menuTxt}>Gigs</Text>}
+        icon={({color, size}) => <MaterialCommunityIcons name="barley" color="white" size={24} />}
+        label={() => <Text style={styles.menuTxt}>Find crops</Text>}
         onPress={() => props.navigation.navigate("ConsumerHome")}
+      />
+      <DrawerItem
+        icon={({color, size}) => <MaterialCommunityIcons name="heart" color="white" size={24} />}
+        label={() => <Text style={styles.menuTxt}>Favorites</Text>}
+        onPress={() => props.navigation.navigate("SavedGigs")}
       />
       {/* <DrawerItem
         icon={({color, size}) => <MaterialCommunityIcons name="bell" color="white" size={24} />}

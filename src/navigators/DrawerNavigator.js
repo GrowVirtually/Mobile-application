@@ -17,6 +17,7 @@ import * as Colors from "../styles/abstracts/colors";
 import UpdateProfileScreen from "../views/UpdateProfileScreen";
 import MyOrdersScreen from "../views/Consumer/MyOrdersScreen";
 import QrScanScreen from "../views/Consumer/qrRead/QrScanScreen";
+import SavedGigsScreen from "../views/Consumer/savedGigs/SavedGigsScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -37,6 +38,7 @@ function ConsumerDrawerNavigator() {
       <Drawer.Screen name={"UpdateProfile"} component={UpdateProfileScreen} />
       <Drawer.Screen name={"MyOrders"} component={MyOrdersScreen} />
       <Drawer.Screen name={"QrScan"} component={QrScanScreen} />
+      <Drawer.Screen name={"SavedGigs"} component={SavedGigsScreen} />
     </Drawer.Navigator>
   );
 }

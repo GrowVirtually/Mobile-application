@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable arrow-body-style */
 import axios from "axios";
 import React, {useEffect, useContext, useState} from "react";
@@ -289,7 +290,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=200000&gigCategory=vegetable`,
+          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${100}&distance=200000&gigCategory=vegetable`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -308,7 +309,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=60000&gigCategory=fruit`,
+          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${100}&distance=200000&gigCategory=fruit`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
