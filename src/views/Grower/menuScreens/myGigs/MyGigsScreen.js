@@ -24,34 +24,34 @@ function MyGigsScreen({navigation}) {
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
 
-  const [emptyResult, setEmptyResult] = useState(false);
-  const [refresh, setRefresh] = useState(1);
-  const [showResult, setShowResult] = useState(false);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(1);
-
+  const [userId, setUserId] = useState("");
   const [myGigs, setMyGigs] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-  const nextPage = () => {
-    setPage(page + 1);
-  };
-
-  const prevPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    } else {
-      alert("You are already on first page");
-    }
-  };
+  //Get User Id
+  const getProfile = async () => {};
 
   //want to fetch the data as soon as the component mounts, so calling getGigs function in useEffect hook.
   useEffect(() => {
     async function getGigs() {
+      //tO GET Profile Id
+      let myProfile;
+      try {
+        myProfile = await axios.get(`${HOST_PORT}/api/v1/users/me`, {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      console.log("userid", userId);
+
+      //To make API call to get gigs
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/growers/3/gigs`,
+          url: `${HOST_PORT}/api/v1/growers/${myProfile.data.data.profile.id}/gigs`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -66,30 +66,18 @@ function MyGigsScreen({navigation}) {
     setLoading(true);
     getGigs();
   }, []);
+
   return (
     <View style={styles.container}>
-      <AppHeader navigation={navigation} title="My Support" />
-      <Text style={styles.text}>My Gig</Text>
+      <AppHeader navigation={navigation} title="My Gigs" showBackButton={true} />
 
-      <ScrollView style={styles.container}>
+      <ScrollView>
         {isLoading ? (
-          <Text>Loading...</Text>
+          <View style={styles.loading}>
+            <ActivityIndicator animating={true} />
+          </View>
         ) : (
-          // <View>
-          //   {myGigs.map(item => (
-          //     <Text>{item.gigType}</Text>
-          //   ))}
-          // </View>
-          // <FlatList
-          //   data={myGigs}
-          //   renderItem={data => <GigGrid {...data.item} navigation={navigation} />}
-          //   keyExtractor={item => item.gigTitle}
-          // />
           <View>
-            {/* {myGigs.map(item => (
-              <GigGrid key={item.id}>{item.gigTitle}</GigGrid>
-            ))} */}
-
             <GigGrid myGigs={myGigs} />
           </View>
         )}
@@ -98,6 +86,11 @@ function MyGigsScreen({navigation}) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  loading: {
+    paddingBottom: 150,
+    marginTop: 50,
+  },
+});
 
 export default MyGigsScreen;
