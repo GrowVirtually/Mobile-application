@@ -115,10 +115,6 @@ export const ConsumerHomeScreen = ({navigation}) => {
       });
     }
 
-    // if (txt === "") {
-    //   setHome(false);
-    // }
-
     setSearchTxt(txt);
     setData(newData);
   };
@@ -215,82 +211,81 @@ export const ConsumerHomeScreen = ({navigation}) => {
 
   // get location
   useEffect(() => {
-    const getMyLocation = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem("mylocation");
-        if (jsonValue != null) {
-          const obj = JSON.parse(jsonValue);
-          setMyLocation(obj);
-        } else {
-          console.log("app loction null");
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
     getMyLocation();
   }, []);
 
+  const getMyLocation = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("mylocation");
+      if (jsonValue != null) {
+        const obj = JSON.parse(jsonValue);
+        setMyLocation(obj);
+      } else {
+        console.log("app loction null");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   // Get mixed gigs
   useEffect(() => {
-    async function getGigs() {
-      setLoading(true);
-      setEmptyResult(false);
+    getGigs();
+  }, [limit, page, refresh]);
 
-      let response;
-      try {
-        if (showResult) {
-          if (searchResult) {
-            response = await axios({
-              method: "get",
-              url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?distance=200000&searchTag=${searchTxt}`,
-              headers: {
-                Authorization: `Bearer ${jwt}`,
-              },
-            });
-          } else {
-            response = await axios({
-              method: "get",
-              url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}&sort=${sortby}`,
-              headers: {
-                Authorization: `Bearer ${jwt}`,
-              },
-            });
-          }
+  const getGigs = async () => {
+    setLoading(true);
+    setEmptyResult(false);
+
+    let response;
+    try {
+      if (showResult) {
+        if (searchResult) {
+          response = await axios({
+            method: "get",
+            url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?distance=200000&searchTag=${searchTxt}`,
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          });
         } else {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${
-              mylocation.longitude
-            }?limit=${100}&distance=200000&page=${page}`,
+            url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}&sort=${sortby}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
           });
         }
-        setGigs(response.data.data.gigs);
+      } else {
+        response = await axios({
+          method: "get",
+          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${
+            mylocation.longitude
+          }?limit=${100}&distance=200000&page=${page}`,
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+      }
+      setGigs(response.data.data.gigs);
+      setLoading(false);
+    } catch (error) {
+      if (error.response.data.status === "fail") {
+        setEmptyResult(true);
         setLoading(false);
-      } catch (error) {
-        // const {message} = error.response.data;
-        if (error.response.data.status === "fail") {
-          setEmptyResult(true);
-          setLoading(false);
-          // setShowResult(false);
-          // console.error(error);
-          console.log(error.response.data);
-        }
+        console.log(error.response.data);
       }
     }
-    getGigs();
-  }, [limit, page, refresh]);
+  };
 
   // get vege gigs
   useEffect(() => {
-    async function getGigs() {
+    const getVegeGigs = async () => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${100}&distance=200000&gigCategory=vegetable`,
+          url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?limit=${100}&distance=200000&gigCategory=vegetable`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -299,28 +294,27 @@ export const ConsumerHomeScreen = ({navigation}) => {
       } catch (error) {
         console.error(error);
       }
-    }
-    getGigs();
+    };
+    getVegeGigs();
   }, []);
 
   // get fruit gigs
   useEffect(() => {
-    async function getGigs() {
+    async function getFruitGigs() {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${100}&distance=200000&gigCategory=fruit`,
+          url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?limit=${100}&distance=200000&gigCategory=fruit`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
         });
         setFruitGigs(response.data.data.gigs);
       } catch (error) {
-        // prevPage();
         console.error(error);
       }
     }
-    getGigs();
+    getFruitGigs();
   }, []);
 
   return (
