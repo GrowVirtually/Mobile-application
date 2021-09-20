@@ -50,7 +50,7 @@ export const ConsumerGig = ({
           source={require("../../../../assets/gigPlaceholder.png")}
         />
       ) : (
-        <Card.Cover style={ConsumerGigStyle.img} source={{uri: imgUrl}} />
+        <Card.Cover style={ConsumerGigStyle.img} source={{uri: images[0].imgLink}} />
       )}
 
       <View style={ConsumerGigStyle.cardContent}>

@@ -242,7 +242,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
           if (searchResult) {
             response = await axios({
               method: "get",
-              url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?distance=200000&searchTag=${searchTxt}`,
+              url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?distance=200000&searchTag=${searchTxt}`,
               headers: {
                 Authorization: `Bearer ${jwt}`,
               },
@@ -259,7 +259,9 @@ export const ConsumerHomeScreen = ({navigation}) => {
         } else {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=200000&page=${page}`,
+            url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${
+              mylocation.longitude
+            }?limit=${100}&distance=200000&page=${page}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -287,7 +289,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=200000&gigCategory=vegetable`,
+          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=200000&gigCategory=vegetable`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -306,7 +308,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&gigCategory=fruit`,
+          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=60000&gigCategory=fruit`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },

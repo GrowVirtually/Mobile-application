@@ -45,7 +45,8 @@ export const GigScreen = ({route, navigation}) => {
       lname: "",
     },
     userid: "",
-  }, );
+    images: [],
+  });
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
@@ -123,7 +124,17 @@ export const GigScreen = ({route, navigation}) => {
         showBackButton={true}
       />
       <ScrollView>
-        <ImageSlider gigImages={gigInfo.gigImages} />
+        {/* <ImageSlider gigImages={gigInfo.gigImages} /> */}
+        {gigData.images.length === 0 ? (
+          <Image style={styles.gigImg} source={require("../../../assets/gigPlaceholder.png")} />
+        ) : (
+          <Image
+            style={styles.gigImg}
+            source={{
+              uri: gigData.images[0].imgLink,
+            }}
+          />
+        )}
         <View style={styles.container}>
           <GigTitle
             expireDate={gigData.expireDate}
@@ -170,9 +181,7 @@ export const GigScreen = ({route, navigation}) => {
           /> */}
           <Button
             icon="shopping-outline"
-            onPress={() =>
-              navigation.navigate("Payment", {qty, gigID: gigData.id})
-            }
+            onPress={() => navigation.navigate("Payment", {qty, gigID: gigData.id})}
             mode="contained">
             Place Order
           </Button>
