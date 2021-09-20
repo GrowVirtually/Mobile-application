@@ -38,8 +38,9 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [showFilters, setshowFilters] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [searchResult, setSearchResult] = useState(false);
-  const [searchTxt, setSearchTxt] = useState("rad");
+  const [searchTxt, setSearchTxt] = useState("");
   const [data, setData] = useState([]);
+  const [viewDrop, setViewDrop] = useState(false);
 
   // Prams states
   const [category, setCategory] = useState("vegetable");
@@ -56,30 +57,56 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const jwt = loginState.userToken;
 
   // fetch arr from backend
+  const [arrayHolder, setArrayHolder] = useState([]);
 
-  const arr = [
-    "vitae semper egestas, urna justo",
-    "Nam consequat dolor",
-    "Pellentesque ultricies dignissim",
-    "amet ante. Vivamus non",
-    "mollis vitae, posuere",
-    "et, rutrum non, hendrerit",
-    "ornare tortor at risus.",
-    "Sed dictum. Proin eget",
-    "Raddish",
-    "tincidunt nibh. Phasellus nulla.",
-    "magna. Nam ligula elit,",
-    "pede. Suspendisse dui.",
-    "sed leo. Cras vehicula aliquet",
-    "auctor odio a purus. Duis",
-  ];
+  useEffect(() => {
+    const getGigTitles = async () => {
+      let response;
+      try {
+        response = await axios({
+          method: "get",
+          url: `${HOST_PORT}/api/v1/gigs/titles`,
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
 
-  const arrayHolder = arr;
+        // console.log(
+        //   "titles",
+        //   response.data.data.gigs.map(item => item.gigTitle),
+        // );
+        setArrayHolder(response.data.data.gigs.map(item => item.gigTitle));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getGigTitles();
+  }, []);
+
+  // const arr = [
+  //   "vitae semper egestas, urna justo",
+  //   "Nam consequat dolor",
+  //   "Pellentesque ultricies dignissim",
+  //   "amet ante. Vivamus non",
+  //   "mollis vitae, posuere",
+  //   "et, rutrum non, hendrerit",
+  //   "ornare tortor at risus.",
+  //   "Sed dictum. Proin eget",
+  //   "Raddish",
+  //   "tincidunt nibh. Phasellus nulla.",
+  //   "magna. Nam ligula elit,",
+  //   "pede. Suspendisse dui.",
+  //   "sed leo. Cras vehicula aliquet",
+  //   "auctor odio a purus. Duis",
+  // ];
+
+  // const arrayHolder = arr;
 
   const searchData = txt => {
     let newData;
+    setHome(true);
+    setViewDrop(true);
     if (txt !== "") {
-      setHome(true);
       newData = arrayHolder.filter(item => {
         const itemdata = item.toUpperCase();
         const textdata = searchTxt.toUpperCase();
@@ -87,9 +114,9 @@ export const ConsumerHomeScreen = ({navigation}) => {
       });
     }
 
-    if (txt === "") {
-      setHome(false);
-    }
+    // if (txt === "") {
+    //   setHome(false);
+    // }
 
     setSearchTxt(txt);
     setData(newData);
@@ -97,7 +124,9 @@ export const ConsumerHomeScreen = ({navigation}) => {
 
   const handlePressItem = txt => {
     console.log("pressed:", txt);
+    setViewDrop(false);
     setSearchTxt(txt);
+    handleSearch(searchTxt);
   };
 
   const handleSortby = val => {
@@ -162,6 +191,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
     // setSearchTxt("");
     setHome(false);
     setSearchResult(false);
+    setShowResult(false);
     setRefresh(1);
   };
 
@@ -212,7 +242,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
           if (searchResult) {
             response = await axios({
               method: "get",
-              url: `${HOST_PORT}/api/v1/gigs/search/${searchTxt}`,
+              url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?distance=200000&searchTag=${searchTxt}`,
               headers: {
                 Authorization: `Bearer ${jwt}`,
               },
@@ -337,6 +367,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         />
 
         {data &&
+          viewDrop &&
           // <FlatList
           //   data={data}
           //   keyExtractor={(item, index) => index.toString()}

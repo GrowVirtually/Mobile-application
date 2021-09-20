@@ -32,19 +32,12 @@ const ConsumerDrawer = props => {
         label={() => <Text style={styles.menuTxt}>Gigs</Text>}
         onPress={() => props.navigation.navigate("ConsumerHome")}
       />
-      <DrawerItem
+      {/* <DrawerItem
         icon={({color, size}) => <MaterialCommunityIcons name="bell" color="white" size={24} />}
         label={() => <Text style={styles.menuTxt}>Notifications</Text>}
         onPress={() => props.navigation.navigate("Notifications")}
-      />
+      /> */}
 
-      <DrawerItem
-        icon={({color, size}) => (
-          <MaterialCommunityIcons name="account-circle" color="white" size={24} />
-        )}
-        label={() => <Text style={styles.menuTxt}>My Profile</Text>}
-        onPress={() => props.navigation.navigate("ProfileScreen")}
-      />
       <DrawerItem
         icon={({color, size}) => (
           <MaterialCommunityIcons name="cart-arrow-down" color="white" size={24} />
@@ -59,6 +52,13 @@ const ConsumerDrawer = props => {
         )}
         label={() => <Text style={styles.menuTxt}>Scan buyer's QR</Text>}
         onPress={() => props.navigation.navigate("QrScan")}
+      />
+      <DrawerItem
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="account-circle" color="white" size={24} />
+        )}
+        label={() => <Text style={styles.menuTxt}>My Profile</Text>}
+        onPress={() => props.navigation.navigate("ProfileScreen")}
       />
     </DrawerContentScrollView>
   );
