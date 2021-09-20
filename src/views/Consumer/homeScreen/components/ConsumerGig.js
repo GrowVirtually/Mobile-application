@@ -7,7 +7,16 @@ import {useNavigation} from "@react-navigation/core";
 import {Dimensions} from "react-native";
 const {width} = Dimensions.get("screen");
 
-export const ConsumerGig = ({gigTitle, unitPrice, expireDate, id, user, unit, direction}) => {
+export const ConsumerGig = ({
+  gigTitle,
+  unitPrice,
+  expireDate,
+  id,
+  user,
+  unit,
+  direction,
+  images,
+}) => {
   const growerName = `${user.fname} ${user.lname}`;
 
   const imgUrl = "https://picsum.photos/200/300?random=1";
@@ -35,7 +44,15 @@ export const ConsumerGig = ({gigTitle, unitPrice, expireDate, id, user, unit, di
           id,
         })
       }>
-      <Card.Cover style={ConsumerGigStyle.img} source={{uri: imgUrl}} />
+      {images.length === 0 ? (
+        <Card.Cover
+          style={ConsumerGigStyle.img}
+          source={require("../../../../assets/gigPlaceholder.png")}
+        />
+      ) : (
+        <Card.Cover style={ConsumerGigStyle.img} source={{uri: imgUrl}} />
+      )}
+
       <View style={ConsumerGigStyle.cardContent}>
         <View style={ConsumerGigStyle.cardLeft}>
           <Text style={ConsumerGigStyle.gigTitle}>
