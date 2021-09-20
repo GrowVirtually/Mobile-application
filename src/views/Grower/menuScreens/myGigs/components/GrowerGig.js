@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {Text, View, StyleSheet} from "react-native";
 import {Avatar, Button, Card, Title, Paragraph} from "react-native-paper";
 import * as Colors from "../../../../../styles/abstracts/colors";
@@ -26,6 +26,9 @@ export const GrowerGig = ({
   direction,
   images,
 }) => {
+  const {loginState} = useContext(AuthContext);
+  const jwt = loginState.userToken;
+
   const imgUrl = "https://cdn-icons-png.flaticon.com/512/3362/3362807.png";
 
   const navigation = useNavigation();
@@ -38,19 +41,33 @@ export const GrowerGig = ({
     return Math.round(days);
   };
 
-  return (
-    <Card
-      style={direction === "row" ? styles.rowItem : styles.gridItem}
-      onPress={() =>
-        navigation.navigate("", {
-          gigTitle,
-          unitPrice,
-          expireDate,
+  const sendDeleteReq = async () => {
+    try {
+      // const config = {
+      //   method: "delete",
+      //   url: `${HOST_PORT}/api/v1/gigs/${id}`,
+      //   headers: {
+      //     Authorization: `Bearer ${jwt}`,
+      //   },
+      // };
 
-          imgUrl,
-          id,
-        })
-      }>
+      const response = await axios.delete(`${HOST_PORT}/api/v1/gigs/${id}`, {
+        data: {foo: "bar"},
+        headers: {Authorization: `Bearer ${jwt}`},
+      });
+
+      console.log(response.data.status);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleGigDelete = () => {
+    sendDeleteReq();
+    navigation.goBack();
+  };
+  return (
+    <Card style={direction === "row" ? styles.rowItem : styles.gridItem}>
       {images.length === 0 ? (
         <Card.Cover style={styles.img} source={{uri: imgUrl}} />
       ) : (
@@ -75,9 +92,7 @@ export const GrowerGig = ({
             Sold: {Math.round(sold)} /{Math.round(stock)}
           </Text>
         </View>
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => navigation.navigate("MyGigsScreen")}>
+        <TouchableOpacity style={styles.menuItem} onPress={() => handleGigDelete()}>
           <Icon name="delete" color={Colors.secondary.color} size={30} />
         </TouchableOpacity>
         <Text style={styles.idTxt}>ID:{id}</Text>
