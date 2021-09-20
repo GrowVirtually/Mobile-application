@@ -33,6 +33,7 @@ function GigScreen4({navigation, route}) {
     quantity,
     price,
     minOrderAmount,
+    gigDuration,
     latitude,
     longitude,
   } = route.params;
@@ -41,11 +42,9 @@ function GigScreen4({navigation, route}) {
   const jwt = loginState.userToken;
 
   const [userId, setUserId] = useState("");
-  const [gigExpDate, setGigExpDate] = useState("");
 
   const onSubmitGetLocation = formFields => {
     // Actions on submit button click.
-
     navigation.navigate("GigScreen5", {});
   };
 
@@ -57,7 +56,7 @@ function GigScreen4({navigation, route}) {
         is_mandatory: "true",
         meta: {
           label: "Gig Duration",
-          placeholder: "Enter Duration of the gig..",
+          placeholder: "Enter latitude of the gig..",
         },
       },
     ],
@@ -80,7 +79,7 @@ function GigScreen4({navigation, route}) {
 
   getProfile();
 
-  console.log("Gig duration", gigExpDate);
+  // console.log("Gig duration", gigExpDate);
 
   //Post Data to database from here
   const postGig = async () => {
@@ -94,16 +93,15 @@ function GigScreen4({navigation, route}) {
       unitPrice: price,
       stock: quantity,
       sold: price,
-      gigDuration: gigExpDate,
+      gigDuration: gigDuration,
       userid: userId,
       location: {
         lat: 6.933906500876093,
         lng: 79.8502538395318,
       },
     };
-    console.log("Data Object", data);
 
-    console.log(gigExpDate);
+    // console.log(gigExpDate);
     try {
       const config = {
         method: "post",
@@ -125,23 +123,8 @@ function GigScreen4({navigation, route}) {
 
   const onSubmit = async formFields => {
     // Actions on submit button click.
-
+    alert("Location set Successfully");
     navigation.navigate("GigScreenImage", {});
-    console.log("Gig Type: ", gigType);
-    console.log("Gig Category: ", gigCategory);
-    console.log("Gig Title: ", gigTitle);
-    console.log("Gig Desc: ", gigDescription);
-    console.log("Gig delivery: ", deliveryOp);
-    console.log("Gig unit: ", selectedUnit);
-    console.log("quantity: ", quantity);
-    console.log("price: ", price);
-    console.log("minOrderAmount:", minOrderAmount);
-    console.log("latitude:", latitude);
-    console.log("longitude:", longitude);
-    console.log("gigExpDate:", formFields.gigExpDate.value);
-    console.log("Jwt:", jwt);
-    setGigExpDate(formFields.gigExpDate.value);
-    // console.log(userId);
     postGig();
   };
 
@@ -151,16 +134,26 @@ function GigScreen4({navigation, route}) {
 
       <AppHeader navigation={navigation} title="Add a New Gig" showBackButton={true} />
 
-      <View style={styles.selectBox}>
-        <Text>{latitude}</Text>
-        <Text>{longitude}</Text>
-      </View>
       <View style={styles.buttonContainer}>
         <Button
           accessibilityLabel="submit-button"
           title="Get Location"
           buttonStyle={styles.button}
           onPress={onSubmitGetLocation}
+        />
+      </View>
+
+      <View style={styles.selectBox}>
+        <Text>{latitude}</Text>
+        <Text>{longitude}</Text>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <Button
+          accessibilityLabel="submit-button"
+          title="Set Location"
+          buttonStyle={styles.button}
+          onPress={onSubmit}
         />
       </View>
       <DynamicForm formTemplate={formTemplate} onSubmit={onSubmit} />

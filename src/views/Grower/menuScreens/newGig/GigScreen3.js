@@ -56,6 +56,7 @@ function GigScreen3({navigation, route}) {
       quantity: quantity,
       price: price,
       minOrderAmount: minOrderAmount,
+      gigDuration: gigDuration,
     });
     console.log("Gig Type: ", gigType);
     console.log("Gig Category: ", gigCategory);
@@ -67,13 +68,14 @@ function GigScreen3({navigation, route}) {
     console.log("Quantity: ", quantity);
     console.log("Price: ", price);
     console.log("minAmount: ", minOrderAmount);
+    console.log("Gig Duration: ", gigDuration);
   };
 
   const [selectedUnit, setSelectedTeam] = useState({});
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [minOrderAmount, setMinOrder] = useState("");
-  const [expdate, setGigExDate] = useState(new Date(1598051730000));
+  const [gigDuration, setGigDuration] = useState("");
 
   function setUnit() {
     return val => setSelectedTeam(val);
@@ -122,6 +124,15 @@ function GigScreen3({navigation, route}) {
         keyboardType="numeric"
       />
 
+      <Text style={styles.labelText}>Gig Duration</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={setGigDuration}
+        value={gigDuration}
+        placeholder="Enter number of days for gig existence "
+        keyboardType="numeric"
+      />
+
       <View style={styles.buttonContainer}>
         <Button
           accessibilityLabel="submit-button"
@@ -130,8 +141,6 @@ function GigScreen3({navigation, route}) {
           onPress={onSubmit}
         />
       </View>
-
-      <DatePickerComp handleDate={setGigExDate} date={expdate} title="Add Gig Expiration Date" />
     </View>
   );
 }
