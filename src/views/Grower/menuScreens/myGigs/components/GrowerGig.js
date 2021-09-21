@@ -43,14 +43,6 @@ export const GrowerGig = ({
 
   const sendDeleteReq = async () => {
     try {
-      // const config = {
-      //   method: "delete",
-      //   url: `${HOST_PORT}/api/v1/gigs/${id}`,
-      //   headers: {
-      //     Authorization: `Bearer ${jwt}`,
-      //   },
-      // };
-
       const response = await axios.delete(`${HOST_PORT}/api/v1/gigs/${id}`, {
         data: {foo: "bar"},
         headers: {Authorization: `Bearer ${jwt}`},

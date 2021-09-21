@@ -19,10 +19,42 @@ export const OrderDetail = ({
   paymentAmount,
   createdAt,
   date,
-  grower,
+  growerId,
   price,
   isOrderCompleted,
+  isConsumerCompleted,
+  isGrowerAccepted,
+  isGrowerCompleted,
+  qrLink,
+  quantity,
+  updatedAt,
+  consumerId,
+  deliveryMethod,
+  gigId,
 }) => {
+  const navigation = useNavigation();
+
+  const handleViewOrder = () => {
+    navigation.navigate("OrderCompletion", {
+      id,
+      paymentAmount,
+      createdAt,
+      date,
+      growerId,
+      price,
+      isOrderCompleted,
+      isConsumerCompleted,
+      isGrowerAccepted,
+      isGrowerCompleted,
+      qrLink,
+      quantity,
+      updatedAt,
+      consumerId,
+      deliveryMethod,
+      gigId,
+    });
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.orderNoRow}>
@@ -33,7 +65,7 @@ export const OrderDetail = ({
         <Text style={styles.dateTxt}>{createdAt}</Text>
         <View style={{flexDirection: "row", alignItems: "center"}}>
           <Icon style={{marginRight: 5}} name="account" size={16} color="#555" />
-          <Text style={styles.dateTxt}>{grower}</Text>
+          <Text style={styles.dateTxt}>Grower Name Here</Text>
         </View>
       </View>
       <View style={styles.priceRow}>
@@ -63,10 +95,14 @@ export const OrderDetail = ({
         )}
       </View>
 
+      <TouchableOpacity style={styles.viewOrder} onPress={() => handleViewOrder()}>
+        <Text style={styles.viewOrderTxt}>View Order</Text>
+      </TouchableOpacity>
+
       <Image
         style={styles.logo}
         source={{
-          uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACECAYAAABRRIOnAAAAAklEQVR4AewaftIAAAN0SURBVO3BQW5cSwIDwWSh73/lHC3+gqsCGq+lsWVGxC/M/OcwUw4z5TBTDjPlMFMOM+UwUw4z5TBTDjPlMFMOM+UwUw4z5TBTXjyUhJ+k8kQS3qFyk4Sm0pLwk1SeOMyUw0w5zJQXH6bySUl4RxKayhNJ+CSVT0rCJx1mymGmHGbKi2+WhHeovCMJN0m4UXlHEprKE0l4h8p3OsyUw0w5zJQXv4zKTRJukvAvO8yUw0w5zJQXv0wSmkpTeYfKTRKayt/sMFMOM+UwU158M5XfJAlN5QmVP8lhphxmymGmvPiwJPw/qbQkNJWWhKbSktBUWhKayk0S/mSHmXKYKYeZ8uIhld9M5UblRuVvcpgph5lymCkvHkpCU2lJ+CSVptKS0FTekYR3qNwk4ZNUvtNhphxmymGmxC/8oCTcqHynJDSVn5SEptKScKPynQ4z5TBTDjMlfuGBJDSVdyThHSrvSMKNyjuS0FRaEprKTRKayk0SblSeOMyUw0w5zJT4hQeScKPSkvAOlSeS0FRaEppKS0JT+c0OM+UwUw4z5cUPU7lJQktCU3mHSktCU2lJeEcS3qHSkvAOlZaEpvLEYaYcZsphpsQvPJCEptKScKPyRBKayjuScKPyLznMlMNMOcyUF3+4JDSVptKScKPSVFoSWhJuVG6S0FRuktBUbpLQVJ44zJTDTDnMlBffTOUmCTcqN0loKi0JN0loKk8k4SYJTyShqXzSYaYcZsphprz4ZkloKk3lJglNpam0JDyRhD9JEprKdzrMlMNMOcyU+IW/WBLeofJEEm5U3pGEG5WWhKbySYeZcpgph5kSv/BAEn6Syk0SnlB5RxKaSktCU2lJ+CSVJw4z5TBTDjPlxYepfFISbpLwhMpNEp5QeULlJgmfdJgph5lymCkvvlkS3qHyhEpLwk0SblRaEm6S8IRKS0JTaSqfdJgph5lymCkv/jEqLQlN5UblJgk3Ki0JLQk3SbhReeIwUw4z5TBTXvzjVFoSmso7VN6h0pJwo9KS8EmHmXKYKYeZ8uKbqXwnlRuVd6jcJOEdKi0JTeVG5ScdZsphphxmyosPS8JPSsKNSktCU2lJuFG5SUJLQlO5UWlJ+EmHmXKYKYeZEr8w85/DTDnMlMNMOcyUw0w5zJTDTDnMlMNMOcyUw0w5zJTDTDnMlMNM+R+dRoj72rWteAAAAABJRU5ErkJggg==",
+          uri: qrLink,
         }}
       />
     </View>
@@ -117,5 +153,21 @@ const styles = StyleSheet.create({
   logo: {
     width: 66,
     height: 58,
+  },
+  viewOrder: {
+    elevation: 8,
+
+    backgroundColor: Colors.primary.color,
+    marginTop: 8,
+    alignItems: "center",
+    paddingVertical: 0,
+    borderRadius: 5,
+    // minHeight: 100,
+  },
+  viewOrderTxt: {
+    color: "#ffff",
+    padding: 10,
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });

@@ -68,7 +68,6 @@ function OrdersScreen({navigation}) {
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.primary.color} />
       <AppHeader navigation={navigation} title="My Orders" showBackButton={true} />
-      <Text style={styles.text}>Orders Screen</Text>
 
       <ScrollView>
         {isLoading ? (
