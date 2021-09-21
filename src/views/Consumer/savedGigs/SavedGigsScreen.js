@@ -20,10 +20,9 @@ const SavedGigsScreen = ({navigation}) => {
     return unsubscribe;
   }, [navigation]);
 
-  // useEffect(() => {
-
-  //   getSavedGigs();
-  // }, []);
+  useEffect(() => {
+    getSavedGigs();
+  }, []);
 
   const getSavedGigs = async () => {
     try {

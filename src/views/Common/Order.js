@@ -4,6 +4,11 @@ import * as Colors from "../../styles/abstracts/colors";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const Order = ({orderId, date, grower, price, isOrderCompleted}) => {
+  const formatDate = dateString => {
+    const d = new Date(dateString);
+    return d.toDateString();
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.orderNoRow}>
@@ -11,16 +16,16 @@ const Order = ({orderId, date, grower, price, isOrderCompleted}) => {
         <Text style={styles.orderTxt}>{orderId}</Text>
       </View>
       <View style={styles.dateRow}>
-        <Text style={styles.dateTxt}>{date}</Text>
-        <View style={{flexDirection: "row", alignItems: "center"}}>
+        <Text style={styles.dateTxt}>{formatDate(date)}</Text>
+        {/* <View style={{flexDirection: "row", alignItems: "center"}}>
           <Icon style={{marginRight: 5}} name="account" size={16} color="#555" />
           <Text style={styles.dateTxt}>{grower}</Text>
-        </View>
+        </View> */}
       </View>
       <View style={styles.priceRow}>
         <Text style={styles.priceTxt}>Rs. {price}</Text>
       </View>
-      <View style={styles.statusRow}>
+      {/* <View style={styles.statusRow}>
         {isOrderCompleted ? (
           <>
             <Icon
@@ -42,7 +47,7 @@ const Order = ({orderId, date, grower, price, isOrderCompleted}) => {
             <Text style={[styles.statusTxt, {color: Colors.errorColor.color}]}>Pending</Text>
           </>
         )}
-      </View>
+      </View> */}
     </View>
   );
 };
