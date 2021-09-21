@@ -94,9 +94,9 @@ export default function UpdateImage({navigation, route}) {
         setLoading(false);
         if (response.data.status === "success") {
           Alert.alert(
-            "Successfully uploaded",
+            "Gig Image Successfully uploaded",
             "Your profile picture has been successfully uploaded",
-            [{text: "OK", onPress: () => null}],
+            [{text: "OK", onPress: () => navigation.navigate("GrowerHome")}],
           );
         }
       }
@@ -133,10 +133,6 @@ export default function UpdateImage({navigation, route}) {
       <AppHeader navigation={navigation} title="My Gigs" showBackButton={true} />
 
       <ScrollView>
-        <Text>{gigTitle}</Text>
-        <Text>{unitPrice}</Text>
-        {/* <Text>{images[0].imgLink}</Text> */}
-
         <View style={styles.imgContainer}>
           {images.length !== 0 ? (
             <Image
@@ -146,7 +142,7 @@ export default function UpdateImage({navigation, route}) {
               }}
             />
           ) : (
-            <Text>No Images</Text>
+            <Text></Text>
           )}
 
           {photo !== null && (
@@ -176,16 +172,12 @@ export default function UpdateImage({navigation, route}) {
                   size={27}
                   onPress={handleCamera}
                 />
-                <IconButton
-                  icon="upload"
-                  color={Colors.secondary.color}
-                  size={27}
-                  disabled={photo === null}
-                  onPress={handleUploadPhoto}
-                />
               </>
             )}
           </View>
+          <TouchableOpacity style={styles.button} onPress={() => handleUploadPhoto()}>
+            <Text style={styles.btnTxt}>Upload Image</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
@@ -212,8 +204,8 @@ const styles = StyleSheet.create({
   },
   img: {
     padding: 10,
-    width: 120,
-    height: 120,
+    width: 300,
+    height: 300,
     borderRadius: 10,
   },
   imgContainer: {
@@ -223,5 +215,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 5,
+  },
+  button: {
+    width: "80%",
+    alignSelf: "center",
+    margin: 20,
+    elevation: 8,
+    backgroundColor: Colors.primary.color,
+    marginTop: 8,
+    alignItems: "center",
+    paddingVertical: 0,
+    borderRadius: 30,
+    // minHeight: 100,
+  },
+  btnTxt: {
+    color: "#ffff",
+    padding: 10,
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
