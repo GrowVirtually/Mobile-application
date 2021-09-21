@@ -2,7 +2,14 @@
 import axios from "axios";
 import React, {useState, useEffect, useContext} from "react";
 import {StyleSheet, Text, View, ScrollView, Image, Platform, Alert} from "react-native";
-import {Button, TextInput, RadioButton, IconButton, ActivityIndicator} from "react-native-paper";
+import {
+  Button,
+  TextInput,
+  RadioButton,
+  IconButton,
+  ActivityIndicator,
+  HelperText,
+} from "react-native-paper";
 import AuthContext from "../context/auth-context";
 import * as Colors from "../styles/abstracts/colors";
 import AppHeader from "./Common/AppHeader";
@@ -21,6 +28,9 @@ const UpdateProfileScreen = ({navigation, route}) => {
   const [imgLink, setImgLink] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState("");
+  const [nicError, setNicError] = useState(false);
 
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
@@ -54,7 +64,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
   };
 
   const handleProfileUpdate = () => {
-    if (fname !== "" && lname !== "" && nic !== "") {
+    if (fname !== "" && lname !== "") {
       sendUpdateReq();
       navigation.goBack();
     }
@@ -164,6 +174,27 @@ const UpdateProfileScreen = ({navigation, route}) => {
     }
   };
 
+  const validateNic = text => {
+    const reg = /^[0-9]+[Vv]$/;
+
+    if (text.length !== 10) {
+      setNicError(true);
+      setError("Invalid number of digits");
+      setNic(text);
+    } else {
+      // eslint-disable-next-line no-lonely-if
+      setNicError(false);
+      if (reg.test(text) === false) {
+        setError("NIC is not correct");
+        setNic(text);
+        setNicError(true);
+      } else {
+        setNic(text);
+        setError("");
+        setNicError(false);
+      }
+    }
+  };
   return (
     <>
       <AppHeader navigation={navigation} title="Edit Profile" />
@@ -253,7 +284,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
         <DatePickerComp handleDate={handleDate} date={dob} title="Update DOB" />
         <TextInput
           label="NIC"
-          onChangeText={txt => setNic(txt)}
+          onChangeText={txt => validateNic(txt)}
           dense
           style={styles.textInput}
           mode="outlined"
@@ -267,6 +298,11 @@ const UpdateProfileScreen = ({navigation, route}) => {
             },
           }}
         />
+        {nicError && (
+          <HelperText type="error" visible={nicError}>
+            {error}
+          </HelperText>
+        )}
         <View style={styles.radioGroup}>
           <View style={{flexDirection: "row", alignItems: "center"}}>
             <Text style={{marginRight: 20}}>Gender: </Text>
