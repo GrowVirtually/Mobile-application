@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet, Image} from "react-native";
 import {Avatar, Button, Card, Title, Paragraph} from "react-native-paper";
 import * as Colors from "../../../../../styles/abstracts/colors";
 import {useNavigation} from "@react-navigation/core";
@@ -62,6 +62,13 @@ export const OrderDetail = ({
           </>
         )}
       </View>
+
+      <Image
+        style={styles.logo}
+        source={{
+          uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACECAYAAABRRIOnAAAAAklEQVR4AewaftIAAAN0SURBVO3BQW5cSwIDwWSh73/lHC3+gqsCGq+lsWVGxC/M/OcwUw4z5TBTDjPlMFMOM+UwUw4z5TBTDjPlMFMOM+UwUw4z5TBTXjyUhJ+k8kQS3qFyk4Sm0pLwk1SeOMyUw0w5zJQXH6bySUl4RxKayhNJ+CSVT0rCJx1mymGmHGbKi2+WhHeovCMJN0m4UXlHEprKE0l4h8p3OsyUw0w5zJQXv4zKTRJukvAvO8yUw0w5zJQXv0wSmkpTeYfKTRKayt/sMFMOM+UwU158M5XfJAlN5QmVP8lhphxmymGmvPiwJPw/qbQkNJWWhKbSktBUWhKayk0S/mSHmXKYKYeZ8uIhld9M5UblRuVvcpgph5lymCkvHkpCU2lJ+CSVptKS0FTekYR3qNwk4ZNUvtNhphxmymGmxC/8oCTcqHynJDSVn5SEptKScKPynQ4z5TBTDjMlfuGBJDSVdyThHSrvSMKNyjuS0FRaEprKTRKayk0SblSeOMyUw0w5zJT4hQeScKPSkvAOlSeS0FRaEppKS0JT+c0OM+UwUw4z5cUPU7lJQktCU3mHSktCU2lJeEcS3qHSkvAOlZaEpvLEYaYcZsphpsQvPJCEptKScKPyRBKayjuScKPyLznMlMNMOcyUF3+4JDSVptKScKPSVFoSWhJuVG6S0FRuktBUbpLQVJ44zJTDTDnMlBffTOUmCTcqN0loKi0JN0loKk8k4SYJTyShqXzSYaYcZsphprz4ZkloKk3lJglNpam0JDyRhD9JEprKdzrMlMNMOcyU+IW/WBLeofJEEm5U3pGEG5WWhKbySYeZcpgph5kSv/BAEn6Syk0SnlB5RxKaSktCU2lJ+CSVJw4z5TBTDjPlxYepfFISbpLwhMpNEp5QeULlJgmfdJgph5lymCkvvlkS3qHyhEpLwk0SblRaEm6S8IRKS0JTaSqfdJgph5lymCkv/jEqLQlN5UblJgk3Ki0JLQk3SbhReeIwUw4z5TBTXvzjVFoSmso7VN6h0pJwo9KS8EmHmXKYKYeZ8uKbqXwnlRuVd6jcJOEdKi0JTeVG5ScdZsphphxmyosPS8JPSsKNSktCU2lJuFG5SUJLQlO5UWlJ+EmHmXKYKYeZEr8w85/DTDnMlMNMOcyUw0w5zJTDTDnMlMNMOcyUw0w5zJTDTDnMlMNM+R+dRoj72rWteAAAAABJRU5ErkJggg==",
+        }}
+      />
     </View>
   );
 };
@@ -106,5 +113,9 @@ const styles = StyleSheet.create({
   statusTxt: {
     fontWeight: "bold",
     color: Colors.secondary.color,
+  },
+  logo: {
+    width: 66,
+    height: 58,
   },
 });
