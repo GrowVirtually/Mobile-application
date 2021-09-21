@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   FlatList,
   Image,
+  Alert,
 } from "react-native";
 import {Button, TextInput, RadioButton, IconButton, ActivityIndicator} from "react-native-paper";
 
@@ -148,12 +149,14 @@ export default function UpdateImage({navigation, route}) {
             <Text>No Images</Text>
           )}
 
-          {/* <Image
-            style={styles.img}
-            source={{
-              uri: photo !== null ? photo.assets[0].uri : images[0].imgLink,
-            }}
-          /> */}
+          {photo !== null && (
+            <Image
+              style={styles.img}
+              source={{
+                uri: photo.assets[0].uri,
+              }}
+            />
+          )}
 
           <View style={styles.imgBtns}>
             {isLoading ? (
