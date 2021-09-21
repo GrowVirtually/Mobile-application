@@ -260,9 +260,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       } else {
         response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${
-            mylocation.longitude
-          }?limit=${100}&distance=200000&page=${page}`,
+          url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?limit=${10}&distance=200000&page=${page}`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -285,7 +283,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?limit=${100}&distance=200000&gigCategory=vegetable`,
+          url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?limit=${50}&distance=200000&gigCategory=vegetable`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -304,7 +302,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?limit=${100}&distance=200000&gigCategory=fruit`,
+          url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?limit=${50}&distance=200000&gigCategory=fruit`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
