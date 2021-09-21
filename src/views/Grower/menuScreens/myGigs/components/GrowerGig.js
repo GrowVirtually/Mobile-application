@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet, Image} from "react-native";
 import {Avatar, Button, Card, Title, Paragraph} from "react-native-paper";
 import * as Colors from "../../../../../styles/abstracts/colors";
 import {useNavigation} from "@react-navigation/core";
@@ -59,6 +59,22 @@ export const GrowerGig = ({
     alert("Gig Deleted successfully!");
     navigation.goBack();
   };
+
+  const editGig = () => {
+    navigation.navigate("UpdateImage", {
+      gigTitle,
+      unitPrice,
+      expireDate,
+      id,
+      user,
+      unit,
+      stock,
+      sold,
+      direction,
+      images,
+    });
+  };
+
   return (
     <Card style={direction === "row" ? styles.rowItem : styles.gridItem}>
       {images.length === 0 ? (
@@ -69,6 +85,19 @@ export const GrowerGig = ({
 
       <View style={styles.cardContent}>
         <View style={styles.cardLeft}>
+          {images.length !== 0 ? (
+            // <Image
+            //   style={styles.img}
+            //   source={{
+            //     uri: photo !== null ? photo.assets[0].uri : images[0].imgLink,
+            //   }}
+            <Text></Text>
+          ) : (
+            <TouchableOpacity style={styles.menuItem} onPress={() => editGig()}>
+              <Icon name="content-save-edit-outline" color={Colors.secondary.color} size={30} />
+            </TouchableOpacity>
+          )}
+
           <View style={styles.cardRight}>
             <Text style={styles.gigTitle}>
               {gigTitle.length > 10 ? gigTitle.slice(0, 17) + ".." : gigTitle}
@@ -88,6 +117,7 @@ export const GrowerGig = ({
         <TouchableOpacity style={styles.menuItem} onPress={() => handleGigDelete()}>
           <Icon name="delete" color={Colors.secondary.color} size={30} />
         </TouchableOpacity>
+
         <Text style={styles.idTxt}>ID:{id}</Text>
       </View>
     </Card>
@@ -138,6 +168,7 @@ const styles = StyleSheet.create({
     color: Colors.fontColor.color,
   },
   menuItem: {
+    fontSize: 8,
     elevation: 2,
     padding: 0,
     backgroundColor: "#fff",
