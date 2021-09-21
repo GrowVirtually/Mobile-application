@@ -33,6 +33,7 @@ const GigTitle = ({priceTag, gigTitle, expireDate, unit, stock, gigId}) => {
         data,
       });
       console.log("saved", response.data);
+      alert("This gig has been saved to your favourites");
     } catch (error) {
       console.error(error);
     }

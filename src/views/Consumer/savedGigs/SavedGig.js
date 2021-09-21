@@ -7,8 +7,8 @@ import {useNavigation} from "@react-navigation/core";
 import {Dimensions} from "react-native";
 const {width} = Dimensions.get("screen");
 
-export const SavedGig = ({gigTitle, users, unitPrice, expireDate, id, unit, direction, images}) => {
-  const growerName = `${users[0].fname} ${users[0].lname}`;
+export const SavedGig = ({gigTitle, user, unitPrice, expireDate, id, unit, direction, images}) => {
+  const growerName = `${user.fname} ${user.lname}`;
 
   const navigation = useNavigation();
 

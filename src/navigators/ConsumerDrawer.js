@@ -20,10 +20,10 @@ const ConsumerDrawer = props => {
 
   return (
     <DrawerContentScrollView {...props}>
-      {/* <SafeAreaView style={styles.header}>
-        <Avatar.Text size={64} label="DD" style={{backgroundColor: "white", color: "green"}} />
-        <Text style={styles.txt}>Dimuthu Dhanushka</Text>
-      </SafeAreaView> */}
+      <SafeAreaView style={styles.header}>
+        {/* <Avatar.Text size={64} label="DD" style={{backgroundColor: "white", color: "green"}} /> */}
+        <Text style={styles.txt}>[ Consumer Mode ]</Text>
+      </SafeAreaView>
 
       {/* Default items */}
       {/* <DrawerItemList {...props} /> */}

@@ -7,10 +7,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 function GrowerDrawer(props) {
   return (
     <DrawerContentScrollView {...props}>
-      {/* <SafeAreaView style={cusomDrawerStyle.header}>
-        <Avatar.Text size={64} label="DD" style={{backgroundColor: "white", color: "green"}} />
-        <Text style={cusomDrawerStyle.txt}>Anjana </Text>
-      </SafeAreaView> */}
+      <SafeAreaView style={cusomDrawerStyle.header}>
+        {/* <Avatar.Text size={64} label="DD" style={{backgroundColor: "white", color: "green"}} /> */}
+        <Text style={cusomDrawerStyle.txt}>[ Grower Mode ] </Text>
+      </SafeAreaView>
 
       {/* Default items */}
       {/* <DrawerItemList {...props} /> */}
@@ -19,11 +19,11 @@ function GrowerDrawer(props) {
         label={() => <Text style={cusomDrawerStyle.menuTxt}>Home</Text>}
         onPress={() => props.navigation.navigate("GrowerStack")}
       />
-      <DrawerItem
+      {/* <DrawerItem
         icon={({color, size}) => <MaterialCommunityIcons name="bell" color="white" size={24} />}
         label={() => <Text style={cusomDrawerStyle.menuTxt}>Notifications</Text>}
         onPress={() => props.navigation.navigate("Notifications")}
-      />
+      /> */}
 
       <DrawerItem
         icon={({color, size}) => <MaterialCommunityIcons name="bell" color="white" size={24} />}
