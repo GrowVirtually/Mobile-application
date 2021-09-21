@@ -2,24 +2,13 @@
 import React from "react";
 import {Text, View, StyleSheet} from "react-native";
 import {Avatar, Button, Card, Title, Paragraph} from "react-native-paper";
-import * as Colors from "../../../../styles/abstracts/colors";
+import * as Colors from "../../../styles/abstracts/colors";
 import {useNavigation} from "@react-navigation/core";
 import {Dimensions} from "react-native";
 const {width} = Dimensions.get("screen");
 
-export const ConsumerGig = ({
-  gigTitle,
-  unitPrice,
-  expireDate,
-  id,
-  user,
-  unit,
-  direction,
-  images,
-}) => {
-  const growerName = `${user.fname} ${user.lname}`;
-
-  const imgUrl = "https://picsum.photos/200/300?random=1";
+export const SavedGig = ({gigTitle, users, unitPrice, expireDate, id, unit, direction, images}) => {
+  const growerName = `${users[0].fname} ${users[0].lname}`;
 
   const navigation = useNavigation();
 
@@ -33,39 +22,37 @@ export const ConsumerGig = ({
 
   return (
     <Card
-      style={direction === "row" ? ConsumerGigStyle.rowItem : ConsumerGigStyle.gridItem}
+      style={direction === "row" ? SavedGigStyle.rowItem : SavedGigStyle.gridItem}
       onPress={() =>
         navigation.navigate("GigScreen", {
           gigTitle,
           unitPrice,
           expireDate,
-          growerName,
-          imgUrl,
           id,
         })
       }>
       {images.length === 0 ? (
         <Card.Cover
-          style={ConsumerGigStyle.img}
-          source={require("../../../../assets/gigPlaceholder.png")}
+          style={SavedGigStyle.img}
+          source={require("../../../assets/gigPlaceholder.png")}
         />
       ) : (
-        <Card.Cover style={ConsumerGigStyle.img} source={{uri: images[0].imgLink}} />
+        <Card.Cover style={SavedGigStyle.img} source={{uri: images[0].imgLink}} />
       )}
 
-      <View style={ConsumerGigStyle.cardContent}>
-        <View style={ConsumerGigStyle.cardLeft}>
-          <Text style={ConsumerGigStyle.gigTitle}>
+      <View style={SavedGigStyle.cardContent}>
+        <View style={SavedGigStyle.cardLeft}>
+          <Text style={SavedGigStyle.gigTitle}>
             {gigTitle.length > 10 ? gigTitle.slice(0, 17) + ".." : gigTitle}
           </Text>
-          <Text style={ConsumerGigStyle.gigSubTitle}>
+          <Text style={SavedGigStyle.gigSubTitle}>
             Rs {unitPrice} /{unit}
           </Text>
-          <Text style={ConsumerGigStyle.expireTxt}>
+          <Text style={SavedGigStyle.expireTxt}>
             Expires in {getDays(expireDate) + " " + (getDays(expireDate) > 1 ? "days" : "day")}
           </Text>
         </View>
-        <View style={ConsumerGigStyle.cardRight}>
+        <View style={SavedGigStyle.cardRight}>
           <Avatar.Text
             size={24}
             label={growerName
@@ -75,7 +62,7 @@ export const ConsumerGig = ({
             color="#fff"
             style={{backgroundColor: Colors.primary.color}}
           />
-          <Text style={ConsumerGigStyle.avatarTxt}>
+          <Text style={SavedGigStyle.avatarTxt}>
             {growerName.length > 10 ? growerName.slice(0, 9) + ".." : growerName}
           </Text>
         </View>
@@ -83,7 +70,7 @@ export const ConsumerGig = ({
     </Card>
   );
 };
-const ConsumerGigStyle = StyleSheet.create({
+const SavedGigStyle = StyleSheet.create({
   gridItem: {
     width: "46%",
     margin: 5,

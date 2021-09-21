@@ -216,7 +216,7 @@ const ProfileScreen = () => {
               <Text style={{marginLeft: 20}}>DOB: {profile.dob ? profile.dob : "none"}</Text>
             </View>
           </View>
-
+{/* 
           <View style={styles.infoBoxWrapper}>
             <View
               style={[
@@ -233,10 +233,10 @@ const ProfileScreen = () => {
               <Title style={{color: Colors.primary.color}}>LKR 140.50</Title>
               <Caption>Pending Clearence</Caption>
             </View>
-          </View>
+          </View> */}
 
           <View style={styles.menuWrapper}>
-            <TouchableRipple onPress={() => {}}>
+            {/* <TouchableRipple onPress={() => {}}>
               <View style={styles.menuItem}>
                 <Icon name="barley" color={Colors.secondary.color} size={25} />
                 <Text style={styles.menuItemText}>My Gigs</Text>
@@ -247,19 +247,19 @@ const ProfileScreen = () => {
                 <Icon name="bank" color={Colors.secondary.color} size={25} />
                 <Text style={styles.menuItemText}>Bank Details</Text>
               </View>
-            </TouchableRipple>
+            </TouchableRipple> */}
             {/* <TouchableRipple onPress={() => {}}>
               <View style={styles.menuItem}>
                 <Icon name="cart-arrow-down" color={Colors.secondary.color} size={25} />
                 <Text style={styles.menuItemText}>My Orders</Text>
               </View>
             </TouchableRipple> */}
-            <TouchableRipple onPress={() => {}}>
+            {/* <TouchableRipple onPress={() => {}}>
               <View style={styles.menuItem}>
                 <Icon name="cart-arrow-up" color={Colors.secondary.color} size={25} />
                 <Text style={styles.menuItemText}>Gig Orders</Text>
               </View>
-            </TouchableRipple>
+            </TouchableRipple> */}
             <TouchableRipple
               onPress={() => {
                 navigation.navigate("UpdateProfile", {profile});

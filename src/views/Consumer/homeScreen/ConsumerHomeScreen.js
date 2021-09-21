@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable arrow-body-style */
 import axios from "axios";
 import React, {useEffect, useContext, useState} from "react";
@@ -38,8 +39,9 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const [showFilters, setshowFilters] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [searchResult, setSearchResult] = useState(false);
-  const [searchTxt, setSearchTxt] = useState("rad");
+  const [searchTxt, setSearchTxt] = useState("");
   const [data, setData] = useState([]);
+  const [viewDrop, setViewDrop] = useState(false);
 
   // Prams states
   const [category, setCategory] = useState("vegetable");
@@ -56,39 +58,61 @@ export const ConsumerHomeScreen = ({navigation}) => {
   const jwt = loginState.userToken;
 
   // fetch arr from backend
+  const [arrayHolder, setArrayHolder] = useState([]);
 
-  const arr = [
-    "vitae semper egestas, urna justo",
-    "Nam consequat dolor",
-    "Pellentesque ultricies dignissim",
-    "amet ante. Vivamus non",
-    "mollis vitae, posuere",
-    "et, rutrum non, hendrerit",
-    "ornare tortor at risus.",
-    "Sed dictum. Proin eget",
-    "Raddish",
-    "tincidunt nibh. Phasellus nulla.",
-    "magna. Nam ligula elit,",
-    "pede. Suspendisse dui.",
-    "sed leo. Cras vehicula aliquet",
-    "auctor odio a purus. Duis",
-  ];
+  useEffect(() => {
+    const getGigTitles = async () => {
+      let response;
+      try {
+        response = await axios({
+          method: "get",
+          url: `${HOST_PORT}/api/v1/gigs/titles`,
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
 
-  const arrayHolder = arr;
+        // console.log(
+        //   "titles",
+        //   response.data.data.gigs.map(item => item.gigTitle),
+        // );
+        setArrayHolder(response.data.data.gigs.map(item => item.gigTitle));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getGigTitles();
+  }, []);
+
+  // const arr = [
+  //   "vitae semper egestas, urna justo",
+  //   "Nam consequat dolor",
+  //   "Pellentesque ultricies dignissim",
+  //   "amet ante. Vivamus non",
+  //   "mollis vitae, posuere",
+  //   "et, rutrum non, hendrerit",
+  //   "ornare tortor at risus.",
+  //   "Sed dictum. Proin eget",
+  //   "Raddish",
+  //   "tincidunt nibh. Phasellus nulla.",
+  //   "magna. Nam ligula elit,",
+  //   "pede. Suspendisse dui.",
+  //   "sed leo. Cras vehicula aliquet",
+  //   "auctor odio a purus. Duis",
+  // ];
+
+  // const arrayHolder = arr;
 
   const searchData = txt => {
     let newData;
+    setHome(true);
+    setViewDrop(true);
     if (txt !== "") {
-      setHome(true);
       newData = arrayHolder.filter(item => {
         const itemdata = item.toUpperCase();
         const textdata = searchTxt.toUpperCase();
         return itemdata.indexOf(textdata) > -1;
       });
-    }
-
-    if (txt === "") {
-      setHome(false);
     }
 
     setSearchTxt(txt);
@@ -97,7 +121,9 @@ export const ConsumerHomeScreen = ({navigation}) => {
 
   const handlePressItem = txt => {
     console.log("pressed:", txt);
+    setViewDrop(false);
     setSearchTxt(txt);
+    handleSearch(searchTxt);
   };
 
   const handleSortby = val => {
@@ -162,6 +188,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
     // setSearchTxt("");
     setHome(false);
     setSearchResult(false);
+    setShowResult(false);
     setRefresh(1);
   };
 
@@ -184,80 +211,81 @@ export const ConsumerHomeScreen = ({navigation}) => {
 
   // get location
   useEffect(() => {
-    const getMyLocation = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem("mylocation");
-        if (jsonValue != null) {
-          const obj = JSON.parse(jsonValue);
-          setMyLocation(obj);
-        } else {
-          console.log("app loction null");
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    };
     getMyLocation();
   }, []);
 
+  const getMyLocation = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("mylocation");
+      if (jsonValue != null) {
+        const obj = JSON.parse(jsonValue);
+        setMyLocation(obj);
+      } else {
+        console.log("app loction null");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   // Get mixed gigs
   useEffect(() => {
-    async function getGigs() {
-      setLoading(true);
-      setEmptyResult(false);
+    getGigs();
+  }, [limit, page, refresh]);
 
-      let response;
-      try {
-        if (showResult) {
-          if (searchResult) {
-            response = await axios({
-              method: "get",
-              url: `${HOST_PORT}/api/v1/gigs/search/${searchTxt}`,
-              headers: {
-                Authorization: `Bearer ${jwt}`,
-              },
-            });
-          } else {
-            response = await axios({
-              method: "get",
-              url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}&sort=${sortby}`,
-              headers: {
-                Authorization: `Bearer ${jwt}`,
-              },
-            });
-          }
+  const getGigs = async () => {
+    setLoading(true);
+    setEmptyResult(false);
+
+    let response;
+    try {
+      if (showResult) {
+        if (searchResult) {
+          response = await axios({
+            method: "get",
+            url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?distance=200000&searchTag=${searchTxt}`,
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          });
         } else {
           response = await axios({
             method: "get",
-            url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${mylocation.longitude}?limit=${limit}&distance=200000&page=${page}`,
+            url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?limit=${limit}&distance=${distance}&page=${page}&gigCategory=${category}&gigType=${gigType}&unitPrice[gte]=${gt}&unitPrice[lte]=${lt}&unit=${unit}&deliveryAbility=${deliverability}&sort=${sortby}`,
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
           });
         }
-        setGigs(response.data.data.gigs);
+      } else {
+        response = await axios({
+          method: "get",
+          url: `${HOST_PORT}/api/v1/gigs/all/${mylocation.latitude},${
+            mylocation.longitude
+          }?limit=${100}&distance=200000&page=${page}`,
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+      }
+      setGigs(response.data.data.gigs);
+      setLoading(false);
+    } catch (error) {
+      if (error.response.data.status === "fail") {
+        setEmptyResult(true);
         setLoading(false);
-      } catch (error) {
-        // const {message} = error.response.data;
-        if (error.response.data.status === "fail") {
-          setEmptyResult(true);
-          setLoading(false);
-          // setShowResult(false);
-          // console.error(error);
-          console.log(error.response.data);
-        }
+        console.log(error.response.data);
       }
     }
-    getGigs();
-  }, [limit, page, refresh]);
+  };
 
   // get vege gigs
   useEffect(() => {
-    async function getGigs() {
+    const getVegeGigs = async () => {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=200000&gigCategory=vegetable`,
+          url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?limit=${100}&distance=200000&gigCategory=vegetable`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -266,28 +294,27 @@ export const ConsumerHomeScreen = ({navigation}) => {
       } catch (error) {
         console.error(error);
       }
-    }
-    getGigs();
+    };
+    getVegeGigs();
   }, []);
 
   // get fruit gigs
   useEffect(() => {
-    async function getGigs() {
+    async function getFruitGigs() {
       try {
         const response = await axios({
           method: "get",
-          url: `${HOST_PORT}/api/v1/gigs/all/5.977553814423967,80.34890374890934?limit=${limit}&distance=60000&gigCategory=fruit`,
+          url: `${HOST_PORT}/api/v1/gigs/all/6.900227917570787,79.85878306831803?limit=${100}&distance=200000&gigCategory=fruit`,
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
         });
         setFruitGigs(response.data.data.gigs);
       } catch (error) {
-        // prevPage();
         console.error(error);
       }
     }
-    getGigs();
+    getFruitGigs();
   }, []);
 
   return (
@@ -337,17 +364,7 @@ export const ConsumerHomeScreen = ({navigation}) => {
         />
 
         {data &&
-          // <FlatList
-          //   data={data}
-          //   keyExtractor={(item, index) => index.toString()}
-          //   // ItemSeparatorComponent={itemSeparator}
-          //   renderItem={({item}) => (
-          //     <Text style={styles.row} onPress={() => console.log("selected", item)}>
-          //       {item}
-          //     </Text>
-          //   )}
-          //   style={{marginTop: 10}}
-          // />
+          viewDrop &&
           data.map((item, index) => (
             <List.Item
               style={{zIndex: 0}}

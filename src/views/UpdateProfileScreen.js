@@ -170,7 +170,7 @@ const UpdateProfileScreen = ({navigation, route}) => {
 
       <ScrollView style={styles.container}>
         <View style={styles.imgContainer}>
-          {profile.imgLink !== "" || photo !== null ? (
+          {profile.imgLink !== null ? (
             <Image
               style={styles.img}
               source={{

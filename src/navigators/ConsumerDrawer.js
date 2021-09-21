@@ -28,29 +28,42 @@ const ConsumerDrawer = props => {
       {/* Default items */}
       {/* <DrawerItemList {...props} /> */}
       <DrawerItem
-        icon={({color, size}) => <MaterialCommunityIcons name="home" color="white" size={24} />}
-        label={() => <Text style={styles.menuTxt}>Gigs</Text>}
+        icon={({color, size}) => <MaterialCommunityIcons name="barley" color="white" size={24} />}
+        label={() => <Text style={styles.menuTxt}>Find crops</Text>}
         onPress={() => props.navigation.navigate("ConsumerHome")}
       />
       <DrawerItem
+        icon={({color, size}) => <MaterialCommunityIcons name="heart" color="white" size={24} />}
+        label={() => <Text style={styles.menuTxt}>Favorites</Text>}
+        onPress={() => props.navigation.navigate("SavedGigs")}
+      />
+      {/* <DrawerItem
         icon={({color, size}) => <MaterialCommunityIcons name="bell" color="white" size={24} />}
         label={() => <Text style={styles.menuTxt}>Notifications</Text>}
         onPress={() => props.navigation.navigate("Notifications")}
-      />
+      /> */}
 
-      <DrawerItem
-        icon={({color, size}) => (
-          <MaterialCommunityIcons name="account-circle" color="white" size={24} />
-        )}
-        label={() => <Text style={styles.menuTxt}>My Profile</Text>}
-        onPress={() => props.navigation.navigate("ProfileScreen")}
-      />
       <DrawerItem
         icon={({color, size}) => (
           <MaterialCommunityIcons name="cart-arrow-down" color="white" size={24} />
         )}
         label={() => <Text style={styles.menuTxt}>My Orders</Text>}
         onPress={() => props.navigation.navigate("MyOrders")}
+      />
+
+      <DrawerItem
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="qrcode-scan" color="white" size={24} />
+        )}
+        label={() => <Text style={styles.menuTxt}>Scan buyer's QR</Text>}
+        onPress={() => props.navigation.navigate("QrScan")}
+      />
+      <DrawerItem
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="account-circle" color="white" size={24} />
+        )}
+        label={() => <Text style={styles.menuTxt}>My Profile</Text>}
+        onPress={() => props.navigation.navigate("ProfileScreen")}
       />
     </DrawerContentScrollView>
   );

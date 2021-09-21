@@ -16,6 +16,10 @@ target 'MobileApp' do
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
+
   target 'MobileAppTests' do
     inherit! :complete
     # Pods for testing
