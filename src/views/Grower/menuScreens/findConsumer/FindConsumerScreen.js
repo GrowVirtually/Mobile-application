@@ -16,6 +16,7 @@ import {
 import MapView, {PROVIDER_GOOGLE, Marker, Callout} from "react-native-maps";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import * as Colors from "../../../../styles/abstracts/colors";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -35,28 +36,7 @@ function FindConsumer({navigation}) {
 
   const initialMapState = {
     markers,
-    categories: [
-      {
-        name: "Fastfood Center",
-        icon: <MaterialCommunityIcons style={styles.chipsIcon} name="food-fork-drink" size={18} />,
-      },
-      {
-        name: "Restaurant",
-        icon: <Ionicons name="ios-restaurant" style={styles.chipsIcon} size={18} />,
-      },
-      {
-        name: "Dineouts",
-        icon: <Ionicons name="md-restaurant" style={styles.chipsIcon} size={18} />,
-      },
-      {
-        name: "Snacks Corner",
-        icon: <MaterialCommunityIcons name="food" style={styles.chipsIcon} size={18} />,
-      },
-      {
-        name: "Hotel",
-        icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
-      },
-    ],
+    categories: [{}, {}, {}, {}, {}],
     region: {
       latitude: 6.9,
       longitude: 79.8588,
@@ -157,7 +137,7 @@ function FindConsumer({navigation}) {
           );
         })}
       </MapView>
-      <View style={styles.searchBox}>
+      {/* <View style={styles.searchBox}>
         <TextInput
           placeholder="Search here"
           placeholderTextColor="#000"
@@ -165,8 +145,8 @@ function FindConsumer({navigation}) {
           style={{flex: 1, padding: 0}}
         />
         <Ionicons name="ios-search" size={20} />
-      </View>
-      <ScrollView
+      </View> */}
+      {/* <ScrollView
         horizontal
         scrollEventThrottle={1}
         showsHorizontalScrollIndicator={false}
@@ -188,7 +168,7 @@ function FindConsumer({navigation}) {
             <Text>{category.name}</Text>
           </TouchableOpacity>
         ))}
-      </ScrollView>
+      </ScrollView> */}
       <Animated.ScrollView
         ref={_scrollView}
         horizontal
@@ -236,7 +216,7 @@ function FindConsumer({navigation}) {
                   style={[
                     styles.signIn,
                     {
-                      borderColor: "#FF6347",
+                      borderColor: Colors.primary.color,
                       borderWidth: 1,
                     },
                   ]}>
@@ -244,10 +224,10 @@ function FindConsumer({navigation}) {
                     style={[
                       styles.textSign,
                       {
-                        color: "#FF6347",
+                        color: Colors.primary.color,
                       },
                     ]}>
-                    Accpet Order
+                    Claim Order
                   </Text>
                 </TouchableOpacity>
               </View>
