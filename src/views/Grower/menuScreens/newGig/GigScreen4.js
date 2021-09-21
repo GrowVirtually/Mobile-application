@@ -10,6 +10,7 @@ import {
   Button,
   ScrollView,
   TextInput,
+  Image,
 } from "react-native";
 
 import DynamicForm from "@coffeebeanslabs/react-native-form-builder";
@@ -45,21 +46,7 @@ function GigScreen4({navigation, route}) {
 
   const onSubmitGetLocation = formFields => {
     // Actions on submit button click.
-    navigation.navigate("GigScreen5", {});
-  };
-
-  const formTemplate = {
-    data: [
-      {
-        component: "input-text",
-        field_name: "gigExpDate",
-        is_mandatory: "true",
-        meta: {
-          label: "Gig Duration",
-          placeholder: "Enter latitude of the gig..",
-        },
-      },
-    ],
+    navigation.navigate("GigScreen5");
   };
 
   //Get User Id
@@ -123,8 +110,8 @@ function GigScreen4({navigation, route}) {
 
   const onSubmit = async formFields => {
     // Actions on submit button click.
-    alert("Location set Successfully");
-    navigation.navigate("GigScreenImage", {});
+    alert("Gig Published Successfully");
+    navigation.navigate("GrowerHome");
     postGig();
   };
 
@@ -134,29 +121,33 @@ function GigScreen4({navigation, route}) {
 
       <AppHeader navigation={navigation} title="Add a New Gig" showBackButton={true} />
 
-      <View style={styles.buttonContainer}>
-        <Button
-          accessibilityLabel="submit-button"
-          title="Get Location"
-          buttonStyle={styles.button}
-          onPress={onSubmitGetLocation}
-        />
-      </View>
+      <View style={styles.centeredView}>
+        <TouchableOpacity style={styles.button} onPress={() => onSubmitGetLocation()}>
+          <Text style={styles.btnTxt}>Set Location</Text>
+        </TouchableOpacity>
 
-      <View style={styles.selectBox}>
-        <Text>{latitude}</Text>
-        <Text>{longitude}</Text>
-      </View>
+        <Text style={[styles.statusTxt, {color: "#000"}]}>Latitude: {latitude}</Text>
 
-      <View style={styles.buttonContainer}>
-        <Button
-          accessibilityLabel="submit-button"
-          title="Set Location"
-          buttonStyle={styles.button}
-          onPress={onSubmit}
+        <Text style={[styles.statusTxt, {color: "#000"}]}>Longitude: {longitude}</Text>
+
+        <Image
+          style={styles.logo}
+          source={{
+            uri: "https://cdn-icons-png.flaticon.com/512/854/854878.png",
+          }}
         />
+
+        <Image
+          style={styles.logo2}
+          source={{
+            uri: "https://cdn-icons-png.flaticon.com/512/3556/3556904.png",
+          }}
+        />
+
+        <TouchableOpacity style={styles.button2} onPress={() => onSubmit()}>
+          <Text style={styles.btnTxt}>Publish Gig</Text>
+        </TouchableOpacity>
       </View>
-      <DynamicForm formTemplate={formTemplate} onSubmit={onSubmit} />
     </View>
   );
 }
@@ -180,14 +171,67 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  buttonContainer: {
-    width: "40%",
-    alignSelf: "center",
-    margin: 60,
+
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  statusTxt: {
+    margin: 5,
+    top: -140,
+    fontWeight: "bold",
+    color: Colors.secondary.color,
+  },
+
+  logo: {
+    position: "absolute",
+    top: 5,
+    left: 120,
+    width: 150,
+    height: 150,
+  },
+  logo2: {
+    position: "absolute",
+    top: 300,
+    left: 120,
+    width: 150,
+    height: 150,
+  },
+
+  btn: {
+    backgroundColor: "#000",
   },
   button: {
-    width: "40%",
+    width: "50%",
     alignSelf: "center",
     margin: 20,
+    elevation: 8,
+    backgroundColor: Colors.primary.color,
+    marginTop: 8,
+    alignItems: "center",
+    paddingVertical: 0,
+    borderRadius: 30,
+    // minHeight: 100,
+  },
+  button2: {
+    width: "50%",
+    alignSelf: "center",
+    margin: 20,
+    elevation: 8,
+    backgroundColor: Colors.primary.color,
+    marginTop: 20,
+    top: 100,
+    alignItems: "center",
+    paddingVertical: 0,
+    borderRadius: 30,
+    // minHeight: 100,
+  },
+  btnTxt: {
+    color: "#ffff",
+    padding: 10,
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });

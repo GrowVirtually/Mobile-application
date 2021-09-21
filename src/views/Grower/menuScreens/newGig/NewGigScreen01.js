@@ -43,11 +43,11 @@ function NewGigScreen01({navigation}) {
           text: "Gig Type",
           items: [
             {
-              label: "pre",
+              label: "Pre Harvest",
               value: "pre",
             },
             {
-              label: "post",
+              label: "Post Harvest",
               value: "post",
             },
           ],
@@ -62,11 +62,11 @@ function NewGigScreen01({navigation}) {
           text: "Gig Category",
           items: [
             {
-              label: "fruit",
+              label: "Fruit",
               value: "fruit",
             },
             {
-              label: "vegetable",
+              label: "Vegetable",
               value: "vegetable",
             },
           ],

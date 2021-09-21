@@ -101,13 +101,6 @@ function GigScreen2({navigation, route}) {
       <ScrollView>
         <DynamicForm formTemplate={formTemplate} onSubmit={onSubmit} />
       </ScrollView>
-
-      <Button
-        accessibilityLabel="submit-button"
-        title="Back"
-        buttonStyle={styles.button}
-        onPress={() => navigation.navigate("NewGig")}
-      />
     </View>
   );
 }

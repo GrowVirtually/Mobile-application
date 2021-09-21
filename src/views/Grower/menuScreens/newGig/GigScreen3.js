@@ -132,15 +132,20 @@ function GigScreen3({navigation, route}) {
         placeholder="Enter number of days for gig existence "
         keyboardType="numeric"
       />
-
       <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => onSubmit()}>
+          <Text style={styles.btnTxt}>Publish Gig</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* <View style={styles.buttonContainer}>
         <Button
           accessibilityLabel="submit-button"
           title="Submit"
           buttonStyle={styles.button}
           onPress={onSubmit}
         />
-      </View>
+      </View> */}
     </View>
   );
 }
@@ -166,15 +171,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  buttonContainer: {
-    width: "40%",
-    alignSelf: "center",
-    margin: 60,
-  },
+
   button: {
     width: "40%",
     alignSelf: "center",
     margin: 20,
+    elevation: 8,
+    backgroundColor: Colors.primary.color,
+    marginTop: 8,
+    alignItems: "center",
+    paddingVertical: 0,
+    borderRadius: 30,
+    // minHeight: 100,
+  },
+  btnTxt: {
+    color: "#ffff",
+    padding: 10,
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 
