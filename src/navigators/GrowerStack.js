@@ -18,6 +18,8 @@ import SuccessGigScreen from "../views/Grower/menuScreens/newGig/SuccessGigScree
 import GigScreenImage from "../views/Grower/menuScreens/newGig/GigScreenImage";
 
 import Orders from "../views/Grower/menuScreens/orders/OrdersScreen";
+import OrderCompletion from "../views/Grower/menuScreens/orders/OrderCompletion";
+
 import Support from "../views/Grower/menuScreens/support/SupportScreen";
 
 const Stack = createStackNavigator();
@@ -38,6 +40,7 @@ const GrowerStack = () => {
       <Stack.Screen name={"SuccessGigScreen"} component={SuccessGigScreen} />
       <Stack.Screen name={"GigScreenImage"} component={GigScreenImage} />
       <Stack.Screen name={"Orders"} component={Orders} />
+      <Stack.Screen name={"OrderCompletion"} component={OrderCompletion} />
       <Stack.Screen name={"Support"} component={Support} />
     </Stack.Navigator>
   );
