@@ -9,7 +9,7 @@ import {
   FlatList,
 } from "react-native";
 import {Searchbar, ActivityIndicator, Button} from "react-native-paper";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import axios from "axios";
 
 import * as Colors from "../../../../styles/abstracts/colors";

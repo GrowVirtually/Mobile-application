@@ -1,102 +1,86 @@
 // src/views/Grower/NewGig.js
 
-import React from 'react';
-import { StyleSheet, View, Text,StatusBar, TouchableOpacity, Button  } from 'react-native';
+import React, {useEffect, useContext, useState} from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  StatusBar,
+  TouchableOpacity,
+  Button,
+  ActivityIndicator,
+} from "react-native";
 
-import * as Colors from '../../../../styles/abstracts/colors';
-import  AppHeader  from '../../../Common/AppHeader';
+import axios from "axios";
+import * as Colors from "../../../../styles/abstracts/colors";
+import AppHeader from "../../../Common/AppHeader";
+import AuthContext from "../../../../context/auth-context";
+import {HOST_PORT} from "@env";
 
-import DynamicForm from '@coffeebeanslabs/react-native-form-builder';
+import OrderList from "./components/OrderList";
 
-function OrdersScreen ({navigation}) {
+function OrdersScreen({navigation}) {
+  const {loginState} = useContext(AuthContext);
+  const jwt = loginState.userToken;
 
-  const formTemplate = {
-    data: [
-      {
-        component: 'image',
-        field_name: 'headerImage',
-        meta: {
-          label: 'alt text for header image',
-          source: 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg'
-        },
-        style: {
-          width: 200,
-          height: 200
-        }
-      },
-      {
-        component: 'input-text',
-        field_name: 'name',
-        is_mandatory: 'true',
-        meta: {
-          label: 'Name',
-          placeholder: 'Enter name..'
-        }
-      },
-      {
-        component: 'input-date',
-        field_name: 'birthDate',
-        is_mandatory: 'true',
-        meta: {
-          title: 'Birth Date'
-        }
-      },
-      {
-        component: 'input-radio',
-        field_name: 'gender',
-        is_mandatory: 'true',
-        meta: {
-          text: 'Your Gender',
-          data: [
-            {
-              label: 'Male',
-              value: 'male'
-            },
-            {
-              label: 'Female',
-              value: 'female'
-            }
-          ]
-        }
-      },
-      {
-        component: 'input-dropdown',
-        field_name: 'favJsFramework',
-        is_mandatory: 'true',
-        meta: {
-          text: 'Select your favorite programming language',
-          items: [
-            {
-              label: 'Javascript',
-              value: 'js'
-            },
-            {
-              label: 'Golang',
-              value: 'golang'
-            },
-            {
-              label: 'Python',
-              value: 'python'
-            },
-          ]
-        },
+  const [myOrders, setMyOrders] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+
+  //want to fetch the data as soon as the component mounts, so calling getGigs function in useEffect hook.
+  useEffect(() => {
+    async function getOrders() {
+      //tO GET Profile Id
+      let myProfile;
+      try {
+        myProfile = await axios.get(`${HOST_PORT}/api/v1/users/me`, {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+
+        console.log("Profile", myProfile.data.data.profile);
+      } catch (error) {
+        console.error(error);
       }
-    ]
-  }
- 
-  const onSubmit = formFields => {
-    // Actions on submit button click.
-    console.log('Form submitted with fields: ', formFields);
-  }
 
+      //To make API call to get Orders
+      try {
+        const response = await axios({
+          method: "get",
+          url: `${HOST_PORT}/api/v1/growers/orders/toDeliver`,
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+        setMyOrders(response.data.data.orders);
+        console.log(response.data.data.orders);
+      } catch (error) {
+        console.error(error);
+      }
+      setLoading(false);
+    }
+    setLoading(true);
+    getOrders();
+  }, []);
+  console.log("Orders Data : ", myOrders);
   return (
     <View style={styles.container}>
-       <StatusBar backgroundColor={Colors.primary.color} />
-       <AppHeader navigation={navigation} title="My Orders" />
+      <StatusBar backgroundColor={Colors.primary.color} />
+      <AppHeader navigation={navigation} title="My Orders" showBackButton={true} />
       <Text style={styles.text}>Orders Screen</Text>
-      <DynamicForm formTemplate={formTemplate} onSubmit={onSubmit} />
-     
-   
+
+      <ScrollView>
+        {isLoading ? (
+          <View style={styles.loading}>
+            <ActivityIndicator animating={true} />
+          </View>
+        ) : (
+          <View>
+            <OrderList myOrders={myOrders} />
+          </View>
+        )}
+      </ScrollView>
     </View>
   );
 }
@@ -105,7 +89,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-
 });
 
 export default OrdersScreen;
