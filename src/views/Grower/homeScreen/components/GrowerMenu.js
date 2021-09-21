@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View, Image} from "react-native";
 import {TouchableOpacity} from "react-native-gesture-handler";
 import {TouchableRipple} from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -36,7 +36,17 @@ export const GrowerMenu = ({navigation}) => {
             <Text style={styles.menuItemText}>My Orders</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.row}>
+
+        <View style={styles.single}>
+          <TouchableOpacity onPress={() => navigation.navigate("Support")} style={styles.menuItem}>
+            <Icon name="help-circle" color={Colors.secondary.color} size={40} />
+            <Text style={styles.menuItemText}>Support</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Image style={styles.img} source={require("../../../../assets/logo.png")} />
+
+        {/* <View style={styles.row}>
           <TouchableOpacity onPress={() => navigation.navigate("Earnings")} style={styles.menuItem}>
             <Icon name="currency-usd" color={Colors.secondary.color} size={40} />
             <Text style={styles.menuItemText}>Earnings</Text>
@@ -45,7 +55,7 @@ export const GrowerMenu = ({navigation}) => {
             <Icon name="help-circle" color={Colors.secondary.color} size={40} />
             <Text style={styles.menuItemText}>Support</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </View>
   );
@@ -61,7 +71,7 @@ const styles = StyleSheet.create({
     // margin: 20,
   },
   menuItem: {
-    elevation: 2,
+    elevation: 20,
     padding: 10,
     backgroundColor: "#fff",
     width: 150,
@@ -81,6 +91,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "stretch",
     justifyContent: "space-between",
-    marginTop: 20,
+    marginTop: 30,
+  },
+  single: {
+    flexDirection: "row",
+    alignItems: "stretch",
+    justifyContent: "space-between",
+    marginTop: 30,
+    marginLeft: 100,
+  },
+  img: {
+    width: 250,
+    height: 250,
+    borderRadius: 10,
+    marginLeft: 45,
   },
 });
