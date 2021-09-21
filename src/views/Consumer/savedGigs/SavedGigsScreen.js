@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {ScrollView, StyleSheet, Text, View} from "react-native";
 import AppHeader from "../../Common/AppHeader";
 import {HOST_PORT} from "@env";
 import axios from "axios";
@@ -35,9 +35,9 @@ const SavedGigsScreen = ({navigation}) => {
       });
       console.log(
         "saved",
-        // response.data.data.savedGigs.map(item => item.gigTitle),
+        response.data.data.savedGigs[0].savedGigs.map(item => item.gigTitle),
       );
-      setGigs(response.data.data.savedGigs);
+      setGigs(response.data.data.savedGigs[0].savedGigs);
     } catch (error) {
       console.error(error);
     }
@@ -46,13 +46,15 @@ const SavedGigsScreen = ({navigation}) => {
   return (
     <>
       <AppHeader navigation={navigation} title="Favorites" />
-      <View style={styles.container}>
-        <View>
-          {gigs.map((item, index) => (
-            <SavedGig key={index} direction="grid" {...item} />
-          ))}
+      <ScrollView>
+        <View style={styles.container}>
+          <View>
+            {gigs.map((item, index) => (
+              <SavedGig key={index} direction="grid" {...item} />
+            ))}
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 };
