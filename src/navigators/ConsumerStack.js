@@ -8,6 +8,7 @@ import {GigScreen} from "../views/Consumer/gigScreen/GigScreen";
 import {ConsumerHomeScreen} from "../views/Consumer/homeScreen/ConsumerHomeScreen";
 import {ConsumerMap} from "../views/Consumer/gigScreen/components/ConsumerMap";
 import Payment from "../views/Consumer/gigScreen/Payment";
+import OrdersScreen from "../views/Grower/menuScreens/orders/OrdersScreen";
 const Stack = createStackNavigator();
 
 const ConsumerStack = () => {
@@ -18,7 +19,7 @@ const ConsumerStack = () => {
       <Stack.Screen name={"GigScreen"} component={GigScreen} />
       <Stack.Screen name={"ConsumerMap"} component={ConsumerMap} />
       <Stack.Screen name={"Payment"} component={Payment} />
-
+      <Stack.Screen name={"OrdersAfterPayment"} component={OrdersScreen} />
     </Stack.Navigator>
   );
 };

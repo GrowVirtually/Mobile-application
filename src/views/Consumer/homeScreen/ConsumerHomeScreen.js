@@ -365,17 +365,6 @@ export const ConsumerHomeScreen = ({navigation}) => {
 
         {data &&
           viewDrop &&
-          // <FlatList
-          //   data={data}
-          //   keyExtractor={(item, index) => index.toString()}
-          //   // ItemSeparatorComponent={itemSeparator}
-          //   renderItem={({item}) => (
-          //     <Text style={styles.row} onPress={() => console.log("selected", item)}>
-          //       {item}
-          //     </Text>
-          //   )}
-          //   style={{marginTop: 10}}
-          // />
           data.map((item, index) => (
             <List.Item
               style={{zIndex: 0}}

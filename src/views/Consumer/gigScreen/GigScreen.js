@@ -137,6 +137,7 @@ export const GigScreen = ({route, navigation}) => {
         )}
         <View style={styles.container}>
           <GigTitle
+            gigId={gigData.id}
             expireDate={gigData.expireDate}
             gigTitle={gigData.gigTitle}
             priceTag={gigData.unitPrice}

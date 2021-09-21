@@ -1,6 +1,6 @@
 import {useNavigation} from "@react-navigation/native";
 import React, {useEffect, useState, useContext} from "react";
-import {SafeAreaView, StyleSheet, Text, View} from "react-native";
+import {SafeAreaView, StyleSheet, Text, View, Alert} from "react-native";
 import AppHeader from "../../Common/AppHeader";
 import {WebView} from "react-native-webview";
 import StripeCheckout from "react-native-stripe-checkout-webview";
@@ -48,10 +48,19 @@ const Payment = ({route}) => {
           sessionId: session.id,
         }}
         onSuccess={() => {
+          Alert.alert("Payment Complete", "Your payment has been successfully completed", [
+            {text: "OK", onPress: () => console.log("OK Pressed")},
+          ]);
+          // navigation.navigate("OrdersAfterPayment");
+          navigation.goBack();
           console.log(`Stripe checkout session succeeded. session id:`);
         }}
         onCancel={() => {
+          Alert.alert("Payment Failed", "Your payment has been failed", [
+            {text: "OK", onPress: () => console.log("OK Pressed")},
+          ]);
           console.log(`Stripe checkout session cancelled.`);
+          navigation.goBack();
         }}
       />
       {/* <WebView source={{uri: "https://www.google.com"}} /> */}

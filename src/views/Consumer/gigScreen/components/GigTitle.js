@@ -1,16 +1,41 @@
 /* eslint-disable prefer-template */
-import React from "react";
+import React, {useContext} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Colors from "../../../../styles/abstracts/colors";
+import {HOST_PORT} from "@env";
+import axios from "axios";
+import AuthContext from "../../../../context/auth-context";
 
-const GigTitle = ({priceTag, gigTitle, expireDate, unit, stock}) => {
+const GigTitle = ({priceTag, gigTitle, expireDate, unit, stock, gigId}) => {
   const getDays = dateStr => {
     const today = new Date();
     const date = new Date(dateStr);
     const diffInTime = date.getTime() - today.getTime();
     const days = diffInTime / (1000 * 3600 * 24);
     return Math.round(days);
+  };
+
+  const {loginState} = useContext(AuthContext);
+  const jwt = loginState.userToken;
+
+  const saveGig = async () => {
+    try {
+      const data = new FormData();
+      data.append("gigId", gigId);
+
+      const response = await axios({
+        method: "post",
+        url: `${HOST_PORT}/api/v1/users/me/saved`,
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+        data,
+      });
+      console.log("saved", response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -24,7 +49,7 @@ const GigTitle = ({priceTag, gigTitle, expireDate, unit, stock}) => {
             Rs. {priceTag} per {unit}
           </Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => saveGig()}>
           <MaterialIcon name="heart" size={25} color={Colors.secondary.color} />
         </TouchableOpacity>
       </View>
