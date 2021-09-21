@@ -30,20 +30,6 @@ function OrdersScreen({navigation}) {
   //want to fetch the data as soon as the component mounts, so calling getGigs function in useEffect hook.
   useEffect(() => {
     async function getOrders() {
-      //tO GET Profile Id
-      let myProfile;
-      try {
-        myProfile = await axios.get(`${HOST_PORT}/api/v1/users/me`, {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
-
-        console.log("Profile", myProfile.data.data.profile);
-      } catch (error) {
-        console.error(error);
-      }
-
       //To make API call to get Orders
       try {
         const response = await axios({

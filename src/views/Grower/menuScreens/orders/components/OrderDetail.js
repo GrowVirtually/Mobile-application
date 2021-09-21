@@ -15,24 +15,34 @@ import {HOST_PORT} from "@env";
 const {width} = Dimensions.get("screen");
 
 export const OrderDetail = ({
-  id,
-  paymentAmount,
-  createdAt,
-  date,
-  growerId,
-  price,
-  isOrderCompleted,
-  isConsumerCompleted,
-  isGrowerAccepted,
-  isGrowerCompleted,
-  qrLink,
-  quantity,
-  updatedAt,
-  consumerId,
-  deliveryMethod,
-  gigId,
+  id = "",
+  paymentAmount = "",
+  createdAt = "",
+  date = "",
+  growerId = "",
+  price = "",
+  isOrderCompleted = "",
+  isConsumerCompleted = "",
+  isGrowerAccepted = "",
+  isGrowerCompleted = "",
+  qrLink = "",
+  quantity = "",
+  updatedAt = "",
+  consumerId = "",
+  deliveryMethod = "",
+  gigId = "",
+  gigTitle = "",
+  growerFname = "",
+  growerLname = "",
+  fname = "",
+  lname = "",
 }) => {
   const navigation = useNavigation();
+  const {loginState} = useContext(AuthContext);
+  const jwt = loginState.userToken;
+
+  const [consumerData, setConsumerData] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   const handleViewOrder = () => {
     navigation.navigate("OrderCompletion", {
@@ -52,20 +62,49 @@ export const OrderDetail = ({
       consumerId,
       deliveryMethod,
       gigId,
+      gigTitle,
+      growerFname,
+      growerLname,
+      consumerName,
     });
   };
+
+  //want to fetch the data as soon as the component mounts, so calling getConsumerData function in useEffect hook.
+
+  async function getConsumerData() {
+    try {
+      const response = await axios({
+        method: "get",
+        url: `${HOST_PORT}/api/v1/growers/consumers/${consumerId}`,
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+      setConsumerData(response.data.data.consumer);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  useEffect(async () => {
+    setLoading(true);
+    await getConsumerData();
+  }, []);
+
+  console.log("Consumer Data : ", consumerData);
+
+  const consumerName = consumerData.fname + " " + consumerData.lname;
 
   return (
     <View style={styles.card}>
       <View style={styles.orderNoRow}>
-        <Text style={styles.orderTxt}>Order # </Text>
+        <Text style={styles.orderTxt}>Order ID: GR00</Text>
         <Text style={styles.orderTxt}>{id}</Text>
       </View>
       <View style={styles.dateRow}>
         <Text style={styles.dateTxt}>{createdAt}</Text>
         <View style={{flexDirection: "row", alignItems: "center"}}>
           <Icon style={{marginRight: 5}} name="account" size={16} color="#555" />
-          <Text style={styles.dateTxt}>Grower Name Here</Text>
+          <Text style={styles.dateTxt}>{consumerName}</Text>
         </View>
       </View>
       <View style={styles.priceRow}>
@@ -98,13 +137,6 @@ export const OrderDetail = ({
       <TouchableOpacity style={styles.viewOrder} onPress={() => handleViewOrder()}>
         <Text style={styles.viewOrderTxt}>View Order</Text>
       </TouchableOpacity>
-
-      <Image
-        style={styles.logo}
-        source={{
-          uri: qrLink,
-        }}
-      />
     </View>
   );
 };

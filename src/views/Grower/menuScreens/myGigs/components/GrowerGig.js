@@ -56,6 +56,7 @@ export const GrowerGig = ({
 
   const handleGigDelete = () => {
     sendDeleteReq();
+    alert("Gig Deleted successfully!");
     navigation.goBack();
   };
   return (

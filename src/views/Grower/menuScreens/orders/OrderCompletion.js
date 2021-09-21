@@ -26,7 +26,6 @@ export default function OrderCompletion({navigation, route}) {
   const {loginState} = useContext(AuthContext);
   const jwt = loginState.userToken;
 
-  const [consumerData, setConsumerData] = useState([]);
   const [gigData, setGigData] = useState({
     coordinates: {coordinates: [], crs: {}, type: ""},
     deliveryAbility: "",
@@ -76,52 +75,20 @@ export default function OrderCompletion({navigation, route}) {
     consumerId,
     deliveryMethod,
     gigId,
+    gigTitle,
+    growerFname,
+    growerLname,
+    consumerName,
   } = route.params;
 
-  //want to fetch the data as soon as the component mounts, so calling getGigs function in useEffect hook.
-  async function getConsumerDetails() {
-    //To make API call to get gigs
-    try {
-      const response = await axios({
-        method: "get",
-        url: `${HOST_PORT}/api/v1/growers/consumers/${consumerId}`,
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
-      setConsumerData(response.data.data.consumer);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const onPressComplete = () => {
+    alert("Order Completion successful!");
+    navigation.navigate("GrowerHome");
+  };
 
-  async function getGigDetails() {
-    //To make API call to get gig details
-    try {
-      const response = await axios({
-        method: "get",
-        url: `${HOST_PORT}/api/v1/gigs/${gigId}`,
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
-      setGigData(response.data.data.gig);
-      return response;
-    } catch (error) {
-      console.error(error);
-      return error;
-    }
-  }
-
-  useEffect(async () => {
-    setLoading(true);
-    const temp = await getGigDetails();
-    console.log("TEmp", temp);
-    await getConsumerDetails();
-  }, []);
-
-  console.log("Consumer Data : ", consumerData);
-  console.log("Gig Data : ", gigData);
+  const onPressCancel = () => {
+    navigation.goBack();
+  };
 
   const LeftContent = props => <Avatar.Icon {...props} icon="pin" />;
 
@@ -135,15 +102,32 @@ export default function OrderCompletion({navigation, route}) {
       <AppHeader navigation={navigation} title="My Orders" showBackButton={true} />
 
       <ScrollView>
-        <Text style={styles.text}>Orders Screen </Text>
-        <Text style={styles.text}>{consumerData.fname + " " + consumerData.lname}</Text>
         <Card>
           <Card.Title title="Order Details" subtitle={currentTime} left={LeftContent} />
           <Card.Content>
             <Title>Order # {id}</Title>
             <Card.Cover source={{uri: "https://cdn-icons-png.flaticon.com/512/3502/3502601.png"}} />
 
-            <Paragraph>Card content</Paragraph>
+            <Paragraph>
+              Order Status:
+              <Text style={[styles.statusTxt, {color: Colors.errorColor.color}]}>Pending</Text>
+            </Paragraph>
+            <Paragraph>
+              Consumer's Delivery Option:
+              <Text style={[styles.statusTxt, {color: "#000"}]}>{deliveryMethod}</Text>
+            </Paragraph>
+            <Paragraph>
+              Gig Title:
+              <Text style={[styles.statusTxt, {color: "#000"}]}>{gigTitle}</Text>
+            </Paragraph>
+            <Paragraph>
+              Quantity Required:
+              <Text style={[styles.statusTxt, {color: "#000"}]}>{Math.round(quantity)}/KG</Text>
+            </Paragraph>
+            <Paragraph>
+              Order Placed on:
+              <Text style={[styles.statusTxt, {color: "#000"}]}>{createdAt}</Text>
+            </Paragraph>
           </Card.Content>
 
           <View style={styles.centeredView}>
@@ -179,10 +163,19 @@ export default function OrderCompletion({navigation, route}) {
               <Text style={styles.textStyle}>Show QR</Text>
             </Pressable>
           </View>
-          <Card.Actions>
+          {/* <Card.Actions>
+            <Button>Complete Order</Button>
             <Button>Cancel</Button>
-            <Button>Ok</Button>
-          </Card.Actions>
+          </Card.Actions> */}
+          <View style={styles.btnContainer}>
+            <TouchableOpacity style={styles.viewOrder} onPress={() => onPressComplete()}>
+              <Text style={styles.viewOrderTxt}>Complete Order</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.viewOrder} onPress={() => onPressCancel()}>
+              <Text style={styles.viewOrderTxt}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         </Card>
 
         {/* <Text>{JSON.stringify(gigData)}</Text>
@@ -245,9 +238,33 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
   },
+  statusTxt: {
+    fontWeight: "bold",
+    color: Colors.secondary.color,
+  },
   modalContent: {
     justifyContent: "center",
     alignItems: "center",
     marginTop: 22,
+  },
+  btnContainer: {
+    marginTop: 0,
+    marginRight: 60,
+    marginLeft: 60,
+  },
+  viewOrder: {
+    elevation: 15,
+    backgroundColor: Colors.primary.color,
+    marginTop: 10,
+    alignItems: "center",
+
+    borderRadius: 40,
+    // minHeight: 100,
+  },
+  viewOrderTxt: {
+    color: "#ffff",
+    padding: 20,
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
