@@ -16,7 +16,7 @@ const EnterMobileNumberScreen = ({navigation}) => {
   const validateMobileNumber = number => {
     const allowBackspace = number.length === mobileNumber.length - 1;
 
-    const regex = /^\d*(\.\d{0, 2})?$/;
+    const regex = /^\d*(\.\d{0, 2})?$/; // regex validation
 
     if (
       (!number || allowBackspace || regex.test(number.toString())) &&
