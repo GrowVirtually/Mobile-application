@@ -38,4 +38,13 @@
   sudo yarn react-native run-android
 ```
 --------------------------------
-Feel free to add any documentation
+
+
+Group No: 15
+Member               | Index No | Github username
+-------------------- | ---------| ---------------
+J.P.A. Shanaka       | 18001582 | ashanaka
+D.D. Liyanaarachch i | 18000932 | DDhanushka
+A. H. Dodampe        | 18000462 | anjana-dodampe
+A.C.Vidanagamachchi  | 18001769 | asinduvg
+G. H. G. M. Madara   | 18020471 | ManulMax
