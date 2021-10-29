@@ -37,6 +37,7 @@
   sudo yarn react-native start --reset-cache
   sudo yarn react-native run-android
 ```
+6. New step added.
 --------------------------------
 
 
