@@ -1,7 +1,5 @@
 ## How to setup the environment
 
-* Read [Official React Native documentation](https://reactnative.dev/docs/environment-setup) and make sure you have installed all the required dependencies before starting on devlopment on the project.
-
 1. Clone the repo
 
 2. Create a file named **.env** on root direcotory.
