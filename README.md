@@ -18,7 +18,7 @@
 
 ```
 
-4. Create the following file.
+4. Create the following xml file.
 ```
   /android/app/src/main/res/values/api-keys.xml
 ```
